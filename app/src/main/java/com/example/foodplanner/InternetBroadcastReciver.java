@@ -17,7 +17,6 @@ public class InternetBroadcastReciver extends BroadcastReceiver {
         Toast.makeText(context, "connected", Toast.LENGTH_SHORT).show();
     }else{
         Toast.makeText(context, "not connected", Toast.LENGTH_SHORT).show();
-
     }
     }
 }
