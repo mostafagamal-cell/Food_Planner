@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -32,8 +33,12 @@ android {
 }
 
 dependencies {
-    implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation(libs.firebase.auth)
+    implementation (libs.core)
 
+    implementation (libs.lottie)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
