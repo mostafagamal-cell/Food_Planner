@@ -6,7 +6,7 @@
     <string name="password">password</string>
     <string name="email">email</string>
     <string name="login">login</string>
-    <string name="donot_have_account">donot_have_account</string>
-    <string name="create_account">create_account</string>
+    <string name="donot_have_account">donot have account</string>
+    <string name="create_account">create account</string>
     <string name="api_key">AIzaSyB6yA4ob64p9aGrtrxtCcg5pd1TSlSTFEU</string>
 </resources>
