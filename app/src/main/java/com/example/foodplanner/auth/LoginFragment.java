@@ -26,7 +26,7 @@ import com.example.foodplanner.Util.IauthPresenter;
 import com.example.foodplanner.databinding.FragmentLogin2Binding;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginFragment extends Fragment implements IauthPresenter.IloginPresenter.Icommuncate {
+public class LoginFragment extends Fragment implements IauthPresenter.Icommuncate {
     private FragmentLogin2Binding binding;
 
 

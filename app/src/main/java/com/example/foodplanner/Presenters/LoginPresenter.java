@@ -3,13 +3,10 @@ package com.example.foodplanner.Presenters;
 import static com.example.foodplanner.Util.Utilits.emailPattern;
 import static com.example.foodplanner.Util.Utilits.passwordPattern;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IauthPresenter;
-import com.example.foodplanner.auth.AuthActivity;
 import com.example.foodplanner.auth.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -17,7 +14,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
     private LoginFragment  context;
     private static LoginPresenter presenter;
     private final FirebaseAuth firebaseAuth;
-    private  IauthPresenter.IloginPresenter.Icommuncate icommuncate;
+    private  IauthPresenter.Icommuncate icommuncate;
     private LoginPresenter(){
         firebaseAuth=FirebaseAuth.getInstance();
     }
@@ -69,8 +66,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
 
     }
 
-    public static synchronized  LoginPresenter getInstance(LoginFragment context, IauthPresenter.IloginPresenter.Icommuncate icommuncate) {
-
+    public static synchronized  LoginPresenter getInstance(LoginFragment context, LoginFragment icommuncate) {
          if (presenter == null) {
             presenter= new LoginPresenter();
         }
