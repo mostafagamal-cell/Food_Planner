@@ -4,9 +4,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Next">Next</string>
     <string name="password">password</string>
+    <string name="confirm_password">confirm password</string>
     <string name="email">email</string>
     <string name="login">login</string>
     <string name="donot_have_account">do not have account</string>
     <string name="create_account">create account</string>
     <string name="api_key">AIzaSyB6yA4ob64p9aGrtrxtCcg5pd1TSlSTFEU</string>
+    <string name="Continue_as_Guest">Continue as Guest</string>
+    <string name="createaccpuntwithgoogle">create accunt with google</string>
+    <string name="loginwithgoogleaccount">login with google account</string>
+    <string name="password_is_empty">password is empty</string>
+    <string name="email_is_empty">email is empty</string>
 </resources>

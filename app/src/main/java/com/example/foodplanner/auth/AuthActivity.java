@@ -1,6 +1,7 @@
 package com.example.foodplanner.auth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toolbar;
 
@@ -16,10 +17,12 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.auth_activity);
         FirebaseApp.initializeApp(this);
         FirebaseAuth auth =FirebaseAuth.getInstance();
-        if (auth.getCurrentUser()!=null){
+        SharedPreferences preferences= this.getSharedPreferences("user",MODE_PRIVATE);
+        SharedPreferences.Editor editor= preferences.edit();
+        if (preferences.getString("user",null)!=null){
             startActivity(new Intent(AuthActivity.this, MaleFragment.class));
             finish();
         }

@@ -21,6 +21,7 @@ public class StartActivity extends AppCompatActivity {
     @SuppressLint({"RestrictedApi","MissingInflatedId", "UseSupportActionBar"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
         super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_main);
          setActionBar(findViewById(R.id.materialToolbar));
