@@ -17,7 +17,7 @@ import com.example.foodplanner.databinding.AuthActivityBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AuthActivity extends AppCompatActivity {
+public class AuthActivity extends AppCompatActivity  {
     AuthActivityBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +25,8 @@ public class AuthActivity extends AppCompatActivity {
         binding=AuthActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         FirebaseApp.initializeApp(this);
-        FirebaseAuth auth =FirebaseAuth.getInstance();
-        SharedPreferences preferences= this.getSharedPreferences("user",MODE_PRIVATE);
-        SharedPreferences.Editor editor= preferences.edit();
-        if (preferences.getString("user",null)!=null){
-            startActivity(new Intent(AuthActivity.this, MaleFragment.class));
-            finish();
-        }
         NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController =navHost.getNavController();
-
         NavigationUI.setupWithNavController(binding.toolbar,navController);
     }
 }

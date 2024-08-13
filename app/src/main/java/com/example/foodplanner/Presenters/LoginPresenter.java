@@ -4,26 +4,31 @@ import static com.example.foodplanner.Util.Utilits.emailPattern;
 import static com.example.foodplanner.Util.Utilits.passwordPattern;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IauthPresenter;
+import com.example.foodplanner.auth.AuthActivity;
+import com.example.foodplanner.auth.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPresenter implements IauthPresenter.IloginPresenter {
-    private Context  context;
+    private LoginFragment  context;
+    private SharedPreferences sharedPreferences;
     private static LoginPresenter presenter;
     private final FirebaseAuth firebaseAuth;
     private  IauthPresenter.IloginPresenter.Icommuncate icommuncate;
     private LoginPresenter(){
         firebaseAuth=FirebaseAuth.getInstance();
+        sharedPreferences=context.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
 
     @Override
     public void Login(String email, String password) {
         int res=checkEmail(email);
         int res2=checkPassword(password);
-        if (res>=0 || res2>=0)
+        if (res<0 || res2<0)
             return;
         boolean isEmailValid = email.matches(emailPattern);
         boolean isPasswordValid = password.matches(passwordPattern);
@@ -36,9 +41,11 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
         if (!isEmailValid||!isPasswordValid)
             return;
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(context.requireActivity(),task -> {
+            Log.d("xxxxxxxxxxxxxxx", "signInWithEmail:onComplete:" + task.isSuccessful());
           if (task.isSuccessful()){
               icommuncate.Sucess();
+              sharedPreferences.edit().putString("user",email).apply();
           }else{
               icommuncate.Error(task.getException().getMessage());
           }
@@ -65,7 +72,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
 
     }
 
-    public static synchronized  LoginPresenter getInstance(Context context, IauthPresenter.IloginPresenter.Icommuncate icommuncate) {
+    public static synchronized  LoginPresenter getInstance(LoginFragment context, IauthPresenter.IloginPresenter.Icommuncate icommuncate) {
 
          if (presenter == null) {
             presenter= new LoginPresenter();
