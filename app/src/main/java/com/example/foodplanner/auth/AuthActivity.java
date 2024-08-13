@@ -11,7 +11,6 @@ import androidx.navigation.NavHost;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.foodplanner.MaleFragment;
 import com.example.foodplanner.R;
 import com.example.foodplanner.databinding.AuthActivityBinding;
 import com.google.firebase.FirebaseApp;

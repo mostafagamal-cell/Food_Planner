@@ -11,6 +11,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.foodplanner.auth.AuthActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -34,6 +37,7 @@ public class StartActivity extends AppCompatActivity {
              @Override
              public void onClick(View v) {
                  startActivity(new Intent(StartActivity.this, AuthActivity.class));
+                 finish();
              }
          });
 

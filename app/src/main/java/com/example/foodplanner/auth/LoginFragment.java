@@ -4,6 +4,7 @@ import static com.example.foodplanner.Util.Utilits.emailPattern;
 import static com.example.foodplanner.Util.Utilits.passwordPattern;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,18 +19,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.foodplanner.Presenters.LoginPresenter;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IauthPresenter;
 import com.example.foodplanner.databinding.FragmentLogin2Binding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment implements IauthPresenter.Icommuncate {
     private FragmentLogin2Binding binding;
-
-
     LoginPresenter presenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +66,12 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
                 binding.passworderrortextview.setVisibility(View.INVISIBLE);
             }
         });
+        binding.createaccounttextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(requireView()).navigate(R.id.createAccountFragment);
+            }
+        });
     }
 
     private void setupLoginButton() {
@@ -69,8 +79,14 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
 
             String email = binding.email.getEditText().getText().toString();
             String password = binding.password.getEditText().getText().toString();
-            presenter.Login(email,password);
             hide();
+            presenter.loginWithEmailAndPassword(email,password);
+        });
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.loginWithGoogle();
+            }
         });
     }
 
@@ -85,16 +101,20 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
 
     @Override
     public void Error(String error) {
+        Log.i("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", "errorPasswordValidation: "+error);
         Toast.makeText(getContext(), "error  " + error , Toast.LENGTH_SHORT).show();
         show();
     }
 
     @Override
     public void errorEmailValidation(String error) {
+        Log.i("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", "errorPasswordValidation: "+error);
+
         binding.email.setError(error);
         binding.erroremailtextview.setVisibility(View.VISIBLE);
         binding.erroremailtextview.setText(error);
         binding.erroremailtextview.setTextColor(Color.RED);
+        show();
     }
 
     @Override
@@ -103,16 +123,30 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
         binding.passworderrortextview.setVisibility(View.VISIBLE);
         binding.passworderrortextview.setText(error);
         binding.passworderrortextview.setTextColor(Color.RED);
+        show();
     }
 
+
     private void hide(){
+        Log.i("eeeeeeeeeeeeeeeeeeee","dddddddddddd");
         binding.loginaccountbutton.setVisibility(View.INVISIBLE);
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.loginaccountbutton.setEnabled(false);
     }
     private void show(){
+        Log.i("eeeeeeeeeeeeeeeeeeee","hhhhhhhhhh");
         binding.loginaccountbutton.setVisibility(View.VISIBLE);
         binding.progressBar.setVisibility(View.INVISIBLE);
         binding.loginaccountbutton.setEnabled(true);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("xxxxxxxxxxxxxxxxxxxxxxxxxxxx",requestCode+"");
+        if (requestCode == 1) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            presenter.handleResult(task);
+        }
     }
 }

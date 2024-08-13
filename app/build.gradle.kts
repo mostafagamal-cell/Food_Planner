@@ -33,6 +33,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildFeatures {
+
         dataBinding = true
         viewBinding = true
     }
@@ -46,6 +47,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:$nav_version")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
     implementation ("io.getstream:avatarview-coil:1.0.7")
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
 
     implementation(libs.firebase.auth)
     implementation (libs.core)
