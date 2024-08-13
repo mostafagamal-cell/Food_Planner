@@ -1,5 +1,7 @@
 package com.example.foodplanner.DataSourse;
 
+import android.util.Log;
+
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
@@ -16,7 +18,7 @@ public class RemoteDataSourse implements IremoteDataSource {
     private static RemoteDataSourse instance;
     Iretrofit iretrofit;
     Irepo.Communicator communicator;
-    private RemoteDataSourse( Irepo.Communicator communicator){
+    public RemoteDataSourse(Irepo.Communicator communicator){
         iretrofit= MyRetrofite.getInstance();
         this.communicator=communicator;
     }

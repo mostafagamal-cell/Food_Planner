@@ -1,13 +1,18 @@
 package com.example.foodplanner.Model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "FavouriteMeals")
 public class Meal{
     @PrimaryKey
+    @NotNull
     public String idMeal;
     public String strMeal;
+    @Ignore
     public Object strDrinkAlternate;
     public String strCategory;
     public String strArea;
@@ -34,6 +39,7 @@ public class Meal{
     public String strIngredient17;
     public String strIngredient18;
     public String strIngredient19;
+    @Ignore
     public Object strIngredient20;
     public String strMeasure1;
     public String strMeasure2;
@@ -56,7 +62,10 @@ public class Meal{
     public String strMeasure19;
     public String strMeasure20;
     public String strSource;
+    @Ignore
     public Object strImageSource;
+    @Ignore
     public Object strCreativeCommonsConfirmed;
+    @Ignore
     public Object dateModified;
 }
