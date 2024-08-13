@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
+import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.google.firebase.FirebaseApp;
 
 public class App extends Application {

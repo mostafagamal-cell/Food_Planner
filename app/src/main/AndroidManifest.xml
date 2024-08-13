@@ -17,9 +17,6 @@
         android:theme="@style/Theme.FoodPlanner"
         tools:targetApi="31">
         <activity
-            android:name=".MaleFragment"
-            android:exported="false" />
-        <activity
             android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity
@@ -33,7 +30,7 @@
         </activity>
 
         <receiver
-            android:name=".InternetBroadcastReciver"
+            android:name=".Util.InternetBroadcastReciver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

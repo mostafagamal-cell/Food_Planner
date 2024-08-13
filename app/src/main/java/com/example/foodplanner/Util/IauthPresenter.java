@@ -6,7 +6,7 @@ public interface IauthPresenter {
         int checkEmail(String email);
         int checkPassword(String password);
         interface Icommuncate{
-            void Sucess();
+            void Sucess(String email);
             void Error(String error);
             void errorEmailValidation(String error);
             void errorPasswordValidation(String error);

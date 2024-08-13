@@ -15,13 +15,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPresenter implements IauthPresenter.IloginPresenter {
     private LoginFragment  context;
-    private SharedPreferences sharedPreferences;
     private static LoginPresenter presenter;
     private final FirebaseAuth firebaseAuth;
     private  IauthPresenter.IloginPresenter.Icommuncate icommuncate;
     private LoginPresenter(){
         firebaseAuth=FirebaseAuth.getInstance();
-        sharedPreferences=context.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -44,8 +42,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(context.requireActivity(),task -> {
             Log.d("xxxxxxxxxxxxxxx", "signInWithEmail:onComplete:" + task.isSuccessful());
           if (task.isSuccessful()){
-              icommuncate.Sucess();
-              sharedPreferences.edit().putString("user",email).apply();
+              icommuncate.Sucess(email);
           }else{
               icommuncate.Error(task.getException().getMessage());
           }
