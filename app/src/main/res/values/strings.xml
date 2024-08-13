@@ -15,4 +15,6 @@
     <string name="loginwithgoogleaccount">login with google account</string>
     <string name="password_is_empty">password is empty</string>
     <string name="email_is_empty">email is empty</string>
+    <string name="email_is_invalid">email is invalid</string>"
+    <string name="password_is_invalid">password is invalid</string>
 </resources>
