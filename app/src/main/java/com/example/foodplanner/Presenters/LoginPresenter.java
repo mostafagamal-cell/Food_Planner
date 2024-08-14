@@ -32,7 +32,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
     private LoginPresenter(LoginFragment context, LoginFragment icommuncate){
         firebaseAuth=FirebaseAuth.getInstance();
             GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(context.getString(R.string.default_web_client_id))
+                    .requestIdToken(context.getString(R.string.id_token))
                     .requestEmail()
                     .build();
             googleApiClient=GoogleSignIn.getClient(context.requireActivity(),gso);
@@ -55,7 +55,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
         if (!isPasswordValid) {
             icommuncate.errorPasswordValidation(context.getString(R.string.password_is_invalid));
         }
-        if (!isEmailValid||!isPasswordValid)
+        if(!isEmailValid||!isPasswordValid)
             return;
 
           firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(context.requireActivity(),task -> {
