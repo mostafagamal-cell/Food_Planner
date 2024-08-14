@@ -21,7 +21,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 public class StartActivity extends AppCompatActivity {
     MaterialToolbar toolbar;
     Button button;
-    @SuppressLint({"RestrictedApi","MissingInflatedId", "UseSupportActionBar"})
+    @SuppressLint("UseSupportActionBar")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         

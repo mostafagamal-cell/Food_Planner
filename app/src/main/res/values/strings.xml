@@ -20,4 +20,12 @@
     <string name="email_is_invalid">email is invalid</string>"
     <string name="password_is_invalid">password is invalid</string>
     <string name="password_does_not_match">password does not match</string>
+    <string name="Search">Search</string>
+    <string name="All_Meals">Meals</string>
+    <string name="Meals_of_Week">Meals of Week</string>
+    <string name="Favourite_Meals">Favourite Meals</string>
+    <string name="Meal_of_Day">Meal of Day</string>
+    <string name="Categories">Categories</string>
+    <string name="Country">Country</string>
+    <string name="ingratiates">ingratiates</string>
 </resources>

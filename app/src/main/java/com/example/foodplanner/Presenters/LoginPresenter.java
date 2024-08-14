@@ -37,7 +37,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
                     .build();
             googleApiClient=new GoogleApiClient.Builder(context.requireActivity())
                     .enableAutoManage(context.requireActivity(),connectionResult -> {
-                        icommuncate.Error(context.getString(R.string.Connection_Fail));
+                        icommuncate.Error(connectionResult.getErrorMessage());
                     })
                     .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                     .build();
@@ -68,7 +68,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
           if (task.isSuccessful()){
               icommuncate.Sucess(email);
           }else{
-              icommuncate.Error(context.getString(R.string.Connection_Fail));
+              icommuncate.Error(task.getException().getMessage());
           }
         });
 
@@ -97,8 +97,6 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
     public void handleResult(Task<GoogleSignInAccount> accountTask) {
         try {
             GoogleSignInAccount account = accountTask.getResult(ApiException.class);
-
-            // Signed in successfully, authenticate with Firebase
             addToFireBase(account.getIdToken());
         } catch (Exception e) {
             Log.w("LoginFragment", "signInResult:failed code=" + e.getMessage());

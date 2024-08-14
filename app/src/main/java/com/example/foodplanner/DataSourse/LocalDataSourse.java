@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LocalDataSourse implements IlocalDataSource {
     MealDao dao;
-    private LocalDataSourse(Application context)
+    public LocalDataSourse(Application context)
    {
     dao=MyDataBase.getInstance(context).mealDao();
    }
@@ -26,11 +26,22 @@ public class LocalDataSourse implements IlocalDataSource {
 
     @Override
     public void insertFavourites(Meal meal) {
-       dao.insertMeal(meal);
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               dao.insertMeal(meal);
+           }
+       }).start();
     }
 
     @Override
     public void deleteFavourites(Meal meal) {
-       dao.deleteMeal(meal);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dao.deleteMeal(meal);
+            }
+        }).start();
+
     }
 }

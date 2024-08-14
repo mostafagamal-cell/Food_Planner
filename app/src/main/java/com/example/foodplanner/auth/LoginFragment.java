@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.foodplanner.App;
+import com.example.foodplanner.MealScreen.MealScreenActivity;
 import com.example.foodplanner.Presenters.LoginPresenter;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IauthPresenter;
@@ -31,6 +33,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class LoginFragment extends Fragment implements IauthPresenter.Icommuncate {
     private FragmentLogin2Binding binding;
@@ -44,6 +48,7 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         presenter=LoginPresenter.getInstance(this,this);
         setupFocusListeners();
         setupLoginButton();
@@ -94,8 +99,10 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
 
     @Override
     public void Sucess(String email) {
+        Log.i("hhhhhhhhhhhhhhhhhhhh",email);
         Toast.makeText(getContext(), "Welcome "  , Toast.LENGTH_SHORT).show();
         requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).edit().putString("user",email).apply();
+        App.Login_State.setValue(App.Logged_in);
         show();
     }
 

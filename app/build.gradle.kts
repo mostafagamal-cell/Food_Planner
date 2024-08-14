@@ -47,7 +47,6 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:$nav_version")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
     implementation ("io.getstream:avatarview-coil:1.0.7")
-    implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.google.code.gson:gson:2.11.0")
 
@@ -55,7 +54,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
-
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation(libs.firebase.auth)
     implementation (libs.core)
 
