@@ -7,8 +7,8 @@ import com.example.foodplanner.Model.Meals;
 import retrofit2.Callback;
 
 public interface IremoteDataSource {
-    default Callback<Meals> mealsCallback(){return null;};
-    default Callback<Categories> categoriesCallback(){return null;};
+    default Callback<Meals> mealsCallback(int type){return null;};
+    default Callback<Categories> categoriesCallback(int type){return null;};
     void getMealByname(String name);
     void getMealByletter(String name);
     void getRandommeal();
@@ -18,6 +18,6 @@ public interface IremoteDataSource {
     void getMealByid(String id);
     void filterByingredient(String Ingredient);
     void getListOfcategories(String list);
-    void getListOfarea(String list);
+    void getListOfarea();
     void getListOfingredients(String list);
 }

@@ -49,7 +49,22 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter=LoginPresenter.getInstance(this,this);
-
+        App.Login_State.observe(getViewLifecycleOwner(),state->{
+            if (state.equals(App.Logged_in)){
+                startActivity(new Intent(getContext(), MealScreenActivity.class));
+                requireActivity().finish();
+                }
+            if (state.equals(App.Guest)){
+                startActivity(new Intent(getContext(), MealScreenActivity.class));
+                requireActivity().finish();
+            }
+        });
+        binding.GustTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                App.Login_State.setValue(App.Guest);
+            }
+        });
         setupFocusListeners();
         setupLoginButton();
     }
@@ -94,9 +109,6 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
             }
         });
     }
-
-
-
     @Override
     public void Sucess(String email) {
         Log.i("hhhhhhhhhhhhhhhhhhhh",email);

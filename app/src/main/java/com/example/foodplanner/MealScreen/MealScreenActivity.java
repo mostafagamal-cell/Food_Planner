@@ -21,7 +21,8 @@ public class MealScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          binding= ActivityMealScreenBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_meal_screen);
-        NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
-         navController =navHost.getNavController();}
+        setContentView(binding.getRoot());
+         NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(binding.fragmentContainerView2.getId());
+         navController =navHost.getNavController();
+    }
 }

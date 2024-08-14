@@ -28,7 +28,7 @@ public class ExampleUnitTest {
     public void test() throws InterruptedException {
         Irepo.Communicator communicator= new Irepo.Communicator() {
             @Override
-            public void onDataArrived(Meals meals) {
+            public void onDataArrived(Meals meals,int type) {
                 System.out.println(meals.meals.size());
             }
 
@@ -39,7 +39,7 @@ public class ExampleUnitTest {
             }
 
             @Override
-            public void onDataArrived(Categories categories) {
+            public void onDataArrived(Categories categories,int type) {
                 System.out.println(categories.categories.size());
             }
         };

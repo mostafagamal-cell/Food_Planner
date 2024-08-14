@@ -17,16 +17,18 @@ import retrofit2.Callback;
 
 public class MyRepository implements Irepo ,Irepo.Communicator {
   private static   MyRepository instance;
+  private  Irepo.Communicator communicator;
   private LocalDataSourse localDataSourse;
   private RemoteDataSourse remoteDataSourse;
   private MyRepository(Application application){
       remoteDataSourse = new RemoteDataSourse(this);
       localDataSourse = new LocalDataSourse(application);
   }
-    public static MyRepository getInstance(Application application) {
+    public static MyRepository getInstance(Irepo.Communicator communicator,Application application) {
         if (instance == null){
             instance = new MyRepository(application);
         }
+        instance.communicator=communicator;
         return instance;
     }
     @Override
@@ -91,8 +93,8 @@ public class MyRepository implements Irepo ,Irepo.Communicator {
     }
 
     @Override
-    public void getListOfarea(String list) {
-        remoteDataSourse.getListOfarea(list);
+    public void getListOfarea() {
+        remoteDataSourse.getListOfarea();
     }
 
     @Override
@@ -101,17 +103,17 @@ public class MyRepository implements Irepo ,Irepo.Communicator {
     }
 
     @Override
-    public void onDataArrived(Meals meals) {
-
+    public void onDataArrived(Meals meals,int type) {
+      communicator.onDataArrived(meals,type);
     }
 
     @Override
     public void onError(String message) {
-
+  communicator.onError(message);
     }
 
     @Override
-    public void onDataArrived(Categories categories) {
-
+    public void onDataArrived(Categories categories, int type) {
+      communicator.onDataArrived(categories,type);
     }
 }

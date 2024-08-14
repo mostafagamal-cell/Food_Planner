@@ -9,7 +9,8 @@ import com.example.foodplanner.NetWork.Iretrofit;
 import com.example.foodplanner.NetWork.MyRetrofite;
 import com.example.foodplanner.Util.IremoteDataSource;
 import com.example.foodplanner.Util.Irepo;
-
+import com.example.foodplanner.Util.Utilits;
+import static com.example.foodplanner.Util.Utilits.*;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,80 +25,59 @@ public class RemoteDataSourse implements IremoteDataSource {
     }
     @Override
     public void getMealByname(String name) {
-        iretrofit.getMealByName(name).enqueue(new Callback<Meals>() {
-            @Override
-            public void onResponse(Call<Meals> call, Response<Meals> response) {
-              communicator.onDataArrived(response.body());
-            }
+        iretrofit.getMealByName(name).enqueue(mealsCallback(Gbyname));
 
-            @Override
-            public void onFailure(Call<Meals> call, Throwable throwable) {
-                communicator.onError(throwable.getMessage());
-
-            }
-        });
 
     }
 
     @Override
     public void getMealByletter(String name) {
-        iretrofit.getMealByLetter(name).enqueue(new Callback<Meals>() {
-            @Override
-            public void onResponse(Call<Meals> call, Response<Meals> response) {
-                communicator.onDataArrived(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Meals> call, Throwable throwable) {
-                communicator.onError(throwable.getMessage());
-
-            }
-        });
+        iretrofit.getMealByLetter(name).enqueue(mealsCallback(Utilits.GgetMealByletter));
     }
 
     @Override
     public void getRandommeal() {
-        iretrofit.getRandomMeal().enqueue(mealsCallback());
+        iretrofit.getRandomMeal().enqueue(mealsCallback(GgetRandommeal));
     }
 
     @Override
     public void getcategories() {
-        iretrofit.getCategories().enqueue(categoriesCallback());
+        iretrofit.getCategories().enqueue(categoriesCallback(Ggetcategories));
     }
 
     @Override
     public void filterBycategory(String category) {
-        iretrofit.filterByCategory(category).enqueue(mealsCallback());
+        iretrofit.filterByCategory(category).enqueue(mealsCallback(GfilterBycategory));
     }
 
     @Override
     public void filterByarea(String Area) {
-        iretrofit.filterByArea(Area).enqueue(mealsCallback());
+        iretrofit.filterByArea(Area).enqueue(mealsCallback(GfilterByarea));
     }
 
     @Override
     public void getMealByid(String id) {
-        iretrofit.getMealById(id).enqueue(mealsCallback());
+        iretrofit.getMealById(id).enqueue(mealsCallback(GgetMealByid));
     }
 
     @Override
     public void filterByingredient(String Ingredient) {
-        iretrofit.filterByIngredient(Ingredient).enqueue(mealsCallback());
+        iretrofit.filterByIngredient(Ingredient).enqueue(mealsCallback(GfilterByingredient));
     }
 
     @Override
     public void getListOfcategories(String list) {
-        iretrofit.getListOfCategories(list).enqueue(mealsCallback());
+        iretrofit.getListOfCategories(list).enqueue(mealsCallback(GgetListOfcategories));
     }
 
     @Override
-    public void getListOfarea(String list) {
-        iretrofit.getListOfArea(list).enqueue(mealsCallback());
+    public void getListOfarea() {
+        iretrofit.getListOfArea("list").enqueue(mealsCallback(GgetListOfarea));
     }
 
     @Override
     public void getListOfingredients(String list) {
-        iretrofit.getListOfIngredients(list).enqueue(mealsCallback());
+        iretrofit.getListOfIngredients(list).enqueue(mealsCallback(GgetListOfingredients));
     }
 
     public static RemoteDataSourse getInstance(Irepo.Communicator communicator) {
@@ -107,12 +87,12 @@ public class RemoteDataSourse implements IremoteDataSource {
         instance.communicator=communicator;
         return instance ;
     }
-    public Callback<Categories> categoriesCallback(){
+    public Callback<Categories> categoriesCallback(int type){
         return new Callback<Categories>(){
 
             @Override
             public void onResponse(Call<Categories> call, Response<Categories> response) {
-                communicator.onDataArrived(response.body());
+                communicator.onDataArrived(response.body(),type);
             }
 
             @Override
@@ -122,12 +102,12 @@ public class RemoteDataSourse implements IremoteDataSource {
         } ;
     }
     @Override
-    public Callback<Meals> mealsCallback(){
+    public Callback<Meals> mealsCallback(int type){
         return new Callback<Meals>(){
 
             @Override
             public void onResponse(Call<Meals> call, Response<Meals> response) {
-                communicator.onDataArrived(response.body());
+                communicator.onDataArrived(response.body(),type);
             }
 
             @Override

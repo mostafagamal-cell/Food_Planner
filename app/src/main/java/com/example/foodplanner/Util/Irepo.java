@@ -5,8 +5,8 @@ import com.example.foodplanner.Model.Meals;
 
 public interface Irepo  extends IlocalDataSource, IremoteDataSource{
 interface Communicator {
-    void onDataArrived(Meals meals);
+    void onDataArrived(Meals meals, int type);
     void onError(String message);
-    void onDataArrived(Categories categories);
+    void onDataArrived(Categories categories, int type);
     }
 }
