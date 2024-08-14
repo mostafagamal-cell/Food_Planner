@@ -48,7 +48,6 @@ public class LoginFragment extends Fragment implements IauthPresenter.Icommuncat
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         presenter=LoginPresenter.getInstance(this,this);
         setupFocusListeners();
         setupLoginButton();

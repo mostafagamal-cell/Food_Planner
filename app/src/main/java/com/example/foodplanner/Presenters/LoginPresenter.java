@@ -24,7 +24,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginPresenter implements IauthPresenter.IloginPresenter {
     protected  LoginFragment  context;
-    private GoogleApiClient  googleApiClient;
+    private GoogleSignInClient  googleApiClient;
 
     private static LoginPresenter presenter;
     private final FirebaseAuth firebaseAuth;
@@ -32,18 +32,13 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
     private LoginPresenter(LoginFragment context, LoginFragment icommuncate){
         firebaseAuth=FirebaseAuth.getInstance();
             GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(context.getString(R.string.id_token))
+                    .requestIdToken(context.getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build();
-            googleApiClient=new GoogleApiClient.Builder(context.requireActivity())
-                    .enableAutoManage(context.requireActivity(),connectionResult -> {
-                        icommuncate.Error(context.getString(R.string.Connection_Fail));
-                    })
-                    .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                    .build();
+            googleApiClient=GoogleSignIn.getClient(context.requireActivity(),gso);
     }
     public void loginWithGoogle(){
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        Intent intent = googleApiClient.getSignInIntent();
         context.startActivityForResult(intent, 1);
     }
     @Override
@@ -63,8 +58,8 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
         if (!isEmailValid||!isPasswordValid)
             return;
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(context.requireActivity(),task -> {
-            Log.d("xxxxxxxxxxxxxxx", "signInWithEmail:onComplete:" + task.isSuccessful());
+          firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(context.requireActivity(),task -> {
+            Log.d("eaaaaaaaaaaaaaaaaaaaaaaaaa", "signInWithEmail:onComplete:" + task.isSuccessful());
           if (task.isSuccessful()){
               icommuncate.Sucess(email);
           }else{

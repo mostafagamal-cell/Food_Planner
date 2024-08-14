@@ -29,5 +29,6 @@ public class App extends Application {
         }
         FirebaseApp.initializeApp(this);
         registerReceiver(new InternetBroadcastReciver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
     }
 }
