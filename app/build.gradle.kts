@@ -40,8 +40,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.database)
     val nav_version = "2.7.7"
     val room_version = "2.6.1"
+    implementation("com.google.firebase:firebase-firestore")
 
     implementation("androidx.navigation:navigation-fragment:$nav_version")
     implementation("androidx.navigation:navigation-ui:$nav_version")

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
 import static com.example.foodplanner.Util.Utilits.*;
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meal;
@@ -127,5 +129,16 @@ public class MealScreenPresenter implements Irepo.Communicator,Irepo {
     @Override
     public void getListOfingredients(String list) {
     repository.getListOfingredients(list);
+    }
+
+    @Override
+    public Meals readFavouriteFromFireStore() {
+        return Irepo.super.readFavouriteFromFireStore();
+    }
+
+    @Override
+    public void writeFavouriteFromFireStore(String _,Meals meals) {
+        String email=context.getSharedPreferences("user",Context.MODE_PRIVATE).getString("user",null);
+        repository.writeFavouriteFromFireStore(email,meals);
     }
 }

@@ -5,4 +5,5 @@ import java.util.ArrayList;
 
 public class Meals {
     public ArrayList<Meal> meals;
+
 }
