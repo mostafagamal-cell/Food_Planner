@@ -32,10 +32,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.bind(Categories.get(position));
     }
-
+    public void setCategories(Categories categories){
+        Categories.clear();
+        Categories.addAll(categories.categories);
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
-        return 0;
+        return Categories.size();
     }
 
     protected class CategoryViewHolder extends RecyclerView.ViewHolder{
