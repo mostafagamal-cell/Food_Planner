@@ -1,9 +1,8 @@
-package com.example.foodplanner.Util;
+package com.example.foodplanner.DataSourse;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.Model.Meal;
-import com.example.foodplanner.Model.Meals;
 
 import java.util.List;
 

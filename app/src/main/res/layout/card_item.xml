@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     <TextView
+        android:id="@+id/ImageText"
         android:background="#B4302E2E"
         android:layout_gravity="bottom"
         android:gravity="center"

@@ -1,14 +1,11 @@
 package com.example.foodplanner.DataSourse;
 
-import android.util.Log;
-
 import com.example.foodplanner.Model.Categories;
-import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.NetWork.Iretrofit;
 import com.example.foodplanner.NetWork.MyRetrofite;
-import com.example.foodplanner.Util.IremoteDataSource;
-import com.example.foodplanner.Util.Irepo;
+import com.example.foodplanner.Repository.Irepo;
+import com.example.foodplanner.Util.ImealScreenPresenter;
 import com.example.foodplanner.Util.Utilits;
 import static com.example.foodplanner.Util.Utilits.*;
 import retrofit2.Call;
@@ -26,8 +23,6 @@ public class RemoteDataSourse implements IremoteDataSource {
     @Override
     public void getMealByname(String name) {
         iretrofit.getMealByName(name).enqueue(mealsCallback(Gbyname));
-
-
     }
 
     @Override
@@ -92,7 +87,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
             @Override
             public void onResponse(Call<Categories> call, Response<Categories> response) {
-                communicator.onDataArrived(response.body(),type);
+                communicator.OnListCatigoryArrived(response.body());
             }
 
             @Override
@@ -107,7 +102,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
             @Override
             public void onResponse(Call<Meals> call, Response<Meals> response) {
-                communicator.onDataArrived(response.body(),type);
+              communicator.onDataRandommealArrived(response.body());
             }
 
             @Override

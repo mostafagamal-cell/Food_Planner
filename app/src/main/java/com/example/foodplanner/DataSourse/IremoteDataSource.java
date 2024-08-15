@@ -1,7 +1,6 @@
-package com.example.foodplanner.Util;
+package com.example.foodplanner.DataSourse;
 
 import com.example.foodplanner.Model.Categories;
-import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 
 import retrofit2.Callback;

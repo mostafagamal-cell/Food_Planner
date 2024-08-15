@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -18,12 +17,11 @@ import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Presenters.MealScreenPresenter;
 import com.example.foodplanner.R;
-import com.example.foodplanner.Util.ImealScreenPresenter;
-import com.example.foodplanner.Util.Irepo;
+import com.example.foodplanner.Util.IfragmentMealComm;
 import com.example.foodplanner.databinding.FragmentMealBinding;
 
 
-public class Meal_Fragment extends Fragment implements ImealScreenPresenter {
+public class Meal_Fragment extends Fragment implements IfragmentMealComm {
     FragmentMealBinding binding;
     MealScreenPresenter presenter;
 
@@ -48,12 +46,9 @@ public class Meal_Fragment extends Fragment implements ImealScreenPresenter {
                 .load(meals.meals.get(0).strMealThumb)
                 .apply(new RequestOptions().placeholder(R.drawable.ic_launcher_background) .error(R.drawable.ic_launcher_foreground).override(100, 100))
                 .into(binding.myImage);
+        binding.itemtext.setText(meals.meals.get(0).strMeal);
     }
 
-    @Override
-    public void onError(String message) {
-
-    }
 
     @Override
     public void onDataArrivedCategories(Categories categories) {
