@@ -1,11 +1,16 @@
 package com.example.foodplanner.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -52,7 +57,16 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             Glide.with(binding.myImage.getContext()).load(category.strCategoryThumb)
                     .apply( new RequestOptions().placeholder(R.drawable.ic_launcher_background)
                             .error(R.drawable.ic_launcher_foreground).override(100, 100)).into(binding.myImage);
+            Log.i("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",category.strCategory);
             binding.ImageText.setText(category.strCategory);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            );
+            binding.ImageText.setLayoutParams(params);
+            binding.ImageText.setTextColor(Color.WHITE);
+
+            binding.ImageText.setGravity(Gravity.CENTER);
         }
 
     }

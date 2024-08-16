@@ -8,6 +8,9 @@ import com.example.foodplanner.Repository.Irepo;
 import com.example.foodplanner.Util.ImealScreenPresenter;
 import com.example.foodplanner.Util.Utilits;
 import static com.example.foodplanner.Util.Utilits.*;
+
+import android.util.Log;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +40,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
     @Override
     public void getcategories() {
+        Log.i(TAG, "getcategories: ");
         iretrofit.getCategories().enqueue(categoriesCallback(Ggetcategories));
     }
 
@@ -62,7 +66,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
     @Override
     public void getListOfcategories(String list) {
-        iretrofit.getListOfCategories(list).enqueue(mealsCallback(GgetListOfcategories));
+        iretrofit.getListOfCategories(list).enqueue(categoriesCallback(GgetListOfcategories));
     }
 
     @Override
@@ -82,11 +86,14 @@ public class RemoteDataSourse implements IremoteDataSource {
         instance.communicator=communicator;
         return instance ;
     }
+
+    private static final String TAG = "RemoteDataSourse";
     public Callback<Categories> categoriesCallback(int type){
         return new Callback<Categories>(){
 
             @Override
             public void onResponse(Call<Categories> call, Response<Categories> response) {
+                Log.i(TAG, "onResponse: "+response.body().categories.size()+"");
                 communicator.OnListCatigoryArrived(response.body());
             }
 

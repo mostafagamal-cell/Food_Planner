@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.foodplanner.Adapter.CategoriesAdapter;
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Presenters.MealScreenPresenter;
@@ -24,6 +25,7 @@ import com.example.foodplanner.databinding.FragmentMealBinding;
 public class Meal_Fragment extends Fragment implements IfragmentMealComm {
     FragmentMealBinding binding;
     MealScreenPresenter presenter;
+    CategoriesAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +39,8 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
         super.onViewCreated(view, savedInstanceState);
         presenter=MealScreenPresenter.getinstance(this,this.requireActivity().getApplication());
         presenter.getRandommeal();
+        presenter.getcatigorys();
+        adapter=new CategoriesAdapter();
     }
 
     @Override
@@ -52,6 +56,8 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
 
     @Override
     public void onDataArrivedCategories(Categories categories) {
+        binding.recyclerView4.setAdapter(adapter);
+        adapter.setCategories(categories);
 
     }
 

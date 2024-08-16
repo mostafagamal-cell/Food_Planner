@@ -7,6 +7,7 @@ import com.example.foodplanner.Model.Meals;
 
 public interface ImealScreenPresenter  {
     void getListOfarea();
+    void getcatigorys();
     void getRandommeal();
     void getListOfcategories();
     void getListOfingredients();

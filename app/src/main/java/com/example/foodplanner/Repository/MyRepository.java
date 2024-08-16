@@ -30,7 +30,7 @@ import java.util.List;
 public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresenter {
   private static   MyRepository instance;
   private  ImealScreenPresenter.Commncator communicator;
-
+    private static final String TAG = "MyRepository";
   private LocalDataSourse localDataSourse;
   private FirebaseFirestore db;
   CollectionReference myRef;
@@ -131,7 +131,12 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
         remoteDataSourse.getListOfarea();
     }
 
-    @Override
+  @Override
+  public void getcatigorys() {
+
+  }
+
+  @Override
     public void getListOfingredients(String list) {
         remoteDataSourse.getListOfingredients(list);
     }

@@ -5,13 +5,18 @@ import android.util.Log;
 
 import static com.example.foodplanner.Util.Utilits.*;
 import com.example.foodplanner.Model.Categories;
+import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Repository.MyRepository;
 import com.example.foodplanner.Util.IfragmentMealComm;
 import com.example.foodplanner.Util.ImealScreenPresenter;
 
+import java.util.ArrayList;
+
 public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPresenter.Commncator{
    private MyRepository repository;
+   private Meals currentMeal;
+   private Categories currentCategory;
    private  static   MealScreenPresenter presenter;
    private static Application context;
    private IfragmentMealComm communicator;
@@ -28,7 +33,8 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
 
     @Override
     public void onDataArrivedRandomaMeal(Meals meals) {
-        communicator.onDataArrivedRandomaMeal(meals);
+        this.currentMeal=meals;
+        communicator.onDataArrivedRandomaMeal(currentMeal);
     }
 
     @Override
@@ -38,6 +44,7 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
 
     @Override
     public void onDataArrivedCategories(Categories categories) {
+        Log.d("xxxxxxxeeeeeeeeeeeeeeeeeeeeeee", "onDataArrivedCategories() called with: categories = [" + categories + "]");
         communicator.onDataArrivedCategories(categories);
     }
 
@@ -61,8 +68,13 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
     }
      @Override
     public void getRandommeal() {
-    repository.getRandommeal();
+       if (currentMeal==null)
+            repository.getRandommeal();
+       else{
+
+           onDataArrivedRandomaMeal(currentMeal);
     }
+   }
 
     @Override
     public void getListOfcategories() {
@@ -72,6 +84,11 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
     @Override
     public void getListOfarea() {
     repository.getListOfarea();
+    }
+
+    @Override
+    public void getcatigorys() {
+        repository.getcategories();
     }
 
     @Override
