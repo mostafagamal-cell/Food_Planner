@@ -40,7 +40,6 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
         presenter=MealScreenPresenter.getinstance(this,this.requireActivity().getApplication());
         presenter.getRandommeal();
         presenter.getcatigorys();
-        adapter=new CategoriesAdapter();
     }
 
     @Override
@@ -49,6 +48,7 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
         Glide.with(this)
                 .load(meals.meals.get(0).strMealThumb)
                 .apply(new RequestOptions().placeholder(R.drawable.ic_launcher_background) .error(R.drawable.ic_launcher_foreground).override(100, 100))
+
                 .into(binding.myImage);
         binding.itemtext.setText(meals.meals.get(0).strMeal);
     }
@@ -56,9 +56,9 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
 
     @Override
     public void onDataArrivedCategories(Categories categories) {
+        adapter=new CategoriesAdapter();
         binding.recyclerView4.setAdapter(adapter);
         adapter.setCategories(categories);
-
     }
 
     @Override

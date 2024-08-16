@@ -29,12 +29,6 @@ public class MealScreenActivity extends AppCompatActivity {
          NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(binding.fragmentContainerView2.getId());
          navController =navHost.getNavController();
          NavigationUI.setupWithNavController(binding.bottomNavigationView,navController);
-         binding.bottomNavigationView.setOnClickListener(new NavigationBarItemView.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-
-             }
-         });
          binding.bottomNavigationView.setOnItemSelectedListener(item -> {
              if (item.getTitle().equals(getString(R.string.All_Meals))&&prv!=0){
                  Log.i("eeeeeexxxxxxxeeeeeeee",item.getTitle().toString());

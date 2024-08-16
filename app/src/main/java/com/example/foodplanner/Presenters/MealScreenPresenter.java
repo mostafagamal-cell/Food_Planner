@@ -44,8 +44,10 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
 
     @Override
     public void onDataArrivedCategories(Categories categories) {
-        Log.d("xxxxxxxeeeeeeeeeeeeeeeeeeeeeee", "onDataArrivedCategories() called with: categories = [" + categories + "]");
-        communicator.onDataArrivedCategories(categories);
+        Log.d("xxxxxxxeeeeeeeeeeeeeeeeeeeeeee", "onDataArrivedCategories() called with: categories = [" + categories.categories.size() + "]");
+        if (communicator!=null)
+            communicator.onDataArrivedCategories(categories);
+        this.currentCategory=categories;
     }
 
     @Override
@@ -88,7 +90,10 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
 
     @Override
     public void getcatigorys() {
-        repository.getcategories();
+       if (currentCategory==null)
+            repository.getcategories();
+       else
+           onDataArrivedCategories(currentCategory);
     }
 
     @Override

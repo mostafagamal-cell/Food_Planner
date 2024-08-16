@@ -177,6 +177,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   @Override
   public void OnListCatigoryArrived(Categories categories) {
+      Log.i("xxxxxxxxxxxxxxxxxxxxx",categories.categories.size()+"");
     communicator.onDataArrivedCategories(categories);
   }
 }
