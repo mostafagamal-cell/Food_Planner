@@ -66,7 +66,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             binding.ImageText.setLayoutParams(params);
             binding.ImageText.setTextColor(Color.WHITE);
 
-            binding.ImageText.setGravity(Gravity.CENTER);
+            binding.ImageText.setGravity(Gravity.BOTTOM|Gravity.CENTER);
         }
 
     }

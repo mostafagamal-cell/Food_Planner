@@ -12,7 +12,6 @@
             android:layout_height="wrap_content">
 
 
-
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
@@ -21,24 +20,24 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/Meal_of_Day"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.017"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.13" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="30dp"
                 android:id="@+id/imageView3"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.06999999">
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.0">
 
                 <ImageView
                     android:id="@+id/myImage"
@@ -47,35 +46,37 @@
                     android:scaleType="fitXY" />
 
                 <TextView
-                    android:textColor="@color/white"
                     android:id="@+id/itemtext"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_gravity="bottom"
                     android:background="#B4302E2E"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="@color/white" />
             </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                android:orientation="horizontal"
                 android:id="@+id/recyclerView4"
                 android:layout_width="0dp"
-                android:layout_height="398dp"
+                android:layout_height="160dp"
                 android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerView4"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="@string/Categories"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <TextView
