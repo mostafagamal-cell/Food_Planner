@@ -34,11 +34,12 @@ public class MealScreenActivity extends AppCompatActivity {
          binding= ActivityMealScreenBinding.inflate(getLayoutInflater());
          setContentView(binding.getRoot());
          NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(binding.fragmentContainerView2.getId());
-         setSupportActionBar(binding.toolbar2);
-        MealScreenActivitynavController =navHost.getNavController();
-        NavigationUI.setupWithNavController(binding.bottomNavigationView,MealScreenActivitynavController);
-        NavigationUI.setupWithNavController(binding.toolbar2,MealScreenActivitynavController);
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+         MealScreenActivitynavController =navHost.getNavController();
+        binding.toolbar2.setTitle(getString(R.string.All_Meals));
+        setSupportActionBar(binding.toolbar2);
+         NavigationUI.setupWithNavController(binding.bottomNavigationView,MealScreenActivitynavController);
+         NavigationUI.setupWithNavController(binding.toolbar2,MealScreenActivitynavController);
+         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
              if (item.getTitle().equals(getString(R.string.All_Meals))&&prv!=0){
                  Log.i("eeeeeexxxxxxxeeeeeeee",item.getTitle().toString());
                  MealScreenActivitynavController.navigate(R.id.meal_Fragment);

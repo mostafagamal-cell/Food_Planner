@@ -13,12 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodplanner.Adapter.ItemCatigoryRec;
-import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meals;
-import com.example.foodplanner.R;
 import com.example.foodplanner.databinding.FragmentCatigoryItemBinding;
 
-public class CatigoryItem extends Fragment implements IcatigortItemPresenter.IcatigortItemComm {
+public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.IcatigortItemComm {
     FragmentCatigoryItemBinding binding;
     IcatigortItemPresenter presenter;
     ItemCatigoryRec rec;
@@ -34,7 +32,7 @@ public class CatigoryItem extends Fragment implements IcatigortItemPresenter.Ica
         super.onViewCreated(view, savedInstanceState);
        presenter=CatigoryItemPresenter.getInstance(this,this.requireActivity().getApplication());
         if (getArguments()!=null){
-            CatigoryItemArgs args= CatigoryItemArgs.fromBundle(getArguments());
+            CatigoryMealsArgs args= CatigoryMealsArgs.fromBundle(getArguments());
             String name= args.getName();
             Log.i("zxcczxczxccxz",name);
             presenter.loadMeals(name);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -44,6 +45,8 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
         presenter=MealScreenPresenter.getinstance(this,this.requireActivity().getApplication());
         presenter.getRandommeal();
         presenter.getcatigorys();
+        Log.i("eeeeeeeaaaaaaaaeeeeeeeee", ((AppCompatActivity)requireActivity()).getSupportActionBar().getTitle()+"");
+
     }
 
     @Override

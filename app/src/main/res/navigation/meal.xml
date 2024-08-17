@@ -7,14 +7,14 @@
     <fragment
         android:id="@+id/meal_Fragment"
         android:name="com.example.foodplanner.MealScreen.Meal_Fragment"
-        android:label="Meal_Fragment" >
+        android:label="@string/All_Meals">
         <action
             android:id="@+id/action_meal_Fragment_to_catigoryItem"
             app:destination="@id/catigoryItem" />
     </fragment>
     <fragment
         android:id="@+id/catigoryItem"
-        android:name="com.example.foodplanner.ItemScreen.CatigoryItem"
+        android:name="com.example.foodplanner.ItemScreen.CatigoryMeals"
         android:label="CatigoryItem" >
         <argument
             android:name="name"

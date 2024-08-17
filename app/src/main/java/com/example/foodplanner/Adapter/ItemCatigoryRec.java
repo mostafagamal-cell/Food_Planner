@@ -1,23 +1,17 @@
 package com.example.foodplanner.Adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.foodplanner.ItemScreen.CatigoryItem;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
-import com.example.foodplanner.databinding.CardItemBinding;
 import com.example.foodplanner.databinding.CatitemBinding;
-import com.example.foodplanner.databinding.FragmentCatigoryItemBinding;
 
 import java.util.ArrayList;
 
