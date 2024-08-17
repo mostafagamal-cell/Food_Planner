@@ -3,21 +3,17 @@ package com.example.foodplanner.Presenters;
 import static com.example.foodplanner.Util.Utilits.emailPattern;
 import static com.example.foodplanner.Util.Utilits.passwordPattern;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IauthPresenter;
 import com.example.foodplanner.auth.CreateAccountFragment;
-import com.example.foodplanner.auth.LoginFragment;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,8 +25,8 @@ public class CreateAccountPresenter  implements IauthPresenter.IsignupPresenter 
     private GoogleSignInClient mGoogleSignInClient;
     private static CreateAccountPresenter presenter;
     private final FirebaseAuth   firebaseAuth;
-    private  IauthPresenter.IcommuncateCreate icommuncate;
-    private CreateAccountPresenter(CreateAccountFragment context, IauthPresenter.IcommuncateCreate  icommuncate){
+    private IauthPresenter.IauthCommCreate icommuncate;
+    private CreateAccountPresenter(CreateAccountFragment context, IauthPresenter.IauthCommCreate icommuncate){
         firebaseAuth =  FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(context.getString(R.string.id_token))
@@ -134,7 +130,7 @@ public class CreateAccountPresenter  implements IauthPresenter.IsignupPresenter 
         }
     }
 
-    public static synchronized CreateAccountPresenter getInstance(CreateAccountFragment context,IauthPresenter.IcommuncateCreate icommuncate) {
+    public static synchronized CreateAccountPresenter getInstance(CreateAccountFragment context, IauthPresenter.IauthCommCreate icommuncate) {
        if (presenter==null){
            presenter = new CreateAccountPresenter(context,icommuncate);
        }

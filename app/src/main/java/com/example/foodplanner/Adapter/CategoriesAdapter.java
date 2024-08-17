@@ -18,12 +18,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Category;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.CardItemBinding;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder> {
+    MyClickListner clickListner;
+    public CategoriesAdapter(MyClickListner clickListner){
+        this.clickListner=clickListner;
+    }
     public static ArrayList<Category> Categories= new ArrayList<>();
     @NonNull
     @Override
@@ -65,8 +70,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             );
             binding.ImageText.setLayoutParams(params);
             binding.ImageText.setTextColor(Color.WHITE);
-
             binding.ImageText.setGravity(Gravity.BOTTOM|Gravity.CENTER);
+            binding.myCard.setOnClickListener(view -> {
+                clickListner.onClick(category.strCategory);
+            });
         }
 
     }

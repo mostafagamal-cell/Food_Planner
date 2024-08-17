@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +22,11 @@ import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Presenters.MealScreenPresenter;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IfragmentMealComm;
+import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentMealBinding;
 
 
-public class Meal_Fragment extends Fragment implements IfragmentMealComm {
+public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClickListner {
     FragmentMealBinding binding;
     MealScreenPresenter presenter;
     CategoriesAdapter adapter;
@@ -56,7 +60,7 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
 
     @Override
     public void onDataArrivedCategories(Categories categories) {
-        adapter=new CategoriesAdapter();
+        adapter=new CategoriesAdapter(this);
         binding.recyclerView4.setAdapter(adapter);
         adapter.setCategories(categories);
     }
@@ -68,6 +72,13 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm {
 
     @Override
     public void onDataArrivedCountry(Meals meals) {
+
+    }
+
+    @Override
+    public void onClick(String v) {
+    Meal_FragmentDirections.ActionMealFragmentToCatigoryItem actionMealFragmentToCatigoryItem = Meal_FragmentDirections.actionMealFragmentToCatigoryItem(v);
+    NavHostFragment.findNavController(this).navigate(actionMealFragmentToCatigoryItem);
 
     }
 }

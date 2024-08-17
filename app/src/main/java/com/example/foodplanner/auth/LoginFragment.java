@@ -1,15 +1,9 @@
 package com.example.foodplanner.auth;
 
-import static com.example.foodplanner.Util.Utilits.emailPattern;
-import static com.example.foodplanner.Util.Utilits.passwordPattern;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.foodplanner.App;
 import com.example.foodplanner.MealScreen.MealScreenActivity;
@@ -30,13 +23,9 @@ import com.example.foodplanner.Util.IauthPresenter;
 import com.example.foodplanner.databinding.FragmentLogin2Binding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
-
-public class LoginFragment extends Fragment implements IauthPresenter.Icommuncate {
+public class LoginFragment extends Fragment implements IauthPresenter.IauthComm {
     private FragmentLogin2Binding binding;
     LoginPresenter presenter;
     @Override

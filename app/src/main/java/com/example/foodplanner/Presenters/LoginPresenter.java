@@ -9,13 +9,11 @@ import android.util.Log;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IauthPresenter;
 import com.example.foodplanner.auth.LoginFragment;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +26,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
 
     private static LoginPresenter presenter;
     private final FirebaseAuth firebaseAuth;
-    private  IauthPresenter.Icommuncate icommuncate;
+    private IauthPresenter.IauthComm icommuncate;
     private LoginPresenter(LoginFragment context, LoginFragment icommuncate){
         firebaseAuth=FirebaseAuth.getInstance();
             GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

@@ -9,10 +9,14 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.DataSourse.LocalDataSourse;
 import com.example.foodplanner.DataSourse.RemoteDataSourse;
+import com.example.foodplanner.ItemScreen.CatigoryItemPresenter;
+import com.example.foodplanner.ItemScreen.IcatigortItemPresenter;
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
+import com.example.foodplanner.Presenters.MealScreenPresenter;
 import com.example.foodplanner.Util.IfragmentMealComm;
+import com.example.foodplanner.Util.ImainPresenter;
 import com.example.foodplanner.Util.ImealScreenPresenter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,25 +33,30 @@ import java.util.List;
 
 public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresenter {
   private static   MyRepository instance;
-  private  ImealScreenPresenter.Commncator communicator;
-    private static final String TAG = "MyRepository";
+  private  ImealScreenPresenter.Commncator Imealscreenpresenter;
+  private  IcatigortItemPresenter icatigortItemComm;
+  private static final String TAG = "MyRepository";
   private LocalDataSourse localDataSourse;
   private FirebaseFirestore db;
   CollectionReference myRef;
   private RemoteDataSourse remoteDataSourse;
   private MyRepository(Application application){
-     String email= application.getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
       db = FirebaseFirestore.getInstance();
       myRef  = db.collection("users");
 
       remoteDataSourse = new RemoteDataSourse(this);
       localDataSourse = new LocalDataSourse(application);
   }
-    public static MyRepository getInstance(ImealScreenPresenter.Commncator communicator, Application application) {
+    public static MyRepository getInstance(ImainPresenter presenter, Application application,String type) {
         if (instance == null){
             instance = new MyRepository(application);
         }
-        instance.communicator=communicator;
+        if (type.equals(MealScreenPresenter.name))
+            instance.Imealscreenpresenter= (ImealScreenPresenter.Commncator) presenter;
+        else if (type.equals(CatigoryItemPresenter.name)){
+            Log.i("xccsxccsccscscsc","heeeeeeeeeeeeeeee");
+            instance.icatigortItemComm= (IcatigortItemPresenter) presenter;
+        }
         return instance;
     }
     @Override
@@ -55,9 +64,16 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
         return localDataSourse.getFavourites();
     }
 
-  @Override
+    @Override
+    public void onDataCatigoryArrived(Meals meals) {
+        Log.i("xccsxccsccscscsc",meals.meals.size()+"");
+
+        icatigortItemComm.onDataArrived(meals);
+    }
+
+    @Override
   public void onDataRandommealArrived(Meals meals) {
-  communicator.onDataArrivedRandomaMeal(meals);
+  Imealscreenpresenter.onDataArrivedRandomaMeal(meals);
   }
 
   @Override
@@ -178,6 +194,6 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   @Override
   public void OnListCatigoryArrived(Categories categories) {
       Log.i("xxxxxxxxxxxxxxxxxxxxx",categories.categories.size()+"");
-    communicator.onDataArrivedCategories(categories);
+    Imealscreenpresenter.onDataArrivedCategories(categories);
   }
 }

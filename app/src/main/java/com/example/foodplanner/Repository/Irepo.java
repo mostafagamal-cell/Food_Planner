@@ -17,6 +17,7 @@ public interface Irepo  extends IlocalDataSource, IremoteDataSource {
       void onError(String message);
     interface Communicator  {
     LiveData<List<Meal>>getFavourites();
+    void onDataCatigoryArrived(Meals meals);
     void onDataRandommealArrived(Meals meals);
     void onDataArrivedFavourite(Meals meals);
     void OnListCatigoryArrived(Categories categories);

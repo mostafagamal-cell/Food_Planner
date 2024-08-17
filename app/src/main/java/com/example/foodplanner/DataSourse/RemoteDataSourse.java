@@ -66,7 +66,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
     @Override
     public void getListOfcategories(String list) {
-        iretrofit.getListOfCategories(list).enqueue(categoriesCallback(GgetListOfcategories));
+        iretrofit.getListOfCategories(list).enqueue(mealsCallback(GgetListOfcategories));
     }
 
     @Override
@@ -109,8 +109,12 @@ public class RemoteDataSourse implements IremoteDataSource {
 
             @Override
             public void onResponse(Call<Meals> call, Response<Meals> response) {
+                if (GfilterBycategory==type){
+                    communicator.onDataCatigoryArrived(response.body());
+                }else{
               communicator.onDataRandommealArrived(response.body());
             }
+                }
 
             @Override
             public void onFailure(Call<Meals> call, Throwable throwable) {

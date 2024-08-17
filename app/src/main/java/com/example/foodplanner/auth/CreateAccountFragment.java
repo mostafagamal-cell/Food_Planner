@@ -23,7 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
 
-public class CreateAccountFragment extends Fragment implements IauthPresenter.IcommuncateCreate {
+public class CreateAccountFragment extends Fragment implements IauthPresenter.IauthCommCreate {
     CreateaccountBinding binding;
     CreateAccountPresenter presenter;
     @Override

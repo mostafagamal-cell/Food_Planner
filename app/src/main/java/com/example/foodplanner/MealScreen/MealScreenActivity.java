@@ -18,7 +18,7 @@ import com.example.foodplanner.databinding.ActivityMealScreenBinding;
 import com.google.android.material.navigation.NavigationBarItemView;
 
 public class MealScreenActivity extends AppCompatActivity {
-    NavController navController;
+   public  NavController MealScreenActivitynavController;
     ActivityMealScreenBinding binding;
     int prv=0;
     @Override
@@ -27,12 +27,12 @@ public class MealScreenActivity extends AppCompatActivity {
          binding= ActivityMealScreenBinding.inflate(getLayoutInflater());
          setContentView(binding.getRoot());
          NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(binding.fragmentContainerView2.getId());
-         navController =navHost.getNavController();
-         NavigationUI.setupWithNavController(binding.bottomNavigationView,navController);
+        MealScreenActivitynavController =navHost.getNavController();
+         NavigationUI.setupWithNavController(binding.bottomNavigationView,MealScreenActivitynavController);
          binding.bottomNavigationView.setOnItemSelectedListener(item -> {
              if (item.getTitle().equals(getString(R.string.All_Meals))&&prv!=0){
                  Log.i("eeeeeexxxxxxxeeeeeeee",item.getTitle().toString());
-                 navController.navigate(R.id.meal_Fragment);
+                 MealScreenActivitynavController.navigate(R.id.meal_Fragment);
                  prv=0;
              }
              else if (item.getTitle().equals(getString(R.string.Search))){

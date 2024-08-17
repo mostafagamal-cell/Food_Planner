@@ -16,12 +16,13 @@ import java.util.ArrayList;
 public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPresenter.Commncator{
    private MyRepository repository;
    private Meals currentMeal;
+   public static final String name="MealScreenPresenter";
    private Categories currentCategory;
    private  static   MealScreenPresenter presenter;
    private static Application context;
    private IfragmentMealComm communicator;
    private MealScreenPresenter(Application application){
-       repository=MyRepository.getInstance(this,application);
+       repository=MyRepository.getInstance(this,application,name);
    }
    public static MealScreenPresenter getinstance(IfragmentMealComm communicatorf, Application application){
        if (presenter==null){
