@@ -1,5 +1,7 @@
 package com.example.foodplanner.Repository;
 
+import static com.example.foodplanner.App.all_meals;
+
 import android.app.Application;
 import android.hardware.Camera;
 import android.util.Log;
@@ -83,14 +85,18 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
-    public void onDataCatigoryArrived(Meals meals) {
-      if (icatigortItemComm!=null)
-        icatigortItemComm.onDataArrived(meals);
+    public void onDataMealArrivedByname(Meals meals) {
+        all_meals.addAll(meals.meals);
     }
 
     @Override
+    public void onDataCatigoryArrived(Meals meals,int a) {
+      if (icatigortItemComm!=null)
+        icatigortItemComm.onDataArrived(meals);
+  }
+
+    @Override
     public void onDataAreaArrived(Meals meals) {
-        Log.i("xccsxccsccscscsc",meals.meals.size()+"");
         if (icatigortItemComm!=null) icatigortItemComm.onDataArrived(meals);
         if (iareaMealsPresenter!=null)iareaMealsPresenter.onDataArrived(meals);
         if (iingPresenter!=null)iingPresenter.onDataArrived(meals);
@@ -144,8 +150,8 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
-    public void filterBycategory(String category) {
-      remoteDataSourse.filterBycategory(category);
+    public void filterBycategory(String category,int type) {
+      remoteDataSourse.filterBycategory(category,type);
     }
 
     @Override
@@ -189,7 +195,20 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
 
-  @Override
+    @Override
+    public void onCatigoryNamesArraiver(Categories catigory) {
+      Log.i("vvvvvvvvvvvvvvvvvvvvvvvvvvvvveee",catigory.meals.size()+"");
+        for (int i = 0; i<catigory.meals.size();i++) {
+            filterBycategory(catigory.meals.get(i).strCategory,1);
+        }
+    }
+
+    @Override
+    public void onDataMealByIdArrived(Meals meals) {
+
+    }
+
+    @Override
   public void readFavouriteFromFireStore() {
 
   }
@@ -219,8 +238,8 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   @Override
   public void OnListCatigoryArrived(Categories categories) {
-      Log.i("xxxxxxxxxxxxxxxxxxxxx",categories.categories.size()+"");
-    Imealscreenpresenter.onDataArrivedCategories(categories);
+            if (Imealscreenpresenter!=null)
+                Imealscreenpresenter.onDataArrivedCategories(categories);
   }
 
     @Override

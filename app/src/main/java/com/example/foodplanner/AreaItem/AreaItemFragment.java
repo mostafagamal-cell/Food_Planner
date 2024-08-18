@@ -1,5 +1,7 @@
 package com.example.foodplanner.AreaItem;
 
+import static com.example.foodplanner.App.all_meals;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

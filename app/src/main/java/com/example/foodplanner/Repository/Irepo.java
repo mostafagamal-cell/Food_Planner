@@ -18,9 +18,12 @@ public interface Irepo  extends IlocalDataSource, IremoteDataSource {
       void  writeFavouriteFromFireStore(String email,Meals JsonData);
       void onError(String message);
     interface Communicator  {
-    void onDataIngradintArrived(Meals meals);
+        void onCatigoryNamesArraiver(Categories catigory);
+        void onDataMealByIdArrived(Meals meals);
+        void onDataIngradintArrived(Meals meals);
     LiveData<List<Meal>>getFavourites();
-    void onDataCatigoryArrived(Meals meals);
+    void onDataMealArrivedByname(Meals meals);
+    void onDataCatigoryArrived(Meals meals,int x);
     void onDataAreaArrived(Meals meals);
     void onDataRandommealArrived(Meals meals);
     void onDataArrivedFavourite(Meals meals);

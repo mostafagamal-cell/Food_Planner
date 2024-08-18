@@ -27,7 +27,7 @@ public interface Iretrofit {
     @GET("filter.php")
     Call<Meals> filterByIngredient(@Query("i") String Ingredient);
     @GET("list.php")
-    Call<Meals> getListOfCategories(@Query("c") String list);
+    Call<Categories> getListOfCategories(@Query("c") String list);
     @GET("list.php")
     Call<Countries> getListOfArea(@Query("a") String list);
     @GET("list.php")

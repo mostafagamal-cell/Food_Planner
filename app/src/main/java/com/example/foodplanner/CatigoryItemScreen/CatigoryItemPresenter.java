@@ -27,7 +27,7 @@ public class CatigoryItemPresenter implements IcatigortItemPresenter {
 
     @Override
     public void loadMeals(String category) {
-       repo.filterBycategory(category);
+       repo.filterBycategory(category,1);
     }
 
     @Override

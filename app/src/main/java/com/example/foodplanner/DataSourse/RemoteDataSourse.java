@@ -48,9 +48,13 @@ public class RemoteDataSourse implements IremoteDataSource {
     }
 
     @Override
-    public void filterBycategory(String category) {
-        iretrofit.filterByCategory(category).enqueue(mealsCallback(GfilterBycategory));
-    }
+    public void filterBycategory(String category,int type) {
+        if (type==0) {
+            iretrofit.filterByCategory(category).enqueue(mealsCallback(GfilterBycategory));
+        }else{
+            iretrofit.filterByCategory("type").enqueue(mealsCallback(GfilterBycategory));
+            }
+        }
 
     @Override
     public void filterByarea(String Area) {
@@ -69,7 +73,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
     @Override
     public void getListOfcategories(String list) {
-        iretrofit.getListOfCategories(list).enqueue(mealsCallback(GgetListOfcategories));
+        iretrofit.getListOfCategories("list").enqueue(categoriesCallback(GgetListOfcategories));
     }
 
     @Override
@@ -96,8 +100,15 @@ public class RemoteDataSourse implements IremoteDataSource {
 
             @Override
             public void onResponse(Call<Categories> call, Response<Categories> response) {
-                Log.i(TAG, "onResponse: "+response.body().categories.size()+"");
-                communicator.OnListCatigoryArrived(response.body());
+                    Log.i(TAG, "onResponse: "+response.body());
+                    if (Ggetcategories == type) {
+                        communicator.OnListCatigoryArrived(response.body());
+
+                    } else if (GgetListOfcategories == type) {
+
+                        communicator.onCatigoryNamesArraiver(response.body());
+                    }
+
             }
 
             @Override
@@ -111,16 +122,23 @@ public class RemoteDataSourse implements IremoteDataSource {
         return new Callback<Meals>(){
             @Override
             public void onResponse(Call<Meals> call, Response<Meals> response) {
-                if (GfilterBycategory==type){
-                    communicator.onDataCatigoryArrived(response.body());
-                }else if(GgetRandommeal==type){
-                   communicator.onDataRandommealArrived(response.body());
+                if (GfilterBycategory == type) {
+                    communicator.onDataCatigoryArrived(response.body(),1);
+                } else if (GgetRandommeal == type) {
+                    communicator.onDataRandommealArrived(response.body());
 
-                 }else if (GfilterByarea==type){
+                } else if (GfilterByarea == type) {
                     communicator.onDataAreaArrived(response.body());
-                }else if(GfilterByingredient==type) communicator.onDataIngradintArrived(response.body());
-                }
+                } else if (GfilterByingredient == type) {
+                    communicator.onDataIngradintArrived(response.body());
+                } else if (GgetMealByid == type) {
+                    communicator.onDataMealByIdArrived(response.body());
+                }else if (GgetMealByletter == type) {
 
+                }else if (Gbyname==type){
+                    communicator.onDataMealArrivedByname(response.body());
+                }
+            }
             @Override
             public void onFailure(Call<Meals> call, Throwable throwable) {
                 communicator.onError(throwable.getMessage());

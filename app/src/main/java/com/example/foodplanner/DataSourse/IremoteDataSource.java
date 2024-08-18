@@ -18,7 +18,7 @@ public interface IremoteDataSource {
     void getMealByletter(String name);
     void getRandommeal();
     void getcategories();
-    void filterBycategory( String category);
+    void filterBycategory( String category,int type);
     void filterByarea(String Area);
     void getMealByid(String id);
     void filterByingredient(String Ingredient);
