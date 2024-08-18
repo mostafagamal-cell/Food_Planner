@@ -52,7 +52,7 @@ public class RemoteDataSourse implements IremoteDataSource {
         if (type==0) {
             iretrofit.filterByCategory(category).enqueue(mealsCallback(GfilterBycategory));
         }else{
-            iretrofit.filterByCategory(category).enqueue(mealsCallback(-1));
+            iretrofit.filterByCategory(category).enqueue(mealsCallback(GgetMealByid));
             }
         }
 
@@ -134,8 +134,6 @@ public class RemoteDataSourse implements IremoteDataSource {
                     communicator.onDataMealByIdArrived(response.body());
                 }else if (GgetMealByletter == type) {
 
-                }else if (-1==type){
-                    communicator.onDataMealArrivedByname(response.body());
                 }
             }
             @Override

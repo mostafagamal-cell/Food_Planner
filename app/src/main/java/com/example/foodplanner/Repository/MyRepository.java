@@ -243,6 +243,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   public void OnListCatigoryArrived(Categories categories) {
             if (Imealscreenpresenter!=null)
                 Imealscreenpresenter.onDataArrivedCategories(categories);
+
   }
 
     @Override
