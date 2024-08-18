@@ -3,12 +3,10 @@ package com.example.foodplanner.DataSourse;
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
-import com.example.foodplanner.Model.IngradintMeals;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.NetWork.Iretrofit;
 import com.example.foodplanner.NetWork.MyRetrofite;
 import com.example.foodplanner.Repository.Irepo;
-import com.example.foodplanner.Util.ImealScreenPresenter;
 import com.example.foodplanner.Util.Utilits;
 import static com.example.foodplanner.Util.Utilits.*;
 
@@ -43,32 +41,27 @@ public class RemoteDataSourse implements IremoteDataSource {
 
     @Override
     public void getcategories() {
-        Log.i(TAG, "getcategories: ");
         iretrofit.getCategories().enqueue(categoriesCallback(Ggetcategories));
     }
 
     @Override
     public void filterBycategory(String category,int type) {
-        if (type==0) {
             iretrofit.filterByCategory(category).enqueue(mealsCallback(GfilterBycategory));
-        }else{
-            iretrofit.filterByCategory(category).enqueue(mealsCallback(GgetMealByid));
-            }
         }
 
     @Override
     public void filterByarea(String Area) {
         iretrofit.filterByArea(Area).enqueue(mealsCallback(GfilterByarea));
     }
-
+    String id;
     @Override
-    public void getMealByid(String id) {
-        int xxx;
+    public synchronized void  getMealByid(String id) {
+        this.id=id;
         iretrofit.getMealById(id).enqueue(mealsCallback(GgetMealByid));
     }
 
     @Override
-    public void filterByingredient(String Ingredient) {
+    public synchronized void filterByingredient(String Ingredient) {
         iretrofit.filterByIngredient(Ingredient).enqueue(mealsCallback(GfilterByingredient));
     }
 
@@ -86,7 +79,6 @@ public class RemoteDataSourse implements IremoteDataSource {
     public void getListOfingredients(String list) {
         iretrofit.getListOfIngredients(list).enqueue(ingradinatsCallback(GgetListOfingredients));
     }
-
     public static RemoteDataSourse getInstance(Irepo.Communicator communicator) {
         if (instance==null){
             instance=new RemoteDataSourse(communicator);
@@ -96,33 +88,27 @@ public class RemoteDataSourse implements IremoteDataSource {
     }
 
     private static final String TAG = "RemoteDataSourse";
-    public Callback<Categories> categoriesCallback(int type){
+    public synchronized Callback<Categories> categoriesCallback(int type){
         return new Callback<Categories>(){
             @Override
             public void onResponse(Call<Categories> call, Response<Categories> response) {
-                    Log.i(TAG, "onResponse: "+response.body());
-                    if (Ggetcategories == type) {
+                       //Log.i("216786841654684", "onResponse: "+response.body().categories.size());
                         communicator.OnListCatigoryArrived(response.body());
-
-                    } else if (GgetListOfcategories == type) {
-                        communicator.onCatigoryNamesArraiver(response.body());
-                    }
-
             }
-
             @Override
             public void onFailure(Call<Categories> call, Throwable throwable) {
                 communicator.onError(throwable.getMessage());
             }
         } ;
     }
+    public  static  int deeffe=0;
     @Override
-    public Callback<Meals> mealsCallback(int type){
+    public synchronized Callback<Meals> mealsCallback(int type){
         return new Callback<Meals>(){
             @Override
             public void onResponse(Call<Meals> call, Response<Meals> response) {
                 if (GfilterBycategory == type) {
-                    communicator.onDataCatigoryArrived(response.body(),1);
+                    communicator.onCatigroyMealArraiverd(response.body());
                 } else if (GgetRandommeal == type) {
                     communicator.onDataRandommealArrived(response.body());
                 } else if (GfilterByarea == type) {
@@ -130,7 +116,7 @@ public class RemoteDataSourse implements IremoteDataSource {
                 } else if (GfilterByingredient == type) {
                     communicator.onDataIngradintArrived(response.body());
                 } else if (GgetMealByid == type) {
-                    int x;
+
                     communicator.onDataMealByIdArrived(response.body());
                 }else if (GgetMealByletter == type) {
 
@@ -144,11 +130,10 @@ public class RemoteDataSourse implements IremoteDataSource {
     }
 
     @Override
-    public Callback<Ingradiants> ingradinatsCallback(int type) {
+    public synchronized Callback<Ingradiants> ingradinatsCallback(int type) {
         return new Callback<Ingradiants>(){
             @Override
             public void onResponse(Call<Ingradiants> call, Response<Ingradiants> response) {
-
                     communicator.onIngradintListArraived(response.body());
             }
 

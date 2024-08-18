@@ -15,13 +15,13 @@ import com.google.firebase.FirebaseApp;
 
 import java.util.ArrayList;
 
-public class App extends Application {
+public class App extends Application implements ImainPresenter {
      public static String Guest= "Guest";
      public  static String Logged_in = "Logged_in";
      public  static String not_Logged_in="not_Logged_in";
+    MyRepository repository;
      public  static  MutableLiveData<String> Login_State;
      public  static  MutableLiveData<Boolean>Connection_State;
-    public static ArrayList<Meal>all_meals=new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,6 +33,11 @@ public class App extends Application {
         }else{
             Login_State.setValue(Logged_in);
         }
+        repository=MyRepository.getInstance(this,this,"N/A");
+        repository.getcatigorys();
+        repository.getListOfarea();
+        repository.getListOfingredients();
+
         FirebaseApp.initializeApp(this);
         registerReceiver(new InternetBroadcastReciver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         MyRepository.getInstance(new ImainPresenter() {}, this, "N/A").getListOfcategories();

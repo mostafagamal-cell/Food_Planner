@@ -1,6 +1,5 @@
 package com.example.foodplanner.Repository;
 
-import static com.example.foodplanner.App.all_meals;
 
 import android.app.Application;
 import android.hardware.Camera;
@@ -14,6 +13,8 @@ import com.example.foodplanner.DataSourse.LocalDataSourse;
 import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.CatigoryItemScreen.CatigoryItemPresenter;
 import com.example.foodplanner.IngrItem.IngPresenter;
+import com.example.foodplanner.MealItem.ImealItemPreseter;
+import com.example.foodplanner.MealItem.MealItemPresenter;
 import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Util.IareaMealsPresenter;
@@ -34,16 +35,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresenter {
+
+  public static Countries countries;
+    public static Categories categories;
+    public static Meals currentMeal;
   private static   MyRepository instance;
+  private static ImealItemPreseter.ImealScreenComm imealItemPreseter;
   private IareaMealsPresenter iareaMealsPresenter;
-    private IingPresenter iingPresenter;
-  private  ImealScreenPresenter.Commncator Imealscreenpresenter;
-  private  IcatigortItemPresenter icatigortItemComm;
+  private IingPresenter iingPresenter;
+    private  ImealScreenPresenter.Commncator Imealscreenpresenter;
+  private  IcatigortItemPresenter.IcatigortItemComm icatigortItemComm;
   private static final String TAG = "MyRepository";
-  private LocalDataSourse localDataSourse;
-  private FirebaseFirestore db;
+  private final LocalDataSourse localDataSourse;
+  private final FirebaseFirestore db;
   CollectionReference myRef;
-  private RemoteDataSourse remoteDataSourse;
+  private final RemoteDataSourse remoteDataSourse;
   private MyRepository(Application application){
       db = FirebaseFirestore.getInstance();
       myRef  = db.collection("users");
@@ -56,10 +62,10 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
         }
         switch (type) {
             case MealScreenPresenter.name:
-                instance.Imealscreenpresenter = (Commncator) presenter;
+                instance.Imealscreenpresenter = (ImealScreenPresenter.Commncator) presenter;
                 break;
             case CatigoryItemPresenter.name:
-                instance.icatigortItemComm = (IcatigortItemPresenter) presenter;
+                instance.icatigortItemComm = (IcatigortItemPresenter.IcatigortItemComm) presenter;
                 break;
             case AreaPresenter.TAG:
                 Log.i("xxxxxxxxxxxxxxxxxxxxx","AreaPresenter");
@@ -68,7 +74,9 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
             case IngPresenter.TAG:
                 instance.iingPresenter=(IingPresenter) presenter;
                 break;
-
+            case MealItemPresenter.TAG:
+                instance.imealItemPreseter= (ImealItemPreseter.ImealScreenComm) presenter;
+                break;
         }
         return instance;
     }
@@ -86,16 +94,14 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void onDataMealArrivedByname(Meals meals) {
-        for (int i = 0; i < meals.meals.size(); i++) {
-            Log.i("eeeeeeeeeeeeeeeeeeeeexeefffaasd",meals.meals.size()+"");
-            getMealByid(meals.meals.get(0).idMeal);
-        }
+
     }
 
     @Override
     public void onDataCatigoryArrived(Meals meals,int a) {
       if (icatigortItemComm!=null)
-        icatigortItemComm.onDataArrived(meals);
+            icatigortItemComm.onDataArrived(meals);
+
   }
 
     @Override
@@ -103,12 +109,12 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
         if (icatigortItemComm!=null) icatigortItemComm.onDataArrived(meals);
         if (iareaMealsPresenter!=null)iareaMealsPresenter.onDataArrived(meals);
         if (iingPresenter!=null)iingPresenter.onDataArrived(meals);
-
     }
 
     @Override
   public void onDataRandommealArrived(Meals meals) {
-    Imealscreenpresenter.onDataArrivedRandomaMeal(meals);
+           currentMeal=meals;
+            if (Imealscreenpresenter!=null) Imealscreenpresenter.onDataArrivedRandomaMeal(currentMeal);
   }
 
   @Override
@@ -134,12 +140,17 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void getRandommeal() {
+      if (currentMeal==null)
         remoteDataSourse.getRandommeal();
-    }
+      else  onDataRandommealArrived(currentMeal);
+  }
 
   @Override
   public void getListOfcategories() {
-    remoteDataSourse.getListOfcategories("list");
+      if (categories==null)
+            remoteDataSourse.getcategories();
+      else
+          OnListCatigoryArrived(categories);
   }
 
   @Override
@@ -153,7 +164,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
-    public void filterBycategory(String category,int type) {
+    public synchronized void filterBycategory(String category,int type) {
       remoteDataSourse.filterBycategory(category,type);
     }
 
@@ -161,14 +172,13 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     public void filterByarea(String Area) {
         remoteDataSourse.filterByarea(Area);
     }
-
     @Override
-    public void getMealByid(String id) {
+    public synchronized void getMealByid(String id) {
         remoteDataSourse.getMealByid(id);
     }
 
     @Override
-    public void filterByingredient(String Ingredient) {
+    public synchronized void  filterByingredient(String Ingredient) {
       remoteDataSourse.filterByingredient(Ingredient);
     }
 
@@ -179,12 +189,15 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void getListOfarea() {
-        remoteDataSourse.getListOfarea();
+        if (countries==null)
+            remoteDataSourse.getListOfarea();
+        else
+            countryListArraived(countries);
     }
 
   @Override
   public void getcatigorys() {
-
+      remoteDataSourse.getcategories();
   }
 
   @Override
@@ -198,17 +211,20 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
 
-    @Override
-    public void onCatigoryNamesArraiver(Categories catigory) {
-      Log.i("vvvvvvvvvvvvvvvvvvvvvvvvvvvvveee",catigory.meals.size()+"");
-        for (int i = 0; i<catigory.meals.size();i++) {
-            filterBycategory(catigory.meals.get(i).strCategory,1);
-        }
-    }
 
     @Override
-    public void onDataMealByIdArrived(Meals meals) {
-      all_meals.addAll(meals.meals);
+    public synchronized void  onCatigroyMealArraiverd(Meals meals) {
+        if (icatigortItemComm!=null){
+            icatigortItemComm.onDataArrived(meals);
+        }
+
+    }
+    public  static  int xxx;
+    @Override
+    public synchronized void  onDataMealByIdArrived(Meals meals) {
+        if (imealItemPreseter!=null)
+            imealItemPreseter.dataArrived(meals.meals.get(0));
+
     }
 
     @Override
@@ -241,9 +257,10 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   @Override
   public void OnListCatigoryArrived(Categories categories) {
-            if (Imealscreenpresenter!=null)
-                Imealscreenpresenter.onDataArrivedCategories(categories);
-
+        MyRepository.categories =categories;
+      if (Imealscreenpresenter != null) {
+          Imealscreenpresenter.onDataArrivedCategories(categories);
+      }
   }
 
     @Override
@@ -254,6 +271,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void countryListArraived(Countries countries) {
-        Imealscreenpresenter.onDataArrivedCountry(countries);
+             MyRepository.countries =countries;
+             if (Imealscreenpresenter!=null) Imealscreenpresenter.onDataArrivedCountry(countries);
     }
 }

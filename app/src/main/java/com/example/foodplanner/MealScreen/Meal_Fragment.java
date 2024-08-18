@@ -47,6 +47,11 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
     }
 
     @Override
+    public void OnClick(Meal meal) {
+
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter=MealScreenPresenter.getinstance(this,this.requireActivity().getApplication());
@@ -66,6 +71,13 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
                 .apply(new RequestOptions().placeholder(R.drawable.ic_launcher_background) .error(R.drawable.ic_launcher_foreground).override(100, 100))
                 .into(binding.myImage);
         binding.itemtext.setText(meals.meals.get(0).strMeal);
+        binding.imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Meal_FragmentDirections.ActionMealFragmentToMealItemScreen actionMealFragmentToMealItemScreen = Meal_FragmentDirections.actionMealFragmentToMealItemScreen(meals.meals.get(0));
+            NavHostFragment.findNavController(Meal_Fragment.this).navigate(actionMealFragmentToMealItemScreen);
+            }
+        });
     }
 
 

@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_meal_Fragment_to_ingItemFrag"
             app:destination="@id/ingItemFrag" />
+        <action
+            android:id="@+id/action_meal_Fragment_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
     </fragment>
     <fragment
         android:id="@+id/catigoryItem"
@@ -26,6 +29,9 @@
         <argument
             android:name="Cat"
             app:argType="com.example.foodplanner.Model.Category" />
+        <action
+            android:id="@+id/action_catigoryItem_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
     </fragment>
     <fragment
         android:id="@+id/areaItemFragment"
@@ -34,6 +40,9 @@
         <argument
             android:name="area"
             app:argType="string" />
+        <action
+            android:id="@+id/action_areaItemFragment_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
     </fragment>
     <fragment
         android:id="@+id/ingItemFrag"
@@ -43,5 +52,16 @@
         <argument
             android:name="Ing"
             app:argType="string" />
+        <action
+            android:id="@+id/action_ingItemFrag_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealItemScreen"
+        android:name="com.example.foodplanner.MealItem.MealItemScreen"
+        android:label="MealItemScreen" >
+        <argument
+            android:name="Meal"
+            app:argType="com.example.foodplanner.Model.Meal" />
     </fragment>
 </navigation>

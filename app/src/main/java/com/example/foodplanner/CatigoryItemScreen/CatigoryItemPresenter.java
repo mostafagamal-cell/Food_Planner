@@ -1,8 +1,11 @@
 package com.example.foodplanner.CatigoryItemScreen;
 
+
 import android.app.Application;
 import android.util.Log;
 
+import com.example.foodplanner.App;
+import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Repository.MyRepository;
 import com.example.foodplanner.Util.IcatigortItemPresenter;
@@ -27,7 +30,7 @@ public class CatigoryItemPresenter implements IcatigortItemPresenter {
 
     @Override
     public void loadMeals(String category) {
-       repo.filterBycategory(category,1);
+       repo.filterBycategory(category,0);
     }
 
     @Override
