@@ -52,7 +52,7 @@ public class RemoteDataSourse implements IremoteDataSource {
         if (type==0) {
             iretrofit.filterByCategory(category).enqueue(mealsCallback(GfilterBycategory));
         }else{
-            iretrofit.filterByCategory("type").enqueue(mealsCallback(GfilterBycategory));
+            iretrofit.filterByCategory(category).enqueue(mealsCallback(-1));
             }
         }
 
@@ -63,6 +63,7 @@ public class RemoteDataSourse implements IremoteDataSource {
 
     @Override
     public void getMealByid(String id) {
+        int xxx;
         iretrofit.getMealById(id).enqueue(mealsCallback(GgetMealByid));
     }
 
@@ -97,7 +98,6 @@ public class RemoteDataSourse implements IremoteDataSource {
     private static final String TAG = "RemoteDataSourse";
     public Callback<Categories> categoriesCallback(int type){
         return new Callback<Categories>(){
-
             @Override
             public void onResponse(Call<Categories> call, Response<Categories> response) {
                     Log.i(TAG, "onResponse: "+response.body());
@@ -105,7 +105,6 @@ public class RemoteDataSourse implements IremoteDataSource {
                         communicator.OnListCatigoryArrived(response.body());
 
                     } else if (GgetListOfcategories == type) {
-
                         communicator.onCatigoryNamesArraiver(response.body());
                     }
 
@@ -126,16 +125,16 @@ public class RemoteDataSourse implements IremoteDataSource {
                     communicator.onDataCatigoryArrived(response.body(),1);
                 } else if (GgetRandommeal == type) {
                     communicator.onDataRandommealArrived(response.body());
-
                 } else if (GfilterByarea == type) {
                     communicator.onDataAreaArrived(response.body());
                 } else if (GfilterByingredient == type) {
                     communicator.onDataIngradintArrived(response.body());
                 } else if (GgetMealByid == type) {
+                    int x;
                     communicator.onDataMealByIdArrived(response.body());
                 }else if (GgetMealByletter == type) {
 
-                }else if (Gbyname==type){
+                }else if (-1==type){
                     communicator.onDataMealArrivedByname(response.body());
                 }
             }

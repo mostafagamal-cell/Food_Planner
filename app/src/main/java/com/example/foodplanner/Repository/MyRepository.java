@@ -86,7 +86,10 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void onDataMealArrivedByname(Meals meals) {
-        all_meals.addAll(meals.meals);
+        for (int i = 0; i < meals.meals.size(); i++) {
+            Log.i("eeeeeeeeeeeeeeeeeeeeexeefffaasd",meals.meals.size()+"");
+            getMealByid(meals.meals.get(0).idMeal);
+        }
     }
 
     @Override
@@ -205,7 +208,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void onDataMealByIdArrived(Meals meals) {
-
+      all_meals.addAll(meals.meals);
     }
 
     @Override
