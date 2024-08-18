@@ -19,7 +19,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/Meal_of_Day"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.017"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,13 +52,14 @@
                     android:layout_gravity="bottom"
                     android:background="#B4302E2E"
                     android:gravity="center"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView4"
                 android:layout_width="0dp"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="32dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -69,12 +70,12 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:gravity="center"
                 android:text="@string/Categories"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -83,41 +84,46 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerView5"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="@string/ingratiates"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerView4" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView5"
-                android:layout_width="599dp"
-                android:layout_height="438dp"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView4" />
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerView6"
+                android:layout_marginTop="32dp"
+                android:text="@string/Countries"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerView5" />
 
             <androidx.recyclerview.widget.RecyclerView
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:id="@+id/recyclerView6"
                 android:layout_width="0dp"
-                android:layout_height="375dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView5" />
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

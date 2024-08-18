@@ -14,4 +14,6 @@ public class Utilits {
     public static final int GgetListOfcategories=8;
     public static final int GgetListOfarea=9;
     public static final int GgetListOfingredients=10;
+    public static final String USA="https://cdn.britannica.com/33/4833-004-828A9A84/Flag-United-States-of-America.jpg";
+    public static final String EG="https://flagpedia.net/data/flags/w580/eg.webp";
 }

@@ -1,12 +1,11 @@
-package com.example.foodplanner.ItemScreen;
+package com.example.foodplanner.CatigoryItemScreen;
 
 import android.app.Application;
 import android.util.Log;
 
-import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Repository.MyRepository;
-import com.google.firebase.database.core.Repo;
+import com.example.foodplanner.Util.IcatigortItemPresenter;
 
 public class CatigoryItemPresenter implements IcatigortItemPresenter {
     public final static  String name="CatigoryItemPresenter";
@@ -33,7 +32,6 @@ public class CatigoryItemPresenter implements IcatigortItemPresenter {
 
     @Override
     public void onDataArrived(Meals categories) {
-        Log.i("cccccccccccccccccccccccccccccccc", "onDataArrived");
         icatigortItemComm.onDataArrived(categories);
     }
 }

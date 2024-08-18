@@ -64,15 +64,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                             .error(R.drawable.ic_launcher_foreground).override(100, 100)).into(binding.myImage);
             Log.i("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",category.strCategory);
             binding.ImageText.setText(category.strCategory);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            );
-            binding.ImageText.setLayoutParams(params);
-            binding.ImageText.setTextColor(Color.WHITE);
             binding.ImageText.setGravity(Gravity.BOTTOM|Gravity.CENTER);
             binding.myCard.setOnClickListener(view -> {
-                clickListner.onClick(category.strCategory);
+                clickListner.OnClick(category);
             });
         }
 

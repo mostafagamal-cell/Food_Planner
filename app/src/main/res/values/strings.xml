@@ -27,5 +27,10 @@
     <string name="Meal_of_Day">Meal of Day</string>
     <string name="Categories">Categories</string>
     <string name="Country">Country</string>
-    <string name="ingratiates">ingratiates</string>
+    <string name="ingratiates">Ingratiates</string>
+    <string name="Instructions">Instructions</string>
+    <string name="information">information</string>
+    <string name="type">"Type"</string>
+    <string name="Steps">Steps</string>
+    <string name="Countries">Countries</string>
 </resources>

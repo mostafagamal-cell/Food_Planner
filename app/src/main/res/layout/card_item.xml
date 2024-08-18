@@ -2,32 +2,35 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.cardview.widget.CardView
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
 
-    android:id="@+id/myCard"
-    android:layout_width="150dp"
-    android:layout_height="150dp"
-    android:background="#4A000000"
-    app:cardCornerRadius="20dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/myCard"
+        android:layout_width="210dp"
+
+        android:layout_height="180dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#4A000000"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/myImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/ImageText"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_gravity="bottom"
-        android:background="#81302E2E"
-        android:gravity="bottom|center"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/ImageText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="#72302E2E"
+            android:gravity="bottom|center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </layout>

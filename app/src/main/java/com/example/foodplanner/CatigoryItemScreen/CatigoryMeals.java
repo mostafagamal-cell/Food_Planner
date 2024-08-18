@@ -1,4 +1,4 @@
-package com.example.foodplanner.ItemScreen;
+package com.example.foodplanner.CatigoryItemScreen;
 
 import android.os.Bundle;
 
@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodplanner.Adapter.ItemCatigoryRec;
+import com.example.foodplanner.Model.Category;
+import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
+import com.example.foodplanner.Util.IcatigortItemPresenter;
 import com.example.foodplanner.databinding.FragmentCatigoryItemBinding;
 
 public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.IcatigortItemComm {
@@ -33,10 +36,10 @@ public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.Ic
        presenter=CatigoryItemPresenter.getInstance(this,this.requireActivity().getApplication());
         if (getArguments()!=null){
             CatigoryMealsArgs args= CatigoryMealsArgs.fromBundle(getArguments());
-            String name= args.getName();
-            Log.i("zxcczxczxccxz",name);
-            presenter.loadMeals(name);
-            ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(name);
+            Category meal = args.getCat();
+            Log.i("zxcczxczxccxz",meal.strCategory);
+            presenter.loadMeals(meal.strCategory);
+            ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(meal.strCategory);
 
         }
         rec= new ItemCatigoryRec();

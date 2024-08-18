@@ -3,6 +3,8 @@ package com.example.foodplanner.Util;
 import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.Model.Categories;
+import com.example.foodplanner.Model.Countries;
+import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Meals;
 
 public interface ImealScreenPresenter extends ImainPresenter  {
@@ -15,8 +17,8 @@ public interface ImealScreenPresenter extends ImainPresenter  {
         void onDataArrivedRandomaMeal(Meals meals);
         void onError(String message);
         void onDataArrivedCategories(Categories categories);
-        void onDataArrivedIngredients(Meals meals);
-        void onDataArrivedCountry(Meals meals);
+        void onDataArrivedIngredients(Ingradiants meals);
+        void onDataArrivedCountry(Countries meals);
 
     }
 

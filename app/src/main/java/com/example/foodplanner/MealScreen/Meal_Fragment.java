@@ -18,7 +18,13 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.Adapter.CategoriesAdapter;
+import com.example.foodplanner.Adapter.CuntriesAdpter;
+import com.example.foodplanner.Adapter.InteREc;
 import com.example.foodplanner.Model.Categories;
+import com.example.foodplanner.Model.Category;
+import com.example.foodplanner.Model.Countries;
+import com.example.foodplanner.Model.Ingradiants;
+import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Presenters.MealScreenPresenter;
 import com.example.foodplanner.R;
@@ -31,7 +37,8 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
     FragmentMealBinding binding;
     MealScreenPresenter presenter;
     CategoriesAdapter adapter;
-
+    InteREc InAdpter;
+    CuntriesAdpter cuntriesAdpter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,6 +52,8 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
         presenter=MealScreenPresenter.getinstance(this,this.requireActivity().getApplication());
         presenter.getRandommeal();
         presenter.getcatigorys();
+        presenter.getListOfingredients();
+        presenter.getListOfarea();
         Log.i("eeeeeeeaaaaaaaaeeeeeeeee", ((AppCompatActivity)requireActivity()).getSupportActionBar().getTitle()+"");
 
     }
@@ -55,7 +64,6 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
         Glide.with(this)
                 .load(meals.meals.get(0).strMealThumb)
                 .apply(new RequestOptions().placeholder(R.drawable.ic_launcher_background) .error(R.drawable.ic_launcher_foreground).override(100, 100))
-
                 .into(binding.myImage);
         binding.itemtext.setText(meals.meals.get(0).strMeal);
     }
@@ -69,19 +77,32 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
     }
 
     @Override
-    public void onDataArrivedIngredients(Meals meals) {
-
+    public void onDataArrivedIngredients(Ingradiants meals) {
+        InAdpter= new InteREc(this);
+        binding.recyclerView5.setAdapter(InAdpter);
+        InAdpter.setIngradiants(meals);
     }
 
     @Override
-    public void onDataArrivedCountry(Meals meals) {
-
+    public void onDataArrivedCountry(Countries meals) {
+     cuntriesAdpter= new CuntriesAdpter(this);
+     cuntriesAdpter.setCuntries(meals);
+     binding.recyclerView6.setAdapter(cuntriesAdpter);
     }
-
     @Override
-    public void onClick(String v) {
+    public void OnClick(Category v) {
     Meal_FragmentDirections.ActionMealFragmentToCatigoryItem actionMealFragmentToCatigoryItem = Meal_FragmentDirections.actionMealFragmentToCatigoryItem(v);
     NavHostFragment.findNavController(this).navigate(actionMealFragmentToCatigoryItem);
-
     }
+
+    @Override
+    public void OnClick(String area,int type) {
+      if (type==0) {
+          Meal_FragmentDirections.ActionMealFragmentToAreaItemFragment actionMealFragmentToAreaItemFragment = Meal_FragmentDirections.actionMealFragmentToAreaItemFragment(area);
+          NavHostFragment.findNavController(this).navigate(actionMealFragmentToAreaItemFragment);
+      }else{
+          Meal_FragmentDirections.ActionMealFragmentToIngItemFrag actionMealFragmentToIngredientItemFragment = Meal_FragmentDirections.actionMealFragmentToIngItemFrag(area);
+          NavHostFragment.findNavController(this).navigate(actionMealFragmentToIngredientItemFragment);
+      }
+      }
 }

@@ -1,6 +1,8 @@
 package com.example.foodplanner.NetWork;
 
 import com.example.foodplanner.Model.Categories;
+import com.example.foodplanner.Model.Countries;
+import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Meals;
 
 import retrofit2.Call;
@@ -27,8 +29,8 @@ public interface Iretrofit {
     @GET("list.php")
     Call<Meals> getListOfCategories(@Query("c") String list);
     @GET("list.php")
-    Call<Meals> getListOfArea(@Query("a") String list);
+    Call<Countries> getListOfArea(@Query("a") String list);
     @GET("list.php")
-    Call<Meals> getListOfIngredients(@Query("i") String list);
+    Call<Ingradiants> getListOfIngredients(@Query("i") String list);
 
 }

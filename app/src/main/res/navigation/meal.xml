@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/meal"
     app:startDestination="@id/meal_Fragment">
 
@@ -11,13 +12,36 @@
         <action
             android:id="@+id/action_meal_Fragment_to_catigoryItem"
             app:destination="@id/catigoryItem" />
+        <action
+            android:id="@+id/action_meal_Fragment_to_areaItemFragment"
+            app:destination="@id/areaItemFragment" />
+        <action
+            android:id="@+id/action_meal_Fragment_to_ingItemFrag"
+            app:destination="@id/ingItemFrag" />
     </fragment>
     <fragment
         android:id="@+id/catigoryItem"
-        android:name="com.example.foodplanner.ItemScreen.CatigoryMeals"
+        android:name="com.example.foodplanner.CatigoryItemScreen.CatigoryMeals"
         android:label="CatigoryItem" >
         <argument
-            android:name="name"
+            android:name="Cat"
+            app:argType="com.example.foodplanner.Model.Category" />
+    </fragment>
+    <fragment
+        android:id="@+id/areaItemFragment"
+        android:name="com.example.foodplanner.AreaItem.AreaItemFragment"
+        android:label="AreaItemFragment" >
+        <argument
+            android:name="area"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingItemFrag"
+        android:name="com.example.foodplanner.IngrItem.IngItemFrag"
+        android:label="fragment_ing_item"
+        tools:layout="@layout/fragment_ing_item" >
+        <argument
+            android:name="Ing"
             app:argType="string" />
     </fragment>
 </navigation>

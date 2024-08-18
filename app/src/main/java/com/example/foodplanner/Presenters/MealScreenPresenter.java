@@ -5,6 +5,8 @@ import android.util.Log;
 
 import static com.example.foodplanner.Util.Utilits.*;
 import com.example.foodplanner.Model.Categories;
+import com.example.foodplanner.Model.Countries;
+import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Repository.MyRepository;
@@ -52,12 +54,12 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
     }
 
     @Override
-    public void onDataArrivedIngredients(Meals meals) {
+    public void onDataArrivedIngredients(Ingradiants meals) {
        communicator.onDataArrivedIngredients(meals);
     }
 
     @Override
-    public void onDataArrivedCountry(Meals meals) {
+    public void onDataArrivedCountry(Countries meals) {
         communicator.onDataArrivedCountry(meals);
     }
 
