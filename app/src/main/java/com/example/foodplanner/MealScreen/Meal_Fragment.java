@@ -1,5 +1,7 @@
 package com.example.foodplanner.MealScreen;
 
+import static com.example.foodplanner.Util.InternetBroadcastReciver.booleanMutableLiveData;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,7 +62,6 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
         presenter.getListOfingredients();
         presenter.getListOfarea();
         Log.i("eeeeeeeaaaaaaaaeeeeeeeee", ((AppCompatActivity)requireActivity()).getSupportActionBar().getTitle()+"");
-
     }
 
     @Override

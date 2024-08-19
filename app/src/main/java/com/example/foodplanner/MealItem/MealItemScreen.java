@@ -43,9 +43,9 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
+       // presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
 
-        presenter.loadMealById(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+        dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
     }
 
     @Override
