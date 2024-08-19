@@ -9,12 +9,11 @@ import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Repository.MyRepository;
 import com.example.foodplanner.Util.IfavouritePresenter;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FavouritePresenter implements IfavouritePresenter {
     MyRepository repository;
+    private IfavouritePresenter.COMM comm;
     public static final String TAG = "FavouritePresenter";
     private static FavouritePresenter favouritePresenter;
     private FavouritePresenter(Application application){
@@ -36,19 +35,25 @@ public class FavouritePresenter implements IfavouritePresenter {
     }
 
     @Override
+    public void saveOnDB(Meal meal) {
+        repository.insertFavourites(meal);
+    }
+
+    @Override
     public LiveData<List<Meal>> readDatafromDB() {
         return repository.getFavourites();
     }
 
     @Override
-    public List<Meal> dataArriveFromCloud(Meals meals) {
-        return Collections.emptyList();
+    public void dataArriveFromCloud(Meals meals) {
+        if (comm!=null) comm.onDataArrive(meals);
     }
 
-    public static FavouritePresenter getInstance(Application application) {
+    public static FavouritePresenter getInstance(IfavouritePresenter.COMM comm,Application application) {
         if (favouritePresenter == null){
             favouritePresenter=new FavouritePresenter(application);
         }
+        favouritePresenter.comm=comm;
         return  favouritePresenter;
     }
 

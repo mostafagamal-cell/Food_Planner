@@ -25,6 +25,9 @@ public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.Favour
         this.clickListner=clickListner;
         meals.meals=new ArrayList<Meal>();
     }
+     public void remove(Meal meal1){
+        meals.meals.removeIf(meal -> meal.idMeal.equals(meal1.idMeal));
+    }
     @NonNull
     @Override
     public FavouriteAdpter.FavouriteItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,6 +46,24 @@ public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.Favour
     }
     public void setcontect(Meals meals){
         this.meals=meals;
+        notifyDataSetChanged();
+    }
+    protected boolean checked(String id){
+        for (int i = 0; i < meals.meals.size(); i++) {
+            if (meals.meals.get(i).idMeal.equals(id)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void update(Meals mymeals){
+       Meals meals1= new Meals();
+       meals1.meals=new ArrayList<Meal>();
+        for (int i = 0; i < mymeals.meals.size(); i++) {
+            if (checked(mymeals.meals.get(i).idMeal)){
+                meals.meals.add(mymeals.meals.get(i));
+            }
+        }
         notifyDataSetChanged();
     }
 

@@ -11,7 +11,11 @@ public interface IfavouritePresenter extends ImainPresenter{
          void deletFavourite(Meal meal);
          void saveOnClould(String email,Meals meal);
          void readOnClould(String email);
+         void saveOnDB(Meal meal);
          LiveData<List<Meal>> readDatafromDB();
-         List<Meal> dataArriveFromCloud(Meals meals);
+         void dataArriveFromCloud(Meals meals);
+         interface COMM{
+             void onDataArrive(Meals meals);
+         }
 
 }

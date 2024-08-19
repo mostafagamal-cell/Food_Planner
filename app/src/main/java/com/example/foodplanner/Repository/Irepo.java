@@ -25,7 +25,6 @@ public interface Irepo  extends IlocalDataSource, IremoteDataSource {
     void onDataCatigoryArrived(Meals meals,int x);
     void onDataAreaArrived(Meals meals);
     void onDataRandommealArrived(Meals meals);
-    void onDataArrivedFavourite(Meals meals);
     void OnListCatigoryArrived(Categories categories);
     void onIngradintListArraived(Ingradiants categories);
     void onError(String message);

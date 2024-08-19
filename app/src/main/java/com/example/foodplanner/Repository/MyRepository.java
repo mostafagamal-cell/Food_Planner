@@ -12,6 +12,7 @@ import com.example.foodplanner.AreaItem.AreaPresenter;
 import com.example.foodplanner.DataSourse.LocalDataSourse;
 import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.CatigoryItemScreen.CatigoryItemPresenter;
+import com.example.foodplanner.FavouriteScreen.FavouritePresenter;
 import com.example.foodplanner.IngrItem.IngPresenter;
 import com.example.foodplanner.MealItem.ImealItemPreseter;
 import com.example.foodplanner.MealItem.MealItemPresenter;
@@ -23,6 +24,7 @@ import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Presenters.MealScreenPresenter;
+import com.example.foodplanner.Util.IfavouritePresenter;
 import com.example.foodplanner.Util.IingPresenter;
 import com.example.foodplanner.Util.ImainPresenter;
 import com.example.foodplanner.Util.ImealScreenPresenter;
@@ -43,7 +45,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     public static Categories categories;
     public static Meals currentMeal;
   private static   MyRepository instance;
-  private static ImealItemPreseter.ImealScreenComm imealItemPreseter;
+  private  ImealItemPreseter.ImealScreenComm imealItemPreseter;
   private IareaMealsPresenter iareaMealsPresenter;
   private IingPresenter iingPresenter;
     private  ImealScreenPresenter.Commncator Imealscreenpresenter;
@@ -51,7 +53,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   private static final String TAG = "MyRepository";
   private final LocalDataSourse localDataSourse;
   private final FirebaseFirestore db;
-
+  private static IfavouritePresenter ifavouritePresenter;
   private final RemoteDataSourse remoteDataSourse;
   private MyRepository(Application application){
       db = FirebaseFirestore.getInstance();
@@ -71,7 +73,6 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                 instance.icatigortItemComm = (IcatigortItemPresenter) presenter;
                 break;
             case AreaPresenter.TAG:
-                Log.i("xxxxxxxxxxxxxxxxxxxxx","AreaPresenter");
                 instance.iareaMealsPresenter = (IareaMealsPresenter) presenter;
                 break;
             case IngPresenter.TAG:
@@ -80,6 +81,8 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
             case MealItemPresenter.TAG:
                 instance.imealItemPreseter= (ImealItemPreseter.ImealScreenComm) presenter;
                 break;
+            case FavouritePresenter.TAG:
+                ifavouritePresenter = (IfavouritePresenter) presenter;
         }
         return instance;
     }
@@ -241,7 +244,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()){
                             Meals meals = document.toObject(Meals.class);
-                            onDataMealByIdArrived(meals);
+                            if (ifavouritePresenter!=null) ifavouritePresenter.dataArriveFromCloud(meals);
                         }
                     }
                     }
@@ -255,9 +258,6 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   }
 
-  @Override
-  public void onDataArrivedFavourite(Meals meals) {
-  }
 
   @Override
   public void OnListCatigoryArrived(Categories categories) {
