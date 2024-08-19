@@ -22,6 +22,7 @@ public class ItemAreaRec extends RecyclerView.Adapter<ItemAreaRec.ItemsRecViewHo
     MyClickListner clickListner;
     public ItemAreaRec(MyClickListner clickListner){
         meals.meals=new ArrayList<Meal>();
+        this.clickListner=clickListner;
     }
     @NonNull
     @Override

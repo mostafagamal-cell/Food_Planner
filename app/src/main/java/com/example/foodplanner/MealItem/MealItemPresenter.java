@@ -9,8 +9,8 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
     public static final String TAG = "MealItemPresenter";
 
     private static MealItemPresenter instance;
-    MyRepository repository;
-    ImealItemPreseter.ImealScreenComm comm;
+    private MyRepository repository;
+    private ImealItemPreseter.ImealScreenComm comm;
     private MealItemPresenter(Application application){
         repository=MyRepository.getInstance(this,application,TAG);
     }
@@ -24,8 +24,19 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
     }
 
     @Override
+    public void instertMeal(Meal meal) {
+        repository.insertFavourites(meal);
+    }
+
+
+    @Override
     public void loadMealById(Meal meal) {
      repository.getMealByid(meal.idMeal);
+    }
+
+    @Override
+    public void saveMeal(Meal meal) {
+        repository.insertFavourites(meal);
     }
 
     @Override

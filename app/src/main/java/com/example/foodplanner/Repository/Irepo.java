@@ -13,7 +13,7 @@ import com.example.foodplanner.DataSourse.IremoteDataSource;
 import java.util.List;
 
 public interface Irepo  extends IlocalDataSource, IremoteDataSource {
-      void  readFavouriteFromFireStore();
+      void  readFavouriteFromFireStore(String email);
       void  writeFavouriteFromFireStore(String email,Meals JsonData);
       void onError(String message);
     interface Communicator  {

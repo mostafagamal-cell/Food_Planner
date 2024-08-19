@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.*;
 
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.Meals;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ import java.util.List;
 public interface MealDao {
 @Insert(onConflict = OnConflictStrategy.REPLACE)
  void insertMeal(Meal meal);
-@Query("SELECT * FROM FavouriteMeals")
-LiveData<List<Meal>> getAllMeals();
+@Query("SELECT * FROM FavouriteMeals Where email=:email")
+LiveData<List<Meal>> getAllMeals(String email);
 @Delete
 void deleteMeal(Meal meal);
 }

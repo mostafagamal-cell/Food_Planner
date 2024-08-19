@@ -26,10 +26,13 @@ import com.example.foodplanner.Presenters.MealScreenPresenter;
 import com.example.foodplanner.Util.IingPresenter;
 import com.example.foodplanner.Util.ImainPresenter;
 import com.example.foodplanner.Util.ImealScreenPresenter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -44,15 +47,15 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   private IareaMealsPresenter iareaMealsPresenter;
   private IingPresenter iingPresenter;
     private  ImealScreenPresenter.Commncator Imealscreenpresenter;
-  private  IcatigortItemPresenter.IcatigortItemComm icatigortItemComm;
+  private  IcatigortItemPresenter icatigortItemComm;
   private static final String TAG = "MyRepository";
   private final LocalDataSourse localDataSourse;
   private final FirebaseFirestore db;
-  CollectionReference myRef;
+
   private final RemoteDataSourse remoteDataSourse;
   private MyRepository(Application application){
       db = FirebaseFirestore.getInstance();
-      myRef  = db.collection("users");
+
       remoteDataSourse = new RemoteDataSourse(this);
       localDataSourse = new LocalDataSourse(application);
   }
@@ -65,7 +68,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                 instance.Imealscreenpresenter = (ImealScreenPresenter.Commncator) presenter;
                 break;
             case CatigoryItemPresenter.name:
-                instance.icatigortItemComm = (IcatigortItemPresenter.IcatigortItemComm) presenter;
+                instance.icatigortItemComm = (IcatigortItemPresenter) presenter;
                 break;
             case AreaPresenter.TAG:
                 Log.i("xxxxxxxxxxxxxxxxxxxxx","AreaPresenter");
@@ -142,7 +145,8 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     public void getRandommeal() {
       if (currentMeal==null)
         remoteDataSourse.getRandommeal();
-      else  onDataRandommealArrived(currentMeal);
+      else
+          onDataRandommealArrived(currentMeal);
   }
 
   @Override
@@ -228,26 +232,26 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
-  public void readFavouriteFromFireStore() {
+  public void readFavouriteFromFireStore(String email) {
+        db.collection("users").document(email).get().addOnCompleteListener
+                (new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()){
+                            Meals meals = document.toObject(Meals.class);
+                            onDataMealByIdArrived(meals);
+                        }
+                    }
+                    }
+                });
 
   }
 
   @Override
   public void writeFavouriteFromFireStore(String email, Meals JsonData) {
-    db.collection("users")
-            .add(email)
-            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-              @Override
-              public void onSuccess(DocumentReference documentReference) {
-                Log.d("xxxxxxxxxxxxxxxxxxxxxxxxx", "DocumentSnapshot added with ID: " + documentReference.getId());
-              }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-              @Override
-              public void onFailure(@NonNull Exception e) {
-                Log.w("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", "Error adding document", e);
-              }
-            });
+    db.collection("users").document(email).set(JsonData);
 
   }
 
@@ -272,6 +276,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     @Override
     public void countryListArraived(Countries countries) {
              MyRepository.countries =countries;
-             if (Imealscreenpresenter!=null) Imealscreenpresenter.onDataArrivedCountry(countries);
+             if (Imealscreenpresenter!=null)
+                 Imealscreenpresenter.onDataArrivedCountry(countries);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.foodplanner.Adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,25 +14,26 @@ import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.CatitemBinding;
+import com.example.foodplanner.databinding.FavouriteitemBinding;
 
 import java.util.ArrayList;
 
-public class ItemIngrRec  extends RecyclerView.Adapter<ItemIngrRec.ItemIngrRecViewHolder> {
-    private Meals meals= new Meals();
+public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.FavouriteItemHolder> {
+    public Meals meals= new Meals();
     MyClickListner clickListner;
-    public ItemIngrRec(MyClickListner clickListner){
-        meals.meals=new ArrayList<Meal>();
+    public FavouriteAdpter(MyClickListner clickListner){
         this.clickListner=clickListner;
+        meals.meals=new ArrayList<Meal>();
     }
     @NonNull
     @Override
-    public ItemIngrRec.ItemIngrRecViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CatitemBinding binding = CatitemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ItemIngrRec.ItemIngrRecViewHolder(binding);
+    public FavouriteAdpter.FavouriteItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        FavouriteitemBinding binding = FavouriteitemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new FavouriteAdpter.FavouriteItemHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemIngrRec.ItemIngrRecViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavouriteAdpter.FavouriteItemHolder holder, int position) {
         holder.bind(meals.meals.get(position));
     }
 
@@ -44,9 +46,9 @@ public class ItemIngrRec  extends RecyclerView.Adapter<ItemIngrRec.ItemIngrRecVi
         notifyDataSetChanged();
     }
 
-    protected class ItemIngrRecViewHolder extends RecyclerView.ViewHolder {
-        CatitemBinding binding;
-        public ItemIngrRecViewHolder(@NonNull CatitemBinding itemView) {
+    protected class FavouriteItemHolder extends RecyclerView.ViewHolder {
+        FavouriteitemBinding binding;
+        public FavouriteItemHolder(@NonNull FavouriteitemBinding itemView) {
             super(itemView.getRoot());
             binding=itemView;
         }
@@ -55,6 +57,12 @@ public class ItemIngrRec  extends RecyclerView.Adapter<ItemIngrRec.ItemIngrRecVi
             binding.mytextitem.setText(meals.strMeal);
             binding.getRoot().setOnClickListener(view -> {
                 clickListner.OnClick(meals);
+            });
+            binding.imageButton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListner.OnClickDelte(meals);
+                }
             });
         }
     }

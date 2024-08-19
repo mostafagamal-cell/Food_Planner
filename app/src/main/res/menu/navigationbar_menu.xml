@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/All_Meals"
-        android:icon="@drawable/icons_meal"/>
+    <item
+        android:id="@+id/meal_Fragment"
+        android:icon="@drawable/icons_meal"
+        android:title="@string/All_Meals" />
     <item android:title="@string/Search"
         android:icon="@android:drawable/ic_menu_search"
         />
     <item android:title="@string/Favourite_Meals"
             android:icon="@drawable/icon_favorites"
+        android:id="@+id/favouriteScreen"
         />
     <item android:title="@string/Meals_of_Week"
         android:icon="@android:drawable/ic_menu_my_calendar"

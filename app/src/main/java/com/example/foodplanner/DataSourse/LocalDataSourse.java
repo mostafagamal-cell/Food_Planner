@@ -1,6 +1,8 @@
 package com.example.foodplanner.DataSourse;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -13,13 +15,17 @@ import java.util.List;
 
 public class LocalDataSourse implements IlocalDataSource {
     MealDao dao;
+    Application application;
     public LocalDataSourse(Application context)
    {
     dao=MyDataBase.getInstance(context).mealDao();
+    this.application=context;
    }
     @Override
     public LiveData<List<Meal>> getFavourites() {
-       return dao.getAllMeals();
+       String email= application.getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+       Log.e("asddddddddddddddddddddddd",email);
+       return dao.getAllMeals(email);
     }
 
     @Override

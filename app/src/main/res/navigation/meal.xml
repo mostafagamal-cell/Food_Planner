@@ -64,4 +64,13 @@
             android:name="Meal"
             app:argType="com.example.foodplanner.Model.Meal" />
     </fragment>
+    <fragment
+        android:id="@+id/favouriteScreen"
+        android:name="com.example.foodplanner.FavouriteScreen.FavouriteScreen"
+        android:label="@string/Favourite_Meals"
+        tools:layout="@layout/fragment_favourite_screen">
+        <action
+            android:id="@+id/action_favouriteScreen_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
+    </fragment>
 </navigation>

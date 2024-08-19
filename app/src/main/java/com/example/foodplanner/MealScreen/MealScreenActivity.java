@@ -2,65 +2,81 @@ package com.example.foodplanner.MealScreen;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.databinding.ActivityMealScreenBinding;
-import com.google.android.material.navigation.NavigationBarItemView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MealScreenActivity extends AppCompatActivity {
-   public  NavController MealScreenActivitynavController;
-    ActivityMealScreenBinding binding;
-    int prv=0;
+
+    public NavController mealScreenNavController;
+    private ActivityMealScreenBinding binding;
+    private int previousTabId = R.id.meal_Fragment;  // Set the initial tab to "All Meals"
 
     @Override
     public boolean onSupportNavigateUp() {
-        Log.i("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","eeeeeeeeeeeeeeeeeeaa");
-        return MealScreenActivitynavController.navigateUp()||super.onSupportNavigateUp();
+        return mealScreenNavController.navigateUp() || super.onSupportNavigateUp();
     }
+    private boolean isNavigating = false;  // A flag to prevent recursion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         binding= ActivityMealScreenBinding.inflate(getLayoutInflater());
-         setContentView(binding.getRoot());
-         NavHostFragment navHost= (NavHostFragment) getSupportFragmentManager().findFragmentById(binding.fragmentContainerView2.getId());
-         MealScreenActivitynavController =navHost.getNavController();
-        binding.toolbar2.setTitle(getString(R.string.All_Meals));
+
+        // Inflate the layout using ViewBinding
+        binding = ActivityMealScreenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Set up the NavHostFragment and NavController
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(binding.fragmentContainerView2.getId());
+        mealScreenNavController = navHostFragment.getNavController();
+
+        // Set up the toolbar
         setSupportActionBar(binding.toolbar2);
-         NavigationUI.setupWithNavController(binding.bottomNavigationView,MealScreenActivitynavController);
-         NavigationUI.setupWithNavController(binding.toolbar2,MealScreenActivitynavController);
-         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-             if (item.getTitle().equals(getString(R.string.All_Meals))&&prv!=0){
-                 Log.i("eeeeeexxxxxxxeeeeeeee",item.getTitle().toString());
-                 MealScreenActivitynavController.navigate(R.id.meal_Fragment);
-                 prv=0;
-             }
-             else if (item.getTitle().equals(getString(R.string.Search))){
-              //   navController.navigate(R.id.search_Fragment);
-                 prv=1;
-             }
-             else if (item.getTitle().equals(getString(R.string.Favourite_Meals))){
-                // navController.navigate(R.id.favourite_Fragment);
-                 prv=2;
+        binding.toolbar2.setTitle(getString(R.string.All_Meals));
+        NavigationUI.setupWithNavController(binding.toolbar2, mealScreenNavController);
 
-             }
-             else if (item.getTitle().equals(getString(R.string.Meals_of_Week))){
-                 // navController.navigate(R.id.week_Fragment);
-                 prv=3;
+        // Set up BottomNavigationView with NavController
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, mealScreenNavController);
+        mealScreenNavController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+           Log.d("MealScreenActivity", "Destination changed: " + navDestination.getLabel());
+            if (!isNavigating) {
+                int destinationId = navDestination.getId();
+                if (destinationId == R.id.meal_Fragment) {
+                    previousTabId = R.id.meal_Fragment;
+                    binding.bottomNavigationView.setSelectedItemId(R.id.meal_Fragment);
+                } else if (destinationId == R.id.favouriteScreen) {
+                    previousTabId = R.id.favouriteScreen;
+                    binding.bottomNavigationView.setSelectedItemId(R.id.favouriteScreen);
+                }
+            }
+        });
 
-             }
-             return true;
-         });
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int selectedItemId = item.getItemId();
+            if (previousTabId != selectedItemId && !isNavigating) {
+                isNavigating = true;  // Prevent recursion by setting the flag
 
+                if (selectedItemId == R.id.meal_Fragment) {
+                    previousTabId = R.id.meal_Fragment;
+                    mealScreenNavController.navigate(R.id.meal_Fragment);
+                } else if (selectedItemId == R.id.favouriteScreen) {
+                    previousTabId = R.id.favouriteScreen;
+                    mealScreenNavController.navigate(R.id.favouriteScreen);
+                }
+
+                isNavigating = false;  // Reset the flag after navigation completes
+            }
+            return true;
+        });
     }
 }

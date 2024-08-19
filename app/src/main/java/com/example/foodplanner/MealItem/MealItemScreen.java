@@ -1,5 +1,6 @@
 package com.example.foodplanner.MealItem;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
+
         presenter.loadMealById(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
     }
 
@@ -81,6 +83,13 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         rec=new InteREc(this);
         rec.setIngradiants(i);
         binding.ingrrec.setAdapter(rec);
-
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                meal.email=email;
+                presenter.instertMeal(meal);
+            }
+        });
     }
 }
