@@ -35,4 +35,11 @@
     <string name="Countries">Countries</string>
     <string name="asyncButton">async Data</string>
     <string name="ReadFromCloud">Read From Cloud</string>
+    <string name="breakfast">BreakFast</string>
+    <string name="Lunch">Lunch</string>
+    <string name="Dinner">Dinner</string>
+    <string name="Date">Date : </string>
+    <string name="GetDate">Get Date</string>
+    <string name="save">Save</string>
+    <string name="exit">Exit</string>
 </resources>

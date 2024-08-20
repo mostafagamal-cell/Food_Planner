@@ -19,6 +19,7 @@ public class App extends Application implements ImainPresenter {
      public static String Guest= "Guest";
      public  static String Logged_in = "Logged_in";
      public  static String not_Logged_in="not_Logged_in";
+     public static Boolean naigateback=false;
     MyRepository repository;
      public  static  MutableLiveData<String> Login_State;
      public  static  MutableLiveData<Boolean>Connection_State;

@@ -12,13 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.FavouriteAdpter;
+import com.example.foodplanner.App;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Util.IfavouritePresenter;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentFavouriteScreenBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -38,26 +41,36 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
         super.onViewCreated(view, savedInstanceState);
         presenter = FavouritePresenter.getInstance(this,requireActivity().getApplication());
         adapter=new FavouriteAdpter(this);
-        presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
-            Meals meals1 =new Meals();
-            meals1.meals=new ArrayList<>(meals);
-            adapter.setcontect(meals1);
-            binding.FaveortaieREC.setAdapter(adapter);
-        });
-        binding.asyncButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-                presenter.saveOnClould(email,adapter.meals);
-            }
-        });
-        binding.button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-                presenter.readOnClould(email);
-            }
-        });
+            App.Login_State.observe(getViewLifecycleOwner(), login_state -> {
+                if (login_state .equals(App.Logged_in)){
+                    presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
+                        Meals meals1 =new Meals();
+                        meals1.meals=new ArrayList<>(meals);
+                        adapter.setcontect(meals1);
+                        binding.FaveortaieREC.setAdapter(adapter);
+                        binding.asyncButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                                presenter.saveOnClould(email,adapter.meals);
+                            }
+                        });
+                        binding.button2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                                presenter.readOnClould(email);
+                            }
+                        });
+
+
+                    });
+                }else{
+                    Toast.makeText(requireContext(), "you are not logged in", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
     }
 
     @Override

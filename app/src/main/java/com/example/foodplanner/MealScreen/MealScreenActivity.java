@@ -4,6 +4,7 @@ import static com.example.foodplanner.Util.InternetBroadcastReciver.booleanMutab
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,8 +18,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.databinding.ActivityMealScreenBinding;
-
 public class MealScreenActivity extends AppCompatActivity {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
     boolean started=false;
     public NavController mealScreenNavController;
     private ActivityMealScreenBinding binding;
@@ -56,7 +61,8 @@ public class MealScreenActivity extends AppCompatActivity {
              show();
             }
         });
-        mealScreenNavController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+        mealScreenNavController
+                .addOnDestinationChangedListener((navController, navDestination, bundle) -> {
             if (navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen){
                 show();
             }else {

@@ -3,6 +3,7 @@ package com.example.foodplanner.MealItem;
 import android.app.Application;
 
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Repository.MyRepository;
 
 public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.ImealScreenComm {
@@ -37,6 +38,11 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
     @Override
     public void saveMeal(Meal meal) {
         repository.insertFavourites(meal);
+    }
+
+    @Override
+    public void savePlan(Plan plan) {
+
     }
 
     @Override

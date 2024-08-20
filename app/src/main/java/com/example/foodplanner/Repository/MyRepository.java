@@ -18,6 +18,7 @@ import com.example.foodplanner.MealItem.ImealItemPreseter;
 import com.example.foodplanner.MealItem.MealItemPresenter;
 import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
+import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Util.IareaMealsPresenter;
 import com.example.foodplanner.Util.IcatigortItemPresenter;
 import com.example.foodplanner.Model.Categories;
@@ -133,6 +134,16 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     localDataSourse.deleteFavourites(meal);
     }
 
+    @Override
+    public void insertPlanned(Plan meal) {
+
+    }
+
+    @Override
+    public void deletePlanned(Plan meal) {
+
+    }
+
 
     @Override
     public void getMealByname(String name) {
@@ -235,8 +246,13 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
+    public LiveData<List<Plan>> getPlanned(String email) {
+        return localDataSourse.getPlanned(email);
+    }
+
+    @Override
   public void readFavouriteFromFireStore(String email) {
-        db.collection("users").document(email).get().addOnCompleteListener
+        db.collection(email).document("f").get().addOnCompleteListener
                 (new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -254,7 +270,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   @Override
   public void writeFavouriteFromFireStore(String email, Meals JsonData) {
-    db.collection("users").document(email).set(JsonData);
+    db.collection(email).document("f").set(JsonData);
 
   }
 

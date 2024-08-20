@@ -64,7 +64,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                             .error(R.drawable.ic_launcher_foreground).override(100, 100)).into(binding.myImage);
             Log.i("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",category.strCategory);
             binding.ImageText.setText(category.strCategory);
-            binding.ImageText.setGravity(Gravity.BOTTOM|Gravity.CENTER);
+            binding.ImageText.setGravity(Gravity.BOTTOM | Gravity.CENTER);
             binding.myCard.setOnClickListener(view -> {
                 clickListner.OnClick(category);
             });

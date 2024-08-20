@@ -1,31 +1,48 @@
 package com.example.foodplanner.MealItem;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.Adapter.InteREc;
 import com.example.foodplanner.Adapter.ItemCatigoryRec;
+import com.example.foodplanner.App;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.IngradintMeals;
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.MyClickListner;
+import com.example.foodplanner.auth.AuthActivity;
+import com.example.foodplanner.databinding.BotttommodelsheetBinding;
 import com.example.foodplanner.databinding.FragmentMealItemScreenBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -43,13 +60,14 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       // presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
+        presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
+         dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
 
-        dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
     }
 
     @Override
     public void dataArrived(Meal meal) {
+
         binding.ImageText.setText(meal.strMeal);
         binding.myTextCountry.setText(meal.strArea);
         Glide.with(this)
@@ -87,9 +105,119 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
             @Override
             public void onClick(View view) {
                 String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-                meal.email=email;
-                presenter.instertMeal(meal);
+                if (email!=null) {
+                    meal.email = email;
+                    presenter.instertMeal(meal);
+                }else{
+                    App.Login_State.setValue(App.not_Logged_in);
+                    Intent intent=new Intent(requireActivity(), AuthActivity.class);
+                    App.naigateback=true;
+                    startActivity(intent);
+                }
+         }
+
+        });
+        binding.floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetDialog(meal);
             }
         });
+    }
+    MutableLiveData<String> eee=new MutableLiveData<>("");
+    private void showData(){
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(MealItemScreen.this.requireContext(),
+                (ss,year1, month1, dayOfMonth) -> {
+                    // Update the TextView with the selected date
+                    eee.setValue(String.format("%d-%d-%d", year1, month1 + 1, dayOfMonth));
+
+                },
+                year, month, day);
+        datePickerDialog.show();
+
+    }
+    String type="";
+    private void showBottomSheetDialog(Meal meal) {
+        // Create the BottomSheetDialog
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this.requireContext());
+
+        // Inflate the layout
+        BotttommodelsheetBinding bottomSheetView = BotttommodelsheetBinding.inflate(getLayoutInflater());
+        // Set the content view
+        bottomSheetDialog.setContentView(bottomSheetView.getRoot());
+
+        // Setup any event listeners
+        String Data;
+
+        bottomSheetView.chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
+                if (bottomSheetView.brealfast.getId()==checkedId){
+                    type="Breakfast";
+                }else if (bottomSheetView.lunch.getId()==checkedId){
+                    type="Lunch";
+                }else if (bottomSheetView.dinner.getId()==checkedId){
+                    type="Dinner";
+                }else{
+                    type="";
+                }
+            }
+        });
+        bottomSheetView.button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showData();
+                if (!eee.getValue().isEmpty()&&!type.isEmpty()){
+                    Plan plan=copyMealToPlan(meal);
+                    presenter.savePlan(plan);
+                }
+                bottomSheetDialog.dismiss(); // Dismiss the bottom sheet
+            }
+        });
+        bottomSheetView.button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            showData();
+            }
+        });
+        eee.observe(this,e-> {
+            bottomSheetView.MyData.setText(e);
+        });
+        bottomSheetView.button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("dawee2465478",eee+"  "+type);
+                bottomSheetDialog.dismiss(); // Dismiss the bottom sheet
+            }
+        });
+        bottomSheetDialog.show();
+    }
+    private Plan copyMealToPlan(Meal meal) {
+        Plan plan = new Plan();
+
+        // Get all declared fields from the Meal class
+        Field[] fields = Meal.class.getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true); // Allow access to private fields
+            try {
+                // Copy each field value from Meal to Plan
+                field.set(plan, field.get(meal));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Set additional fields specific to Plan
+        plan.type = type;  // Or assign the correct value = "Monday";  // Or assign the correct value
+        plan.time = eee.getValue();  // Or assign the correct value
+
+        return plan;
     }
 }

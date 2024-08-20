@@ -39,13 +39,20 @@ public class LoginFragment extends Fragment implements IauthPresenter.IauthComm 
         super.onViewCreated(view, savedInstanceState);
         presenter=LoginPresenter.getInstance(this,this);
         App.Login_State.observe(getViewLifecycleOwner(),state->{
-            if (state.equals(App.Logged_in)){
-                startActivity(new Intent(getContext(), MealScreenActivity.class));
-                requireActivity().finish();
+            if (!App.naigateback) {
+                if (state.equals(App.Logged_in)) {
+                    startActivity(new Intent(getContext(), MealScreenActivity.class));
+                    requireActivity().finish();
                 }
-            if (state.equals(App.Guest)){
-                startActivity(new Intent(getContext(), MealScreenActivity.class));
-                requireActivity().finish();
+                if (state.equals(App.Guest)) {
+                    startActivity(new Intent(getContext(), MealScreenActivity.class));
+                    requireActivity().finish();
+                }
+            }else{
+                if (state.equals(App.Logged_in)) {
+                    App.naigateback=false;
+                    requireActivity().finish();
+                }
             }
         });
         binding.GustTextView.setOnClickListener(new View.OnClickListener() {
