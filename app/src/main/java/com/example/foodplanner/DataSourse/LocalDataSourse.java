@@ -79,6 +79,12 @@ public class LocalDataSourse implements IlocalDataSource {
             }
         }).start();
     }
+
+    @Override
+    public LiveData<Integer> checkinDatabase(String id) {
+        return dao.countMealByNameAndCalories(id);
+    }
+
     public static String getStartOfWeek() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());

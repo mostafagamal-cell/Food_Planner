@@ -24,4 +24,6 @@ LiveData<List<Plan>> getAllMealsPlanned(String email,String startDate ,String en
  void insertPlan(Plan plan);
  @Delete
  void deletePlane(Plan plan);
+ @Query("SELECT COUNT(*) FROM FavouriteMeals WHERE idMeal = :id")
+ LiveData<Integer> countMealByNameAndCalories(String id);
 }

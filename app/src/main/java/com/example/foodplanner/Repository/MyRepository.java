@@ -144,6 +144,11 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     }
 
+    @Override
+    public LiveData<Integer> checkinDatabase(String id) {
+        return localDataSourse.checkinDatabase(id);
+    }
+
 
     @Override
     public void getMealByname(String name) {

@@ -2,8 +2,10 @@ package com.example.foodplanner.MealScreen;
 
 import static com.example.foodplanner.Util.InternetBroadcastReciver.booleanMutableLiveData;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,14 +18,45 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.foodplanner.App;
 import com.example.foodplanner.R;
+import com.example.foodplanner.auth.AuthActivity;
 import com.example.foodplanner.databinding.ActivityMealScreenBinding;
+
+import java.util.Objects;
+
 public class MealScreenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        getSharedPreferences("user",MODE_PRIVATE).edit().putString("user",null).apply();
+        App.Login_State.setValue(App.not_Logged_in);
+        if (item.getTitle()==getString(R.string.Logout)){
+             Intent intent= new Intent(this, AuthActivity.class);
+             startActivity(intent);
+             finish();
+        }else{
+            App.naigateback=true;
+            Intent intent= new Intent(this, AuthActivity.class);
+            startActivity(intent);
+
+        }
+
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.topbar, menu);
+        if (App.Login_State.getValue().equals(App.Logged_in)){
+
+            menu.getItem(0).setTitle(getString(R.string.Logout));
+
+        }else
+        {
+            menu.getItem(0).setTitle(getString(R.string.login));
+        }
+        return true;
+    }
     boolean started=false;
     public NavController mealScreenNavController;
     private ActivityMealScreenBinding binding;
@@ -38,22 +71,25 @@ public class MealScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMealScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         // Set up the NavHostFragment and NavController
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(binding.fragmentContainerView2.getId());
         mealScreenNavController = navHostFragment.getNavController();
-
         // Set up the toolbar
-        setSupportActionBar(binding.toolbar2);
         binding.toolbar2.setTitle(getString(R.string.All_Meals));
-        NavigationUI.setupWithNavController(binding.toolbar2, mealScreenNavController);
 
+
+        setSupportActionBar(binding.toolbar2);
+
+        NavigationUI.setupWithNavController(binding.toolbar2, mealScreenNavController);
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, mealScreenNavController);
+        App.Login_State.observe(this, s -> {
+            invalidateMenu();
+        });
+
         booleanMutableLiveData.observe(this, aBoolean -> {
             if (!aBoolean){
                hide();
@@ -63,7 +99,7 @@ public class MealScreenActivity extends AppCompatActivity {
         });
         mealScreenNavController
                 .addOnDestinationChangedListener((navController, navDestination, bundle) -> {
-            if (navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen){
+            if (navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen||navDestination.getId()==R.id.loginFragment2||navDestination.getId()==R.id.createAccountFragment){
                 show();
             }else {
                 if (!booleanMutableLiveData.getValue()){

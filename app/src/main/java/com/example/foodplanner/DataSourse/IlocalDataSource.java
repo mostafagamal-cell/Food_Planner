@@ -14,4 +14,5 @@ public interface IlocalDataSource {
     void deleteFavourites(Meal meal);
     void insertPlanned(Plan meal);
     void deletePlanned(Plan meal);
+    LiveData<Integer> checkinDatabase(String id);
 }

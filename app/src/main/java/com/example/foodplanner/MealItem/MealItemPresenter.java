@@ -2,6 +2,8 @@ package com.example.foodplanner.MealItem;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Repository.MyRepository;
@@ -48,5 +50,10 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
     @Override
     public void dataArrived(Meal meal) {
         comm.dataArrived(meal);
+    }
+
+    @Override
+    public LiveData<Integer> checkinDatabase(String id) {
+        return repository.checkinDatabase(id);
     }
 }

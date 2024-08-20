@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 
+import android.os.IBinder;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import com.example.foodplanner.databinding.FragmentMealItemScreenBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.play.integrity.internal.b;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -60,14 +62,26 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
-         dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+          presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
+          dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+          presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(this.requireActivity(),e->{
+                Log.i("dasadasd223wee2465478",e+"");
+                if (e==1)
+                     binding.floatingActionButton.setImageResource(R.drawable.filledfavouriteicon);
+                else
+                    binding.floatingActionButton.setImageResource(R.drawable.unfilledfavouriteicon);
+          });
 
     }
 
     @Override
     public void dataArrived(Meal meal) {
-
+        String [] stps=meal.strInstructions.split("\n\r");
+        StringBuilder str= new StringBuilder();
+        for (int i = 0; i < stps.length; i++) {
+           str.append('\n').append("Step ").append(i + 1).append('\n').append(stps[i]).append('\n');
+        }
+        binding.mealstp.setText(str.toString());
         binding.ImageText.setText(meal.strMeal);
         binding.myTextCountry.setText(meal.strArea);
         Glide.with(this)
