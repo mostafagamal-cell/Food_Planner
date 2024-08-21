@@ -53,7 +53,9 @@ public class ItemCatigoryRec extends RecyclerView.Adapter<ItemCatigoryRec.ItemsR
         public void bind(Meal meals){
             Glide.with(binding.getRoot()).load(meals.strMealThumb).apply( new RequestOptions().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)).into(binding.myImage);
             binding.mytextitem.setText(meals.strMeal);
-            clickListner.OnClick(meals);
+            binding.getRoot().setOnClickListener(v -> {
+                clickListner.OnClick(meals);
+            });
         }
 
     }

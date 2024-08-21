@@ -75,7 +75,7 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
         binding.imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Meal_FragmentDirections.ActionMealFragmentToMealItemScreen actionMealFragmentToMealItemScreen = Meal_FragmentDirections.actionMealFragmentToMealItemScreen(meals.meals.get(0));
+            Meal_FragmentDirections.ActionMealFragment2ToMealItemScreen actionMealFragmentToMealItemScreen = Meal_FragmentDirections.actionMealFragment2ToMealItemScreen(meals.meals.get(0));
             NavHostFragment.findNavController(Meal_Fragment.this).navigate(actionMealFragmentToMealItemScreen);
             }
         });
@@ -104,18 +104,19 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
     }
     @Override
     public void OnClick(Category v) {
-    Meal_FragmentDirections.ActionMealFragmentToCatigoryItem actionMealFragmentToCatigoryItem = Meal_FragmentDirections.actionMealFragmentToCatigoryItem(v);
+
+    Meal_FragmentDirections.ActionMealFragment2ToCatigoryMeals actionMealFragmentToCatigoryItem = Meal_FragmentDirections.actionMealFragment2ToCatigoryMeals(v);
     NavHostFragment.findNavController(this).navigate(actionMealFragmentToCatigoryItem);
     }
 
     @Override
     public void OnClick(String area,int type) {
       if (type==0) {
-          Meal_FragmentDirections.ActionMealFragmentToAreaItemFragment actionMealFragmentToAreaItemFragment = Meal_FragmentDirections.actionMealFragmentToAreaItemFragment(area);
-          NavHostFragment.findNavController(this).navigate(actionMealFragmentToAreaItemFragment);
+
+          NavHostFragment.findNavController(this).navigate(Meal_FragmentDirections.actionMealFragment2ToAreaItemFragment(area));
       }else{
-          Meal_FragmentDirections.ActionMealFragmentToIngItemFrag actionMealFragmentToIngredientItemFragment = Meal_FragmentDirections.actionMealFragmentToIngItemFrag(area);
-          NavHostFragment.findNavController(this).navigate(actionMealFragmentToIngredientItemFragment);
+
+          NavHostFragment.findNavController(this).navigate( Meal_FragmentDirections.actionMealFragment2ToIngItemFrag(area));
       }
-      }
+    }
 }

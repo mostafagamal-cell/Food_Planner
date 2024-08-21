@@ -2,37 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/meal_Fragment"
-    android:id="@+id/meal">
+    android:id="@+id/meal"
+    app:startDestination="@id/meal_Fragment2">
 
-    <fragment
-        android:id="@+id/meal_Fragment"
-        android:name="com.example.foodplanner.MealScreen.Meal_Fragment"
-        android:label="@string/All_Meals">
-        <action
-            android:id="@+id/action_meal_Fragment_to_catigoryItem"
-            app:destination="@id/catigoryItem" />
-        <action
-            android:id="@+id/action_meal_Fragment_to_areaItemFragment"
-            app:destination="@id/areaItemFragment" />
-        <action
-            android:id="@+id/action_meal_Fragment_to_ingItemFrag"
-            app:destination="@id/ingItemFrag" />
-        <action
-            android:id="@+id/action_meal_Fragment_to_mealItemScreen"
-            app:destination="@id/mealItemScreen" />
-    </fragment>
-    <fragment
-        android:id="@+id/catigoryItem"
-        android:name="com.example.foodplanner.CatigoryItemScreen.CatigoryMeals"
-        android:label="CatigoryItem" >
-        <argument
-            android:name="Cat"
-            app:argType="com.example.foodplanner.Model.Category" />
-        <action
-            android:id="@+id/action_catigoryItem_to_mealItemScreen2"
-            app:destination="@id/mealItemScreen" />
-    </fragment>
     <fragment
         android:id="@+id/areaItemFragment"
         android:name="com.example.foodplanner.AreaItem.AreaItemFragment"
@@ -80,6 +52,34 @@
         tools:layout="@layout/fragment_plan_screen" >
         <action
             android:id="@+id/action_planScreen_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/catigoryMeals"
+        android:name="com.example.foodplanner.CatigoryItemScreen.CatigoryMeals"
+        android:label="CatigoryMeals" >
+        <argument
+            android:name="Cat"
+            app:argType="com.example.foodplanner.Model.Category" />
+        <action
+            android:id="@+id/action_catigoryMeals_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/meal_Fragment2"
+        android:name="com.example.foodplanner.MealScreen.Meal_Fragment"
+        android:label="Meal_Fragment" >
+        <action
+            android:id="@+id/action_meal_Fragment2_to_areaItemFragment"
+            app:destination="@id/areaItemFragment" />
+        <action
+            android:id="@+id/action_meal_Fragment2_to_catigoryMeals"
+            app:destination="@id/catigoryMeals" />
+        <action
+            android:id="@+id/action_meal_Fragment2_to_ingItemFrag"
+            app:destination="@id/ingItemFrag" />
+        <action
+            android:id="@+id/action_meal_Fragment2_to_mealItemScreen"
             app:destination="@id/mealItemScreen" />
     </fragment>
 </navigation>
