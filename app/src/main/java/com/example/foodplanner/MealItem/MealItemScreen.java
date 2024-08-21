@@ -65,7 +65,10 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
           presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
-          dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+        email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+
+        dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+
           presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(this.requireActivity(),e->{
                 Log.i("dasadasd223wee2465478",e+"");
                 if (e==1)
@@ -120,7 +123,6 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
                 if (email!=null) {
                     meal.email = email;
                     presenter.instertMeal(meal);
@@ -136,6 +138,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         binding.floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 showBottomSheetDialog(meal);
             }
         });
@@ -235,8 +238,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                 e.printStackTrace();
             }
         }
-
-        // Set additional fields specific to Plan
+        plan.email=email;
         plan.type = type;  // Or assign the correct value = "Monday";
         plan.time=name;
         return plan;

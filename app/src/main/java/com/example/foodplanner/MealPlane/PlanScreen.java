@@ -64,12 +64,11 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
 
         binding.dayspinner.setOnItemSelectedListener(this);
         binding.typespinner.setOnItemSelectedListener(this);
-
+        planRec.filterDay(getString(R.string.Non));
+        planRec.filterType(getString(R.string.Non));
         if (email != null) {
             presenter.getPlans(email).observe(this.requireActivity(), plans -> {
                 planRec.setcontent(plans);
-                planRec.filterDay(getString(R.string.Non));
-                planRec.filterType(getString(R.string.Non));
                 binding.planrec.setAdapter(planRec);
             });
         } else {

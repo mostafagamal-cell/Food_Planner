@@ -36,6 +36,13 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
         this.clickListner=clickListner;
     }
     public void setcontent(List<Plan> plans){
+
+        myplans.clear();
+        myplans.addAll(plans);
+        applyFilters();
+        notifyDataSetChanged();
+    }
+    public void setupdate(List<Plan> plans){
         filterplan.clear();
         for (int i = 0; i < plans.size(); i++) {
             if (!myplans.contains(plans.get(i))){

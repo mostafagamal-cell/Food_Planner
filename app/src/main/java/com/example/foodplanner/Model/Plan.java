@@ -1,11 +1,13 @@
 package com.example.foodplanner.Model;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
-@Entity(tableName = "Plans", primaryKeys = {"Day", "time","type"})
+
+
+@Entity(tableName = "Plans", primaryKeys = {"Day", "time","type","email"})
 public class Plan extends Meal {
+
     @NonNull
     public String Day;
     @NonNull

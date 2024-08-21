@@ -12,9 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "FavouriteMeals")
 public class Meal implements Parcelable {
+    @NonNull
     public String email;
     @PrimaryKey
-    @NotNull
+    @NonNull
     public String idMeal;
     public String strMeal;
     @Ignore
