@@ -116,6 +116,7 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     @Override
     public void OnClickDelte(Plan meal) {
         presenter.delete_plan(meal);
+        Toast.makeText(this.getActivity(), "Plan Deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
