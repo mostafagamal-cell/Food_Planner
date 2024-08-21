@@ -45,6 +45,8 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -118,7 +120,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                 email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
                 if (email!=null) {
                     meal.email = email;
                     presenter.instertMeal(meal);
@@ -138,6 +140,8 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
             }
         });
     }
+    String email;
+    String dayName="";
     MutableLiveData<String> eee=new MutableLiveData<>("");
     private void showData(){
         final Calendar calendar = Calendar.getInstance();
@@ -148,18 +152,23 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         DatePickerDialog datePickerDialog = new DatePickerDialog(MealItemScreen.this.requireContext(),
                 (ss,year1, month1, dayOfMonth) -> {
                     // Update the TextView with the selected date
-                    eee.setValue(String.format("%d-%d-%d", year1, month1 + 1, dayOfMonth));
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
+                      eee.setValue(String.format("%d-%d-%d", year1, month1 + 1, dayOfMonth));
+                     calendar.set(year1, month1, dayOfMonth);
+                      name =calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+                     dayName = sdf.format(calendar.getTime());
                 },
                 year, month, day);
         datePickerDialog.show();
 
     }
+    String name="";
     String type="";
     private void showBottomSheetDialog(Meal meal) {
         // Create the BottomSheetDialog
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this.requireContext());
-
+        bottomSheetDialog.setCancelable(false);
         // Inflate the layout
         BotttommodelsheetBinding bottomSheetView = BotttommodelsheetBinding.inflate(getLayoutInflater());
         // Set the content view
@@ -182,13 +191,12 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                 }
             }
         });
-        bottomSheetView.button4.setOnClickListener(new View.OnClickListener() {
+        bottomSheetView.button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                showData();
                 if (!eee.getValue().isEmpty()&&!type.isEmpty()){
                     Plan plan=copyMealToPlan(meal);
+                    plan.Day=dayName;
                     presenter.savePlan(plan);
                 }
                 bottomSheetDialog.dismiss(); // Dismiss the bottom sheet
@@ -203,7 +211,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         eee.observe(this,e-> {
             bottomSheetView.MyData.setText(e);
         });
-        bottomSheetView.button5.setOnClickListener(new View.OnClickListener() {
+        bottomSheetView.button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("dawee2465478",eee+"  "+type);
@@ -229,9 +237,8 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         }
 
         // Set additional fields specific to Plan
-        plan.type = type;  // Or assign the correct value = "Monday";  // Or assign the correct value
-        plan.time = eee.getValue();  // Or assign the correct value
-
+        plan.type = type;  // Or assign the correct value = "Monday";
+        plan.time=name;
         return plan;
     }
 }

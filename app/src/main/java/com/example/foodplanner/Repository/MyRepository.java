@@ -38,7 +38,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresenter {
 
@@ -137,6 +143,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     @Override
     public void insertPlanned(Plan meal) {
 
+        localDataSourse.insertPlanned(meal);
     }
 
     @Override
@@ -148,6 +155,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     public LiveData<Integer> checkinDatabase(String id) {
         return localDataSourse.checkinDatabase(id);
     }
+
 
 
     @Override
@@ -300,4 +308,5 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
              if (Imealscreenpresenter!=null)
                  Imealscreenpresenter.onDataArrivedCountry(countries);
     }
+
 }

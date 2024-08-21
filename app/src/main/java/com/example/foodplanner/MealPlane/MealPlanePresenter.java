@@ -7,8 +7,18 @@ import androidx.lifecycle.LiveData;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Repository.MyRepository;
+import com.google.type.DateTime;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MealPlanePresenter implements ImealPlannerPresenter{
     private static MealPlanePresenter presenter;
@@ -28,6 +38,9 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
     public void insertPlan(Plan plan) {
         repository.insertPlanned(plan);
     }
+
+
+
     public static MealPlanePresenter getInstance(ImealPlannerPresenter.Comm comm , Application application) {
        if (presenter==null){
            presenter=new MealPlanePresenter(application);
@@ -35,4 +48,5 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
         presenter.comm=comm;
         return presenter ;
     }
+
 }

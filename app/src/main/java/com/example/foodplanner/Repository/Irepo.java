@@ -11,6 +11,7 @@ import com.example.foodplanner.DataSourse.IlocalDataSource;
 import com.example.foodplanner.DataSourse.IremoteDataSource;
 import com.example.foodplanner.Model.Plan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Irepo  extends IlocalDataSource, IremoteDataSource {
@@ -31,6 +32,5 @@ public interface Irepo  extends IlocalDataSource, IremoteDataSource {
     void onIngradintListArraived(Ingradiants categories);
     void onError(String message);
     void countryListArraived(Countries countries);
-
     }
 }

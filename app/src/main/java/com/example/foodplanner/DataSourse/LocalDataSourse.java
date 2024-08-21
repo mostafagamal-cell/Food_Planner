@@ -13,10 +13,12 @@ import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Repository.Irepo;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class LocalDataSourse implements IlocalDataSource {
     MealDao dao;
@@ -34,9 +36,8 @@ public class LocalDataSourse implements IlocalDataSource {
 
     @Override
     public LiveData<List<Plan>> getPlanned(String email) {
-        String startOfWeek =getStartOfWeek();
-        String endOfWeek = getEndOfWeek();
-        return dao.getAllMealsPlanned(email,startOfWeek,endOfWeek);
+        ArrayList<String> a= getStartAndEndDate();
+        return dao.getAllMealsPlanned(email,a.get(0),a.get(1));
     }
 
     @Override
@@ -84,19 +85,25 @@ public class LocalDataSourse implements IlocalDataSource {
     public LiveData<Integer> checkinDatabase(String id) {
         return dao.countMealByNameAndCalories(id);
     }
-
-    public static String getStartOfWeek() {
+    @Override
+    public ArrayList<String> getStartAndEndDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        Date start = calendar.getTime();
-        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(start);
-    }
-
-    public static String getEndOfWeek() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
-        Date end = calendar.getTime();
-        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(end);
+        Date date= new Date();
+        calendar.setTime(date);
+        calendar.setTime(date);
+        ArrayList<String> strings =new ArrayList<>();
+        String o="";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        while (!Objects.requireNonNull(o).equalsIgnoreCase("Saturday")){
+            calendar.add(Calendar.DAY_OF_YEAR,-1);
+            o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+        }
+        strings.add(sdf.format(calendar.getTime()));
+        while (!Objects.requireNonNull(o).equalsIgnoreCase("Friday")){
+            calendar.add(Calendar.DAY_OF_YEAR,1);
+            o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+        }
+        strings.add(sdf.format(calendar.getTime()));
+        return strings;
     }
 }

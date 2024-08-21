@@ -29,8 +29,9 @@ public class MealScreenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         getSharedPreferences("user",MODE_PRIVATE).edit().putString("user",null).apply();
-        App.Login_State.setValue(App.not_Logged_in);
+
         if (item.getTitle()==getString(R.string.Logout)){
+             App.Login_State.setValue(App.not_Logged_in);
              Intent intent= new Intent(this, AuthActivity.class);
              startActivity(intent);
              finish();
@@ -40,6 +41,8 @@ public class MealScreenActivity extends AppCompatActivity {
             startActivity(intent);
 
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -99,7 +102,7 @@ public class MealScreenActivity extends AppCompatActivity {
         });
         mealScreenNavController
                 .addOnDestinationChangedListener((navController, navDestination, bundle) -> {
-            if (navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen||navDestination.getId()==R.id.loginFragment2||navDestination.getId()==R.id.createAccountFragment){
+            if (navDestination.getId() == R.id.planScreen||navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen||navDestination.getId()==R.id.loginFragment2||navDestination.getId()==R.id.createAccountFragment){
                 show();
             }else {
                 if (!booleanMutableLiveData.getValue()){
@@ -119,6 +122,8 @@ public class MealScreenActivity extends AppCompatActivity {
                     mealScreenNavController.popBackStack(mealScreenNavController.getGraph().getStartDestinationId(), false);
                 } else if (selectedItemId == R.id.favouriteScreen) {
                     mealScreenNavController.navigate(R.id.favouriteScreen);
+                }else if (selectedItemId==R.id.planScreen){
+                    mealScreenNavController.navigate(R.id.planScreen);
                 }
             return true;
         });

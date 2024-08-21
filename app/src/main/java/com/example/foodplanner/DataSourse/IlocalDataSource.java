@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IlocalDataSource {
@@ -15,4 +16,5 @@ public interface IlocalDataSource {
     void insertPlanned(Plan meal);
     void deletePlanned(Plan meal);
     LiveData<Integer> checkinDatabase(String id);
+   default ArrayList<String> getStartAndEndDate(){return null;}
 }

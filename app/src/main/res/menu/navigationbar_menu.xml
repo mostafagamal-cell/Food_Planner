@@ -12,7 +12,9 @@
             android:icon="@drawable/icon_favorites"
         android:id="@+id/favouriteScreen"
         />
-    <item android:title="@string/Meals_of_Week"
+    <item
+        android:id="@id/planScreen"
+        android:title="@string/Meals_of_Week"
         android:icon="@android:drawable/ic_menu_my_calendar"
         />
 

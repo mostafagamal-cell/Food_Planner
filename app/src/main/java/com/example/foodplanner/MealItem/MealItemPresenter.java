@@ -44,6 +44,7 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
 
     @Override
     public void savePlan(Plan plan) {
+        repository.insertPlanned(plan);
 
     }
 
