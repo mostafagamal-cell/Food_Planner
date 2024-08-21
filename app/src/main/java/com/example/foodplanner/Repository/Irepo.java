@@ -10,6 +10,7 @@ import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.DataSourse.IlocalDataSource;
 import com.example.foodplanner.DataSourse.IremoteDataSource;
 import com.example.foodplanner.Model.Plan;
+import com.example.foodplanner.Model.PlannesMeal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 public interface Irepo  extends IlocalDataSource, IremoteDataSource {
       LiveData<List<Plan>> getPlanned(String email);
       void  readFavouriteFromFireStore(String email);
+      void  writePlanedFromFireStore(String email, PlannesMeal JsonData);
+      void  readPlanedFromFireStore(String email);
       void  writeFavouriteFromFireStore(String email,Meals JsonData);
       void onError(String message);
     interface Communicator  {

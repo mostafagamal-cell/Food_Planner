@@ -20,6 +20,7 @@ import com.example.foodplanner.MealItem.MealItemPresenter;
 import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Plan;
+import com.example.foodplanner.Model.PlannesMeal;
 import com.example.foodplanner.Util.IareaMealsPresenter;
 import com.example.foodplanner.Util.IcatigortItemPresenter;
 import com.example.foodplanner.Model.Categories;
@@ -275,7 +276,8 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()){
                             Meals meals = document.toObject(Meals.class);
-                            if (ifavouritePresenter!=null) ifavouritePresenter.dataArriveFromCloud(meals);
+                            if (ifavouritePresenter!=null)
+                                ifavouritePresenter.dataArriveFromCloud(meals);
                         }
                     }
                     }
@@ -283,7 +285,41 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   }
 
-  @Override
+    @Override
+    public void writePlanedFromFireStore(String email, PlannesMeal JsonData) {
+        db.collection(email).document("P").set(JsonData).addOnCompleteListener(
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(application, "Success", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(application, "Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void readPlanedFromFireStore(String email) {
+        db.collection(email).document("P").get().addOnCompleteListener
+                (new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()){
+                                Meals meals = document.toObject(Meals.class);
+                                if (ifavouritePresenter!=null)
+                                    ifavouritePresenter.dataArriveFromCloud(meals);
+                            }
+                        }
+                    }
+                });
+    }
+
+    @Override
   public void writeFavouriteFromFireStore(String email, Meals JsonData) {
     db.collection(email).document("f").set(JsonData).addOnCompleteListener(
         new OnCompleteListener<Void>() {

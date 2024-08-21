@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.foodplanner.Adapter.PlanRec;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
+import com.example.foodplanner.Model.PlannesMeal;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FavouriteitemBinding;
@@ -89,6 +90,16 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
         } else {
             Toast.makeText(this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
         }
+        binding.button6.setOnClickListener(v -> {
+            if (email!=null){
+                PlannesMeal plannesMeal = new PlannesMeal();
+                plannesMeal.meals=planRec.myplans;
+                presenter.saveplans(plannesMeal,email);
+            }else{
+                Toast.makeText(this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     @Override

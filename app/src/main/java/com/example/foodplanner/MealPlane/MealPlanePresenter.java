@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
+import com.example.foodplanner.Model.PlannesMeal;
 import com.example.foodplanner.Repository.MyRepository;
 import com.google.type.DateTime;
 
@@ -41,6 +42,16 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
         repository.insertPlanned(plan);
     }
 
+
+    @Override
+    public void loadplane(String email) {
+
+    }
+
+    @Override
+    public void saveplans(PlannesMeal plan, String email) {
+    repository.writePlanedFromFireStore(email,plan);
+    }
 
 
     public static MealPlanePresenter getInstance(ImealPlannerPresenter.Comm comm , Application application) {
