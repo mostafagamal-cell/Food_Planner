@@ -29,6 +29,9 @@
         <argument
             android:name="Cat"
             app:argType="com.example.foodplanner.Model.Category" />
+        <action
+            android:id="@+id/action_catigoryItem_to_mealItemScreen2"
+            app:destination="@id/mealItemScreen" />
     </fragment>
     <fragment
         android:id="@+id/areaItemFragment"
