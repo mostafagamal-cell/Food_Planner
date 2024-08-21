@@ -29,10 +29,14 @@ import java.util.List;
 public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
     MyClickListner clickListner;
     ArrayList<Plan> myplans=new ArrayList<>();
+    ArrayList<Plan> filterplan=new ArrayList<>();
+   public String f1;
+   public String f2;
     public PlanRec(MyClickListner clickListner){
         this.clickListner=clickListner;
     }
     public void setcontent(List<Plan> plans){
+        filterplan.clear();
         for (int i = 0; i < plans.size(); i++) {
             if (!myplans.contains(plans.get(i))){
                 myplans.add(plans.get(i));
@@ -42,6 +46,29 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
                 myplans.add(plans.get(i));
             }
         }
+        applyFilters();
+        notifyDataSetChanged();
+    }
+
+    public void filterDay(String filter) {
+        f2 = filter;
+        applyFilters();
+    }
+
+    public void filterType(String filter) {
+        f1 = filter;
+        applyFilters();
+    }
+    private void applyFilters() {
+        filterplan.clear();
+        for (Plan plan : myplans) {
+            boolean matchesType = f1.equalsIgnoreCase("None") || plan.type.equalsIgnoreCase(f1);
+            boolean matchesDay = f2.equalsIgnoreCase("None") || plan.time.equalsIgnoreCase(f2);
+            if (matchesType && matchesDay) {
+                filterplan.add(plan);
+            }
+        }
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
@@ -51,12 +78,12 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(myplans.get(position));
+        holder.bind(filterplan.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return myplans.size();
+        return filterplan.size();
     }
 
     class MyViewHolder extends  RecyclerView.ViewHolder{
@@ -78,7 +105,7 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
             binding.imageButton2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    clickListner.OnClickDelte((Meal) plan);
+                    clickListner.OnClickDelte(plan);
                 }
             });
         }

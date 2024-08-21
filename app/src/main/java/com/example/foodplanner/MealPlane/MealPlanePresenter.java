@@ -48,5 +48,8 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
         presenter.comm=comm;
         return presenter ;
     }
+    public void delete_plan(Plan plan){
+        repository.deletePlanned(plan);
+    }
 
 }

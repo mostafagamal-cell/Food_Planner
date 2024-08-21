@@ -11,7 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class InternetBroadcastReciver extends BroadcastReceiver {
-    public static MutableLiveData<Boolean>booleanMutableLiveData=new MutableLiveData<>();
+    public static MutableLiveData<Boolean>booleanMutableLiveData=new MutableLiveData<>(false);
     @Override
     public void onReceive(Context context, Intent intent) {
     ConnectivityManager connectivityManager= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

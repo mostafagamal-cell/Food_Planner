@@ -148,7 +148,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void deletePlanned(Plan meal) {
-
+    localDataSourse.deletePlanned(meal);
     }
 
     @Override

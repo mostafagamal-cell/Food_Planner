@@ -22,7 +22,6 @@ public class App extends Application implements ImainPresenter {
      public static Boolean naigateback=false;
     MyRepository repository;
      public  static  MutableLiveData<String> Login_State;
-     public  static  MutableLiveData<Boolean>Connection_State;
     @Override
     public void onCreate() {
         super.onCreate();

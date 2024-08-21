@@ -36,6 +36,7 @@
     <string name="asyncButton">async Data</string>
     <string name="ReadFromCloud">Read From Cloud</string>
     <string name="breakfast">BreakFast</string>
+    <string name="Non">None</string>
     <string name="Lunch">Lunch</string>
     <string name="Dinner">Dinner</string>
     <string name="Date">Date : </string>
@@ -44,11 +45,12 @@
     <string name="exit">Exit</string>
     <string name="Logout">Logout</string>
     <string name="day">"Day : "</string>
-    <string name="Monday">Monday\t</string>
+    <string name="Monday">Monday</string>
     <string name="Saturday">Saturday</string>
     <string name="Friday">Friday</string>
     <string name="Thursday">Thursday</string>
     <string name="Wednesday">Wednesday</string>
-    <string name="Tuesday">Tuesday\t</string>
+    <string name="Tuesday">Tuesday</string>
     <string name="Sunday">Sunday</string>
+    <string name="_type">Type :</string>
 </resources>
