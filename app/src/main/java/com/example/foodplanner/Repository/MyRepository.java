@@ -4,6 +4,7 @@ package com.example.foodplanner.Repository;
 import android.app.Application;
 import android.hardware.Camera;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -60,11 +61,12 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   private static final String TAG = "MyRepository";
   private final LocalDataSourse localDataSourse;
   private final FirebaseFirestore db;
+  private  final Application application;
   private static IfavouritePresenter ifavouritePresenter;
   private final RemoteDataSourse remoteDataSourse;
   private MyRepository(Application application){
       db = FirebaseFirestore.getInstance();
-
+        this.application=application;
       remoteDataSourse = new RemoteDataSourse(this);
       localDataSourse = new LocalDataSourse(application);
   }
@@ -283,7 +285,18 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
   @Override
   public void writeFavouriteFromFireStore(String email, Meals JsonData) {
-    db.collection(email).document("f").set(JsonData);
+    db.collection(email).document("f").set(JsonData).addOnCompleteListener(
+        new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(application, "Success", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(application, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    );
 
   }
 

@@ -5,12 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodplanner.Adapter.ItemIngrRec;
+import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IingPresenter;
@@ -37,6 +39,13 @@ public class IngItemFrag extends Fragment implements IingPresenter.IareaMealsPre
             presenter=IngPresenter.getInstance(this,requireActivity().getApplication());
             presenter.loadMeals(ing);
         }
+    }
+
+    @Override
+    public void OnClick(Meal meal) {
+        IngItemFragDirections.ActionIngItemFragToMealItemScreen action = IngItemFragDirections.actionIngItemFragToMealItemScreen(meal);
+        NavHostFragment.findNavController(this).navigate(action);
+
     }
 
     @Override

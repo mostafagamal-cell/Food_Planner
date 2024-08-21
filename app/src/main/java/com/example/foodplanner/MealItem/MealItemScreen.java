@@ -67,9 +67,9 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         super.onViewCreated(view, savedInstanceState);
           presenter= MealItemPresenter.getInstance(this,this.requireActivity().getApplication());
         email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-
-        dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
-
+        if (MealItemScreenArgs.fromBundle(getArguments()).getMeal().strInstructions!=null)
+                dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+        else presenter.loadMealById(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
           presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(this.requireActivity(),e->{
                 Log.i("dasadasd223wee2465478",e+"");
                 if (e==1)

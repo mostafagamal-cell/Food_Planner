@@ -50,11 +50,11 @@ public class ItemIngrRec  extends RecyclerView.Adapter<ItemIngrRec.ItemIngrRecVi
             super(itemView.getRoot());
             binding=itemView;
         }
-        public void bind(Meal meals){
-            Glide.with(binding.getRoot()).load(meals.strMealThumb).apply( new RequestOptions().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)).into(binding.myImage);
-            binding.mytextitem.setText(meals.strMeal);
+        public void bind(Meal eee){
+            Glide.with(binding.getRoot()).load(eee.strMealThumb).apply( new RequestOptions().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)).into(binding.myImage);
+            binding.mytextitem.setText(eee.strMeal);
             binding.getRoot().setOnClickListener(view -> {
-                clickListner.OnClick(meals);
+                clickListner.OnClick(eee);
             });
         }
     }

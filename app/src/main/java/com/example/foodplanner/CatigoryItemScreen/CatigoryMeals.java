@@ -50,8 +50,8 @@ public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.Ic
 
     @Override
     public void OnClick(Meal meal) {
-        CatigoryMealsDirections.ActionCatigoryItemToMealItemScreen catigoryMealsDirections = CatigoryMealsDirections.actionCatigoryItemToMealItemScreen(meal);
-        NavHostFragment.findNavController(this).navigate(catigoryMealsDirections);
+        CatigoryMealsDirections.ActionCatigoryItemToMealItemScreen actionCatigoryItemToMealItemScreen = CatigoryMealsDirections.actionCatigoryItemToMealItemScreen(meal);
+       NavHostFragment.findNavController(this).navigate(actionCatigoryItemToMealItemScreen);
     }
 
     @Override
