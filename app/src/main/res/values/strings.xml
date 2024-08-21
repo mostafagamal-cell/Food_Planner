@@ -44,4 +44,11 @@
     <string name="exit">Exit</string>
     <string name="Logout">Logout</string>
     <string name="day">"Day : "</string>
+    <string name="Monday">Monday\t</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Friday">Friday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Tuesday">Tuesday\t</string>
+    <string name="Sunday">Sunday</string>
 </resources>

@@ -30,9 +30,9 @@ public class MealScreenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         getSharedPreferences("user",MODE_PRIVATE).edit().putString("user",null).apply();
 
-        if (item.getTitle()==getString(R.string.Logout)){
-             App.Login_State.setValue(App.not_Logged_in);
-             Intent intent= new Intent(this, AuthActivity.class);
+        if (Objects.equals(App.Login_State.getValue(), App.Logged_in)){
+            App.Login_State.setValue(App.not_Logged_in);
+            Intent intent= new Intent(this, AuthActivity.class);
              startActivity(intent);
              finish();
         }else{
