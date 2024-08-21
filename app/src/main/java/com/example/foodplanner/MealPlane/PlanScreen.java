@@ -25,14 +25,16 @@ import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FavouriteitemBinding;
 import com.example.foodplanner.databinding.FragmentPlanScreenBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, MyClickListner, AdapterView.OnItemSelectedListener {
     FragmentPlanScreenBinding binding;
     PlanRec planRec;
     MealPlanePresenter presenter;
-    private String[] typs;
-    private String[] days;
+    private ArrayList<String> typs=new ArrayList<>();
+    private ArrayList<String> days=new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,10 +46,15 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize the arrays now that the context is available
-        typs = new String[]{getString(R.string.Non), getString(R.string.breakfast), getString(R.string.Lunch), getString(R.string.Dinner)};
-        days = new String[]{getString(R.string.Non), getString(R.string.Saturday), getString(R.string.Sunday), getString(R.string.Monday),
-                getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday), getString(R.string.Friday)};
+        typs.addAll(Arrays.asList(
+                getString(R.string.Non),
+                getString(R.string.breakfast),
+                getString(R.string.Lunch),
+                getString(R.string.Dinner)
+        ));
+
+        days.addAll(Arrays.asList(getString(R.string.Non), getString(R.string.Saturday), getString(R.string.Sunday), getString(R.string.Monday),
+                getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday), getString(R.string.Friday)));
 
         presenter = MealPlanePresenter.getInstance(this, this.getActivity().getApplication());
         String email = this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
@@ -64,8 +71,16 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
 
         binding.dayspinner.setOnItemSelectedListener(this);
         binding.typespinner.setOnItemSelectedListener(this);
-        planRec.filterDay(getString(R.string.Non));
-        planRec.filterType(getString(R.string.Non));
+
+            if (presenter.f1==null||presenter.f2==null) {
+                presenter.f1 = getString(R.string.Non);
+                presenter.f2 = getString(R.string.Non);
+            }
+            binding.dayspinner.setSelection(typs.indexOf(presenter.f1));
+           binding.typespinner.setSelection(days.indexOf(presenter.f2));
+
+        planRec.filterDay(presenter.f1);
+            planRec.filterType(presenter.f2);
         if (email != null) {
             presenter.getPlans(email).observe(this.requireActivity(), plans -> {
                 planRec.setcontent(plans);
@@ -95,9 +110,11 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (adapterView.getId() == binding.dayspinner.getId()) {
-            planRec.filterDay(days[i]);
+            planRec.filterDay(days.get(i));
+            presenter.f1=days.get(i);
         } else if (adapterView.getId() == binding.typespinner.getId()) {
-            planRec.filterType(typs[i]);
+            planRec.filterType(typs.get(i));
+            presenter.f2=typs.get(i);
         }
     }
 
@@ -105,4 +122,5 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     public void onNothingSelected(AdapterView<?> adapterView) {
         // Do nothing
     }
+
 }

@@ -21,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -138,8 +139,12 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         binding.floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (email!=null) {
+                    showBottomSheetDialog(meal);
 
-                showBottomSheetDialog(meal);
+                }else{
+                    Toast.makeText(MealItemScreen.this.requireContext(), "plz Login", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
