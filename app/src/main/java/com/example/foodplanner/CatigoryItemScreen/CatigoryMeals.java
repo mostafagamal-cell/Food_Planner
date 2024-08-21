@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +18,10 @@ import com.example.foodplanner.Model.Category;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Util.IcatigortItemPresenter;
+import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentCatigoryItemBinding;
 
-public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.IcatigortItemComm {
+public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.IcatigortItemComm, MyClickListner {
     FragmentCatigoryItemBinding binding;
     IcatigortItemPresenter presenter;
     ItemCatigoryRec rec;
@@ -42,8 +44,13 @@ public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.Ic
             ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(meal.strCategory);
 
         }
-        rec= new ItemCatigoryRec();
+        rec= new ItemCatigoryRec(this);
         binding.recyclerView.setAdapter(rec);
+    }
+
+    @Override
+    public void OnClick(Meal meal) {
+        NavHostFragment.findNavController(this).navigate(CatigoryMealsDirections.actionCatigoryItemToMealItemScreen(meal));
     }
 
     @Override

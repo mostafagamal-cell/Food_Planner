@@ -11,13 +11,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.CatitemBinding;
 
 import java.util.ArrayList;
 
 public class ItemCatigoryRec extends RecyclerView.Adapter<ItemCatigoryRec.ItemsRecViewHolder> {
     private Meals meals= new Meals();
-    public ItemCatigoryRec(){
+    MyClickListner clickListner;
+    public ItemCatigoryRec(MyClickListner clickListner){
+        this.clickListner= clickListner;
         meals.meals=new ArrayList<Meal>();
     }
     @NonNull
@@ -50,6 +53,7 @@ public class ItemCatigoryRec extends RecyclerView.Adapter<ItemCatigoryRec.ItemsR
         public void bind(Meal meals){
             Glide.with(binding.getRoot()).load(meals.strMealThumb).apply( new RequestOptions().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)).into(binding.myImage);
             binding.mytextitem.setText(meals.strMeal);
+            clickListner.OnClick(meals);
         }
 
     }

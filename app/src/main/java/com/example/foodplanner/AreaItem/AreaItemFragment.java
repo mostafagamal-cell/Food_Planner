@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.foodplanner.Adapter.CuntriesAdpter;
 import com.example.foodplanner.Adapter.ItemAreaRec;
 import com.example.foodplanner.Model.Countries;
+import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IareaMealsPresenter;
@@ -49,5 +51,10 @@ public class AreaItemFragment extends Fragment implements IareaMealsPresenter.Ia
         adpter= new ItemAreaRec(this);
         adpter.setcontect(categories);
         binding.myrecycler.setAdapter(adpter);
+    }
+
+    @Override
+    public void OnClick(Meal meal) {
+        NavHostFragment.findNavController(this).navigate(AreaItemFragmentDirections.actionAreaItemFragmentToMealItemScreen(meal));
     }
 }
