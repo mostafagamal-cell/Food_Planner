@@ -37,7 +37,10 @@ public class App extends Application implements ImainPresenter {
         repository.getcatigorys();
         repository.getListOfarea();
         repository.getListOfingredients();
-
+        for (int i = 0; i < 26; i++) {
+           char a=(char) ('a'+i);
+           repository.getMealByletter(a+"");
+        }
         FirebaseApp.initializeApp(this);
         registerReceiver(new InternetBroadcastReciver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         MyRepository.getInstance(new ImainPresenter() {}, this, "N/A").getListOfcategories();

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +91,12 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
         } else {
             Toast.makeText(this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
         }
+        binding.button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.loadplane(email);
+            }
+        });
         binding.button6.setOnClickListener(v -> {
             if (email!=null){
                 PlannesMeal plannesMeal = new PlannesMeal();
@@ -104,8 +111,12 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
 
     @Override
     public void onDataArrived(List<Plan> meal) {
-        planRec.setcontent(meal);
+        Log.i("eeeeeeeeeeeeeeedeefafaffa", meal.size()+"");
+        planRec.setupdate(meal);
         binding.planrec.setAdapter(planRec);
+        for (int i = 0; i < meal.size(); i++) {
+            presenter.insertPlan(meal.get(i));
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.foodplanner.MealPlane;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -45,7 +46,7 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
 
     @Override
     public void loadplane(String email) {
-
+        repository.readPlanedFromFireStore(email);
     }
 
     @Override
@@ -64,5 +65,10 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
     public void delete_plan(Plan plan){
         repository.deletePlanned(plan);
     }
+    public void dataArrived(PlannesMeal plannesMeal){
+        Log.d(TAG, "dataArrivasdasdasdadadsed: "+plannesMeal.meals.size());
+        comm.onDataArrived(plannesMeal.meals);
+    }
+
 
 }

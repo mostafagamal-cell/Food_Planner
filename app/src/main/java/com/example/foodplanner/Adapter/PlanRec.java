@@ -43,16 +43,27 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
     public void setupdate(List<Plan> plans){
         filterplan.clear();
         for (int i = 0; i < plans.size(); i++) {
-            if (!myplans.contains(plans.get(i))){
+            if (check(plans.get(i))){
                 myplans.add(plans.get(i));
             }else
             {
-                myplans.remove(plans.get(i));
                 myplans.add(plans.get(i));
             }
         }
         applyFilters();
         notifyDataSetChanged();
+    }
+    public boolean check(Plan p){
+        for (int i = 0; i < myplans.size(); i++) {
+            if (p.email.equals(myplans.get(i).email)&&
+                    p.Day.equals(myplans.get(i).Day)
+                    &&p.type.equals(myplans.get(i).type)
+                    &&p.time.equals(myplans.get(i).time)){
+                return true;
+            }
+
+        }
+        return false;
     }
 
     public void filterDay(String filter) {

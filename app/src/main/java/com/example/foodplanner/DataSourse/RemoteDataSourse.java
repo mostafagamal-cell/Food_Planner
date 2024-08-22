@@ -119,7 +119,8 @@ public class RemoteDataSourse implements IremoteDataSource {
 
                     communicator.onDataMealByIdArrived(response.body());
                 }else if (GgetMealByletter == type) {
-
+                    Log.i("ddddddddeeeeeeefgasd2145",response.code()+"");
+                    communicator.onDataMealArrivedByletter(response.body());
                 }
             }
             @Override

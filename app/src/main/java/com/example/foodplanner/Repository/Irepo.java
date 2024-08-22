@@ -27,7 +27,9 @@ public interface Irepo  extends IlocalDataSource, IremoteDataSource {
         void onDataMealByIdArrived(Meals meals);
         void onDataIngradintArrived(Meals meals);
     LiveData<List<Meal>>getFavourites();
-    void onDataMealArrivedByname(Meals meals);
+        void onDataMealArrivedByletter(Meals meals);
+
+        void onDataMealArrivedByname(Meals meals);
     void onDataCatigoryArrived(Meals meals,int x);
     void onDataAreaArrived(Meals meals);
     void onDataRandommealArrived(Meals meals);

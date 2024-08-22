@@ -17,6 +17,7 @@ import com.example.foodplanner.FavouriteScreen.FavouritePresenter;
 import com.example.foodplanner.IngrItem.IngPresenter;
 import com.example.foodplanner.MealItem.ImealItemPreseter;
 import com.example.foodplanner.MealItem.MealItemPresenter;
+import com.example.foodplanner.MealPlane.MealPlanePresenter;
 import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Plan;
@@ -49,10 +50,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresenter {
-
   public static Countries countries;
     public static Categories categories;
     public static Meals currentMeal;
+    private  static MealPlanePresenter mealPlanePresenter;
   private static   MyRepository instance;
   private  ImealItemPreseter.ImealScreenComm imealItemPreseter;
   private IareaMealsPresenter iareaMealsPresenter;
@@ -65,6 +66,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   private  final Application application;
   private static IfavouritePresenter ifavouritePresenter;
   private final RemoteDataSourse remoteDataSourse;
+  private  Meals all_meals= new Meals();
   private MyRepository(Application application){
       db = FirebaseFirestore.getInstance();
         this.application=application;
@@ -92,7 +94,8 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                 instance.imealItemPreseter= (ImealItemPreseter.ImealScreenComm) presenter;
                 break;
             case FavouritePresenter.TAG:
-                ifavouritePresenter = (IfavouritePresenter) presenter;
+                ifavouritePresenter = (IfavouritePresenter) presenter;break;
+            case MealPlanePresenter.TAG: mealPlanePresenter = (MealPlanePresenter) presenter;break;
         }
         return instance;
     }
@@ -106,6 +109,21 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     @Override
     public LiveData<List<Meal>> getFavourites() {
         return localDataSourse.getFavourites();
+    }
+    int x=0;
+    @Override
+    public void onDataMealArrivedByletter(Meals meals) {
+
+      if (all_meals.meals==null){
+          all_meals.meals=new ArrayList<>();
+      }
+      if (meals.meals!=null) {
+          all_meals.meals.addAll(meals.meals);
+          Log.i("ea1233321dsdadadas  "+((char)('a'+x)), all_meals.meals.size() + "");
+      }else{
+          Log.i("ea1233321dsdadadas  "+((char)('a'+x)), "null");
+      }
+      x++;
     }
 
     @Override
@@ -310,9 +328,9 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()){
-                                Meals meals = document.toObject(Meals.class);
-                                if (ifavouritePresenter!=null)
-                                    ifavouritePresenter.dataArriveFromCloud(meals);
+                                PlannesMeal meals = document.toObject(PlannesMeal.class);
+                                if (mealPlanePresenter!=null)
+                                    mealPlanePresenter.dataArrived(meals);
                             }
                         }
                     }
