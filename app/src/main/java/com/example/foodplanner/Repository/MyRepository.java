@@ -295,10 +295,9 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
                 for (Meal meal : all_meals.meals) {
                     boolean containsQuery = meal.strMeal.toLowerCase().contains(query.toLowerCase());
-
                     // Check if the meal matches the category, area, and ingredient
-                    boolean matchesCategory = f1.equalsIgnoreCase("None") || meal.strCategory.equalsIgnoreCase(f1);
-                    boolean matchesArea = f2.equalsIgnoreCase("None") || meal.strArea.equalsIgnoreCase(f2);
+                    boolean matchesCategory = f1.equalsIgnoreCase("None") || meal.strArea.equalsIgnoreCase(f1);
+                    boolean matchesArea = f2.equalsIgnoreCase("None") || meal.strCategory.equalsIgnoreCase(f2);
                     boolean matchesIngredient = f3.equalsIgnoreCase("None");
 
                     // Check if any ingredient matches the given ingredient filter
@@ -322,8 +321,9 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                     if (containsQuery && matchesCategory && matchesArea && matchesIngredient) {
                         meals.add(meal);
                     }
-                    searchPresenter.dataArrivedSearch(meals);
                 }
+                Log.i("asddddddddddddddddddddd",meals.size()+"");
+                searchPresenter.dataArrivedSearch(meals);
             }
         }).start();
     }

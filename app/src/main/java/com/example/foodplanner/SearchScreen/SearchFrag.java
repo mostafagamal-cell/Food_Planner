@@ -63,6 +63,8 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         presenter.f2=MyRepository.all_cat.get(i);
+                        Log.i("asddsadasdasdasdd f3",presenter.f3);
+
                         presenter.search();
                     }
 
@@ -75,6 +77,8 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         presenter.f3=MyRepository.all_ing.get(i);
+                        Log.i("asddsadasdasdasdd f3",presenter.f3);
+
                         presenter.search();
                     }
 
@@ -88,6 +92,7 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         presenter.f1=MyRepository.areas.get(i);
+                        Log.i("asddsadasdasdasdd f1",presenter.f1);
                         presenter.search();
                     }
 
@@ -101,22 +106,16 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                 fragmentSearchBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
-                        if (s.isEmpty()){
-                            presenter.query=getString(R.string.Non);
-                        }else {
+
                             presenter.query = s;
-                        }
                         presenter.search();
                         return false;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String s) {
-                        if (s.isEmpty()){
-                            presenter.query=getString(R.string.Non);
-                        }else {
+
                             presenter.query = s;
-                        }
                         presenter.search();
                         return false;
                     }
