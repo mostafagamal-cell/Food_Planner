@@ -61,7 +61,7 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
           if (task.isSuccessful()){
               icommuncate.Sucess(email);
           }else{
-              icommuncate.Error(context.getString(R.string.Connection_Fail));
+              icommuncate.Error(task.getException().getMessage());
           }
         });
 

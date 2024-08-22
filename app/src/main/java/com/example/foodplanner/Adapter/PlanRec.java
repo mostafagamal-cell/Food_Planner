@@ -124,6 +124,9 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
                     clickListner.OnClickDelte(plan);
                 }
             });
+            binding.typetextview.setText(plan.type);
+            binding.typetextview.setVisibility(View.VISIBLE);
+            binding.textView13.setVisibility(View.VISIBLE);
         }
     }
 }
