@@ -14,7 +14,8 @@
     <string name="create_account">create account</string>
     <string name="pleasechooseday">Please Choose Day</string>
     <string name="pleasechoosetype">Please Choose Type</string>
-
+    <string name="plans">Plans</string>
+    <string name="search">Search</string>
     <string name="Authfild">Authentication Failed</string>
     <string name="api_key">AIzaSyB6yA4ob64p9aGrtrxtCcg5pd1TSlSTFEU</string>
     <string name="Continue_as_Guest">Continue as Guest</string>

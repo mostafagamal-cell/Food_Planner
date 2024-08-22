@@ -48,8 +48,8 @@
     <fragment
         android:id="@+id/planScreen"
         android:name="com.example.foodplanner.MealPlane.PlanScreen"
-        android:label="fragment_plan_screen"
-        tools:layout="@layout/fragment_plan_screen" >
+        android:label="@string/plans"
+        tools:layout="@layout/fragment_plan_screen">
         <action
             android:id="@+id/action_planScreen_to_mealItemScreen"
             app:destination="@id/mealItemScreen" />
@@ -85,7 +85,7 @@
     <fragment
         android:id="@+id/searchFrag"
         android:name="com.example.foodplanner.SearchScreen.SearchFrag"
-        android:label="SearchFrag" >
+        android:label="@string/search">
         <action
             android:id="@+id/action_searchFrag_to_mealItemScreen"
             app:destination="@id/mealItemScreen" />
