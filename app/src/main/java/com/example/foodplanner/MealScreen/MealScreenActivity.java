@@ -94,15 +94,21 @@ public class MealScreenActivity extends AppCompatActivity {
         });
 
         booleanMutableLiveData.observe(this, aBoolean -> {
-            if (!aBoolean){
-               hide();
-            }else{
-             show();
+            if (!aBoolean &&
+                    mealScreenNavController.getCurrentDestination() != null &&
+                    mealScreenNavController.getCurrentDestination().getId() != R.id.planScreen &&
+                    mealScreenNavController.getCurrentDestination().getId() != R.id.favouriteScreen &&
+                    mealScreenNavController.getCurrentDestination().getId() != R.id.mealItemScreen &&
+                    mealScreenNavController.getCurrentDestination().getId() != R.id.loginFragment2 &&
+                    mealScreenNavController.getCurrentDestination().getId() != R.id.createAccountFragment) {
+                hide();
+            } else {
+                show();
             }
         });
         mealScreenNavController
                 .addOnDestinationChangedListener((navController, navDestination, bundle) -> {
-            if (navDestination.getId() == R.id.planScreen||navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen||navDestination.getId()==R.id.loginFragment2||navDestination.getId()==R.id.createAccountFragment){
+            if (navDestination.getId()==R.id.planScreen||navDestination.getId() == R.id.planScreen||navDestination.getId() == R.id.favouriteScreen||navDestination.getId() == R.id.mealItemScreen||navDestination.getId()==R.id.loginFragment2||navDestination.getId()==R.id.createAccountFragment){
                 show();
             }else {
                 if (!booleanMutableLiveData.getValue()){

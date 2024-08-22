@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -36,6 +37,7 @@ public class IngItemFrag extends Fragment implements IingPresenter.IareaMealsPre
         super.onViewCreated(view, savedInstanceState);
         if(getArguments()!=null){
             String ing=IngItemFragArgs.fromBundle(getArguments()).getIng();
+            ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(ing);
             presenter=IngPresenter.getInstance(this,requireActivity().getApplication());
             presenter.loadMeals(ing);
         }

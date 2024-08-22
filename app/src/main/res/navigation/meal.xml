@@ -68,7 +68,7 @@
     <fragment
         android:id="@+id/meal_Fragment2"
         android:name="com.example.foodplanner.MealScreen.Meal_Fragment"
-        android:label="Meal_Fragment" >
+        android:label="@string/All_Meals">
         <action
             android:id="@+id/action_meal_Fragment2_to_areaItemFragment"
             app:destination="@id/areaItemFragment" />

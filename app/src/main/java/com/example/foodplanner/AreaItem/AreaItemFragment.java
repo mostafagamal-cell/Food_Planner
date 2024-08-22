@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -41,6 +42,7 @@ public class AreaItemFragment extends Fragment implements IareaMealsPresenter.Ia
         presenter=AreaPresenter.getInstance(this,requireActivity().getApplication());
         if (getArguments()!=null){
             String area=AreaItemFragmentArgs.fromBundle(getArguments()).getArea();
+            ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(area);
             Log.d("sddddddddddddddddddddddddddddddddddd", "onViewCreated: "+area);
             presenter.loadMeals(area);
         }

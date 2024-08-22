@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 
@@ -82,6 +83,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
 
     @Override
     public void dataArrived(Meal meal) {
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(meal.strMeal);
         String [] stps=meal.strInstructions.split("\n\r");
         StringBuilder str= new StringBuilder();
         for (int i = 0; i < stps.length; i++) {
