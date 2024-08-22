@@ -25,6 +25,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Objects;
+
 public class LoginFragment extends Fragment implements IauthPresenter.IauthComm {
     private FragmentLogin2Binding binding;
     LoginPresenter presenter;
@@ -108,7 +110,7 @@ public class LoginFragment extends Fragment implements IauthPresenter.IauthComm 
     @Override
     public void Sucess(String email) {
         Log.i("hhhhhhhhhhhhhhhhhhhh",email);
-        Toast.makeText(getContext(), "Welcome "  , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getContext().getString(R.string.welcom)  , Toast.LENGTH_SHORT).show();
         requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).edit().putString("user",email).apply();
         App.Login_State.setValue(App.Logged_in);
         show();
@@ -117,7 +119,8 @@ public class LoginFragment extends Fragment implements IauthPresenter.IauthComm 
     @Override
     public void Error(String error) {
         Log.i("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", "errorPasswordValidation: "+error);
-        Toast.makeText(getContext(), "error  " + error , Toast.LENGTH_SHORT).show();
+        if (Objects.equals(error, getString(R.string.Authfild))) Toast.makeText(getContext(), getString(R.string.Authfild) , Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getContext(), error , Toast.LENGTH_SHORT).show();
         show();
     }
 

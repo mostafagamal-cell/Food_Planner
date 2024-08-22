@@ -133,9 +133,11 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                     meal.email = email;
                     presenter.instertMeal(meal);
                     if (isfav) {
-                        Toast.makeText(MealItemScreen.this.requireContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.mealallreadysaved), Toast.LENGTH_SHORT).show();
+
                     }else{
-                        Toast.makeText(MealItemScreen.this.requireContext(), "Meal is Already Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.mealsaved), Toast.LENGTH_SHORT).show();
+
                     }
                     }else{
                     App.Login_State.setValue(App.not_Logged_in);
@@ -153,7 +155,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                     showBottomSheetDialog(meal);
 
                 }else{
-                    Toast.makeText(MealItemScreen.this.requireContext(), "plz Login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -212,15 +214,24 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         bottomSheetView.button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (eee.getValue().isEmpty()){
+                    Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.pleasechooseday), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (type.isEmpty()){
+                    Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.pleasechoosetype), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!eee.getValue().isEmpty()&&!type.isEmpty()){
                     Plan plan=copyMealToPlan(meal);
                     plan.Day=dayName;
                     presenter.savePlan(plan);
+                    Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.plansaved), Toast.LENGTH_SHORT).show();
+
                 }
                 eee.setValue("");
                 type="";
                 bottomSheetDialog.dismiss(); // Dismiss the bottom sheet
-                Toast.makeText(MealItemScreen.this.requireContext(), "Plan Saved", Toast.LENGTH_SHORT).show();
             }
         });
         bottomSheetView.button3.setOnClickListener(new View.OnClickListener() {

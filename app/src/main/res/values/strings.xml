@@ -9,8 +9,13 @@
     <string name="confirm_password">confirm password</string>
     <string name="email">email</string>
     <string name="login">login</string>
+    <string name="plandeleted">Plan Deleted</string>
     <string name="donot_have_account">do not have account</string>
     <string name="create_account">create account</string>
+    <string name="pleasechooseday">Please Choose Day</string>
+    <string name="pleasechoosetype">Please Choose Type</string>
+
+    <string name="Authfild">Authentication Failed</string>
     <string name="api_key">AIzaSyB6yA4ob64p9aGrtrxtCcg5pd1TSlSTFEU</string>
     <string name="Continue_as_Guest">Continue as Guest</string>
     <string name="createaccpuntwithgoogle">create accunt with google</string>
@@ -21,6 +26,20 @@
     <string name="password_is_invalid">password is invalid</string>
     <string name="password_does_not_match">password does not match</string>
     <string name="Search">Search</string>
+    <string name="error">Error</string>
+    <string name="mealsaved">Meal Saved</string>
+    <string name="mealallreadysaved">Meal is Already Saved</string>
+    <string name="Pleaselogin">Please login</string>
+    <string name="sucess">Success</string>
+    <string name="plansaved">Plan Saved</string>
+    <string name="faild">Failed</string>
+
+    <string name="connected">connected</string>
+    <string name="youarenotlogin">You are not Login</string>
+    <string name="notconnected">not connected</string>
+
+    <string name="createaccountsucces">Create Account Successful</string>
+    <string name="welcom">"Welcome"</string>
     <string name="All_Meals">Meals</string>
     <string name="Meals_of_Week">Meals of Week</string>
     <string name="Favourite_Meals">Favourite Meals</string>

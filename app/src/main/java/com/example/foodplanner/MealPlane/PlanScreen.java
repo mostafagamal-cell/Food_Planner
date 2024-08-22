@@ -23,6 +23,7 @@ import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Model.PlannesMeal;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FavouriteitemBinding;
 import com.example.foodplanner.databinding.FragmentPlanScreenBinding;
@@ -89,26 +90,35 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
                 binding.planrec.setAdapter(planRec);
             });
         } else {
-            Toast.makeText(this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getActivity(), getString(R.string.Pleaselogin), Toast.LENGTH_SHORT).show();
         }
         binding.button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (email!=null){
-                presenter.loadplane(email);
+                    if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
+                        presenter.loadplane(email);
+                    }else{
+                        Toast.makeText(getContext(), getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                    }
             }else{
-                Toast.makeText(PlanScreen.this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlanScreen.this.getActivity(), getString(R.string.Pleaselogin), Toast.LENGTH_SHORT).show();
             }
 
         }
         });
         binding.button6.setOnClickListener(v -> {
             if (email!=null){
-                PlannesMeal plannesMeal = new PlannesMeal();
-                plannesMeal.meals=planRec.myplans;
-                presenter.saveplans(plannesMeal,email);
+                if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
+                    PlannesMeal plannesMeal = new PlannesMeal();
+                    plannesMeal.meals = planRec.myplans;
+                    presenter.saveplans(plannesMeal, email);
+                }else {
+                    Toast.makeText(getContext(), getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                }
+
             }else{
-                Toast.makeText(PlanScreen.this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlanScreen.this.getActivity(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -132,7 +142,7 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     @Override
     public void OnClickDelte(Plan meal) {
         presenter.delete_plan(meal);
-        Toast.makeText(this.getActivity(), "Plan Deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getActivity(), getString(R.string.plandeleted), Toast.LENGTH_SHORT).show();
     }
 
     @Override

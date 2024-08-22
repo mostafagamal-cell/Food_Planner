@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,12 +43,9 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
 //        applyFilters();
 //    }
     public void setupdate(List<Plan> plans){
+        this.myplans.clear();
         filterplan.clear();
-        for (int i = 0; i < plans.size(); i++) {
-            if (!check(plans.get(i))){
-                myplans.add(plans.get(i));
-            }
-        }
+        myplans.addAll(plans);
         applyFilters();
         notifyDataSetChanged();
     }

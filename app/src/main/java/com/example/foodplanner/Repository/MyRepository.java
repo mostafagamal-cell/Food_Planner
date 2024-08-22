@@ -360,9 +360,9 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(application, "Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application, application.getString(R.string.sucess), Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(application, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application, application.getString(R.string.faild), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -394,9 +394,9 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(application, "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(application, application.getString(R.string.sucess), Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(application, "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(application, application.getString(R.string.faild), Toast.LENGTH_SHORT).show();
                 }
             }
         }

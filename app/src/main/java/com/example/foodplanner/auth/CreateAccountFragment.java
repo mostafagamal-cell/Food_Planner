@@ -81,7 +81,7 @@ public class CreateAccountFragment extends Fragment implements IauthPresenter.Ia
 
     @Override
     public void Sucess(String email) {
-        Toast.makeText(getContext(), "Create Account Sucessful "  , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.createaccountsucces), Toast.LENGTH_SHORT).show();
         show();
         Navigation.findNavController(requireView()).navigateUp();
 
@@ -133,11 +133,11 @@ public class CreateAccountFragment extends Fragment implements IauthPresenter.Ia
         binding.confermpassworderrortextview.setVisibility(View.VISIBLE);
         binding.confermpassworderrortextview.setTextColor(Color.RED);
         if (error.equals(this.getString(R.string.password_does_not_match)))
-             errorPasswordValidation(error);
+             errorPasswordValidation(getString(R.string.password_does_not_match));
         show();
     }
     public void Error(String error) {
-        Toast.makeText(getContext(), "error  " + error , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.error) , Toast.LENGTH_SHORT).show();
         show();
     }
 }

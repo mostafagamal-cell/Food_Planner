@@ -18,7 +18,9 @@ import com.example.foodplanner.Adapter.FavouriteAdpter;
 import com.example.foodplanner.App;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
+import com.example.foodplanner.R;
 import com.example.foodplanner.Util.IfavouritePresenter;
+import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentFavouriteScreenBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,21 +54,37 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
                             @Override
                             public void onClick(View view) {
                                 String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-                                presenter.saveOnClould(email,adapter.meals);
+                                if (email==null){
+                                    Toast.makeText(getContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                               if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
+                                   presenter.saveOnClould(email, adapter.meals);
+                               }else{
+                                   Toast.makeText(FavouriteScreen.this.getContext(), FavouriteScreen.this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                               }
                             }
                         });
                         binding.button2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                                if (email==null){
+                                    Toast.makeText(getContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
                                 presenter.readOnClould(email);
+                                }else{
+                                    Toast.makeText(FavouriteScreen.this.getContext(), FavouriteScreen.this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
 
 
                     });
                 }else{
-                    Toast.makeText(requireContext(), "you are not logged in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
                 }
             });
 
