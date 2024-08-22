@@ -287,49 +287,47 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
-    public void search(String query, String f1, String f2) {
-       new Thread(new Runnable() {
-           @Override
-           public void run() {
-               ArrayList<Meal> meals = new ArrayList<>();
-               for (Meal meal : all_meals.meals) {
-                   boolean containsQuery = meal.strMeal.toLowerCase().contains(query.toLowerCase());
-                   boolean matchesType = f1.equalsIgnoreCase("None");
-                   boolean matchesDay = f2.equalsIgnoreCase("None");
+    public void search(String query, String f1, String f2, String f3) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Meal> meals = new ArrayList<>();
 
-                   // Check if the meal contains the query in any of its ingredients
-                   for (int j = 1; j <= 20; j++) {
-                       try {
-                           // Dynamically access ingredient fields like strIngredient1, strIngredient2, etc.
-                           Field ingredientField = Meal.class.getDeclaredField("strIngredient" + j);
-                           String ingredient = (String) ingredientField.get(meal);
+                for (Meal meal : all_meals.meals) {
+                    boolean containsQuery = meal.strMeal.toLowerCase().contains(query.toLowerCase());
 
-                           if (ingredient != null && ingredient.toLowerCase().contains(query.toLowerCase())) {
-                               containsQuery = true;
-                           }
+                    // Check if the meal matches the category, area, and ingredient
+                    boolean matchesCategory = f1.equalsIgnoreCase("None") || meal.strCategory.equalsIgnoreCase(f1);
+                    boolean matchesArea = f2.equalsIgnoreCase("None") || meal.strArea.equalsIgnoreCase(f2);
+                    boolean matchesIngredient = f3.equalsIgnoreCase("None");
 
-                           // Update matchesType and matchesDay based on the provided filters
-                           if (!matchesType && ingredient != null && ingredient.equals(f1)) {
-                               matchesType = true;
-                           }
-                           if (!matchesDay && ingredient != null && ingredient.equals(f2)) {
-                               matchesDay = true;
-                           }
-                       } catch (NoSuchFieldException | IllegalAccessException e) {
-                           Log.i("eeeeeeeeeeeeeeeeeeeeeeee",e.getMessage());
-                       }
-                   }
+                    // Check if any ingredient matches the given ingredient filter
+                    for (int j = 1; j <= 20; j++) {
+                        try {
+                            // Dynamically access ingredient fields like strIngredient1, strIngredient2, etc.
+                            Field ingredientField = Meal.class.getDeclaredField("strIngredient" + j);
+                            ingredientField.setAccessible(true);
+                            String ingredient = (String) ingredientField.get(meal);
 
-                   // If the meal matches the query and both filters, add it to the list
-                   if (containsQuery && matchesType && matchesDay) {
-                       meals.add(meal);
-                   }
-               }
-               searchPresenter.dataArrivedSearch(meals);
-           }
-       }).start();
+                            if (ingredient != null && ingredient.equalsIgnoreCase(f3)) {
+                                matchesIngredient = true;
+                                break; // No need to check further ingredients if one matches
+                            }
+                        } catch (NoSuchFieldException | IllegalAccessException e) {
+                            Log.e("SearchError", e.getMessage());
+                        }
+                    }
 
+                    // If the meal matches the query, category, area, and ingredient, add it to the list
+                    if (containsQuery && matchesCategory && matchesArea && matchesIngredient) {
+                        meals.add(meal);
+                    }
+                    searchPresenter.dataArrivedSearch(meals);
+                }
+            }
+        }).start();
     }
+
 
     @Override
     public LiveData<List<Plan>> getPlanned(String email) {

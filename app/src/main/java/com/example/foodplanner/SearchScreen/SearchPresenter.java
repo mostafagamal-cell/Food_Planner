@@ -19,7 +19,7 @@ public class SearchPresenter implements IsearchPresenter,IsearchPresenter.Comm{
     public String query;
     @Override
     public void search() {
-        repository.search(query,f1,f2);
+        repository.search(query,f1,f2,f3);
     }
 
     public static final String TAG = "SearchPresenter";

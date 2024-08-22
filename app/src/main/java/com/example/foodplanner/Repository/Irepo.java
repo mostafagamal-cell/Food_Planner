@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Irepo  extends IlocalDataSource, IremoteDataSource {
-     void search(String query,String f1,String f2);
+     void search(String query,String f1,String f2,String f3);
       LiveData<List<Plan>> getPlanned(String email);
       void  readFavouriteFromFireStore(String email);
       void  writePlanedFromFireStore(String email, PlannesMeal JsonData);
