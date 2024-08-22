@@ -44,10 +44,7 @@ public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.Favour
     public int getItemCount() {
         return meals.meals.size();
     }
-    public void setcontect(Meals meals){
-        this.meals=meals;
-        notifyDataSetChanged();
-    }
+
     protected boolean checked(String id){
         for (int i = 0; i < meals.meals.size(); i++) {
             if (meals.meals.get(i).idMeal.equals(id)){

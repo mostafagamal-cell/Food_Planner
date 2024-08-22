@@ -82,4 +82,12 @@
             android:id="@+id/action_meal_Fragment2_to_mealItemScreen"
             app:destination="@id/mealItemScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFrag"
+        android:name="com.example.foodplanner.SearchScreen.SearchFrag"
+        android:label="SearchFrag" >
+        <action
+            android:id="@+id/action_searchFrag_to_mealItemScreen"
+            app:destination="@id/mealItemScreen" />
+    </fragment>
 </navigation>

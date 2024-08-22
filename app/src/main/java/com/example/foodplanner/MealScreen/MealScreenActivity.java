@@ -130,6 +130,8 @@ public class MealScreenActivity extends AppCompatActivity {
                     mealScreenNavController.navigate(R.id.favouriteScreen);
                 }else if (selectedItemId==R.id.planScreen){
                     mealScreenNavController.navigate(R.id.planScreen);
+                }else if (selectedItemId==R.id.searchFrag){
+                    mealScreenNavController.navigate(R.id.searchFrag);
                 }
             return true;
         });

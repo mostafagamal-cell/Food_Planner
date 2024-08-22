@@ -46,7 +46,7 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
                     presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
                         Meals meals1 =new Meals();
                         meals1.meals=new ArrayList<>(meals);
-                        adapter.setcontect(meals1);
+                        adapter.update(meals1);
                         binding.FaveortaieREC.setAdapter(adapter);
                         binding.asyncButton.setOnClickListener(new View.OnClickListener() {
                             @Override

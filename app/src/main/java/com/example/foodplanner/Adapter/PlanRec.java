@@ -35,24 +35,22 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
      public PlanRec(MyClickListner clickListner){
         this.clickListner=clickListner;
     }
-    public void setcontent(List<Plan> plans){
-        myplans.clear();
-        myplans.addAll(plans);
-        applyFilters();
-    }
+//    public void setcontent(List<Plan> plans){
+//        myplans.clear();
+//        myplans.addAll(plans);
+//        applyFilters();
+//    }
     public void setupdate(List<Plan> plans){
         filterplan.clear();
         for (int i = 0; i < plans.size(); i++) {
-            if (check(plans.get(i))){
-                myplans.add(plans.get(i));
-            }else
-            {
+            if (!check(plans.get(i))){
                 myplans.add(plans.get(i));
             }
         }
         applyFilters();
         notifyDataSetChanged();
     }
+
     public boolean check(Plan p){
         for (int i = 0; i < myplans.size(); i++) {
             if (p.email.equals(myplans.get(i).email)&&

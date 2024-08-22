@@ -1,6 +1,8 @@
 package com.example.foodplanner.Repository;
 
 
+import static com.google.common.collect.ComparisonChain.start;
+
 import android.app.Application;
 import android.hardware.Camera;
 import android.util.Log;
@@ -22,6 +24,8 @@ import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Model.PlannesMeal;
+import com.example.foodplanner.R;
+import com.example.foodplanner.SearchScreen.SearchPresenter;
 import com.example.foodplanner.Util.IareaMealsPresenter;
 import com.example.foodplanner.Util.IcatigortItemPresenter;
 import com.example.foodplanner.Model.Categories;
@@ -41,6 +45,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,6 +59,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     public static Categories categories;
     public static Meals currentMeal;
     private  static MealPlanePresenter mealPlanePresenter;
+    private  static SearchPresenter searchPresenter;
   private static   MyRepository instance;
   private  ImealItemPreseter.ImealScreenComm imealItemPreseter;
   private IareaMealsPresenter iareaMealsPresenter;
@@ -96,6 +102,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
             case FavouritePresenter.TAG:
                 ifavouritePresenter = (IfavouritePresenter) presenter;break;
             case MealPlanePresenter.TAG: mealPlanePresenter = (MealPlanePresenter) presenter;break;
+            case SearchPresenter.TAG: searchPresenter = (SearchPresenter) presenter;break;
         }
         return instance;
     }
@@ -280,6 +287,51 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     }
 
     @Override
+    public void search(String query, String f1, String f2) {
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               ArrayList<Meal> meals = new ArrayList<>();
+               for (Meal meal : all_meals.meals) {
+                   boolean containsQuery = meal.strMeal.toLowerCase().contains(query.toLowerCase());
+                   boolean matchesType = f1.equalsIgnoreCase("None");
+                   boolean matchesDay = f2.equalsIgnoreCase("None");
+
+                   // Check if the meal contains the query in any of its ingredients
+                   for (int j = 1; j <= 20; j++) {
+                       try {
+                           // Dynamically access ingredient fields like strIngredient1, strIngredient2, etc.
+                           Field ingredientField = Meal.class.getDeclaredField("strIngredient" + j);
+                           String ingredient = (String) ingredientField.get(meal);
+
+                           if (ingredient != null && ingredient.toLowerCase().contains(query.toLowerCase())) {
+                               containsQuery = true;
+                           }
+
+                           // Update matchesType and matchesDay based on the provided filters
+                           if (!matchesType && ingredient != null && ingredient.equals(f1)) {
+                               matchesType = true;
+                           }
+                           if (!matchesDay && ingredient != null && ingredient.equals(f2)) {
+                               matchesDay = true;
+                           }
+                       } catch (NoSuchFieldException | IllegalAccessException e) {
+                           Log.i("eeeeeeeeeeeeeeeeeeeeeeee",e.getMessage());
+                       }
+                   }
+
+                   // If the meal matches the query and both filters, add it to the list
+                   if (containsQuery && matchesType && matchesDay) {
+                       meals.add(meal);
+                   }
+               }
+               searchPresenter.dataArrivedSearch(meals);
+           }
+       }).start();
+
+    }
+
+    @Override
     public LiveData<List<Plan>> getPlanned(String email) {
         return localDataSourse.getPlanned(email);
     }
@@ -351,20 +403,33 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
             }
         }
     );
-
   }
 
 
   @Override
   public void OnListCatigoryArrived(Categories categories) {
         MyRepository.categories =categories;
+    if (all_cat.isEmpty()) {
+        for (int i = 0; i < categories.categories.size(); i++) {
+            all_cat.add(categories.categories.get(i).strCategory);
+        }
+        all_cat.add(0,application.getString(R.string.Non));
+    }
       if (Imealscreenpresenter != null) {
           Imealscreenpresenter.onDataArrivedCategories(categories);
       }
   }
-
+    public static ArrayList<String>all_cat=new ArrayList<>();
+    public static ArrayList<String>areas =new ArrayList<>();
+    public static ArrayList<String>all_ing=new ArrayList<>();
     @Override
     public void onIngradintListArraived(Ingradiants categories) {
+        if (all_ing.isEmpty()) {
+            for (int i = 0; i < categories.meals.size(); i++) {
+                all_ing.add(categories.meals.get(i).strIngredient);
+            }
+            all_ing.add(0,application.getString(R.string.Non));
+        }
       if (Imealscreenpresenter!=null)
         Imealscreenpresenter.onDataArrivedIngredients(categories);
     }
@@ -372,6 +437,12 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
     @Override
     public void countryListArraived(Countries countries) {
              MyRepository.countries =countries;
+             if (areas.isEmpty()) {
+                 for (int i = 0; i < countries.meals.size(); i++) {
+                     areas.add(countries.meals.get(i).strArea);
+                 }
+                 areas.add(0,application.getString(R.string.Non));
+             }
              if (Imealscreenpresenter!=null)
                  Imealscreenpresenter.onDataArrivedCountry(countries);
     }

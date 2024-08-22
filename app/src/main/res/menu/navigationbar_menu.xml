@@ -5,7 +5,9 @@
         android:id="@+id/meal_Fragment"
         android:icon="@drawable/icons_meal"
         android:title="@string/All_Meals" />
-    <item android:title="@string/Search"
+    <item
+        android:id="@+id/searchFrag"
+        android:title="@string/Search"
         android:icon="@android:drawable/ic_menu_search"
         />
     <item android:title="@string/Favourite_Meals"

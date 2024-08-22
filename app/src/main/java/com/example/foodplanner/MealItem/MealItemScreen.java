@@ -62,7 +62,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         binding= FragmentMealItemScreenBinding.inflate(inflater,container,false);
         return binding.getRoot();
     }
-
+    boolean isfav=false;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -73,10 +73,13 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
         else presenter.loadMealById(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
           presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(this.requireActivity(),e->{
                 Log.i("dasadasd223wee2465478",e+"");
-                if (e==1)
-                     binding.floatingActionButton.setImageResource(R.drawable.filledfavouriteicon);
-                else
+                if (e==1) {
+                    isfav = true;
+                    binding.floatingActionButton.setImageResource(R.drawable.filledfavouriteicon);
+                }else {
+                    isfav=false;
                     binding.floatingActionButton.setImageResource(R.drawable.unfilledfavouriteicon);
+                }
           });
 
     }
@@ -129,7 +132,12 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                 if (email!=null) {
                     meal.email = email;
                     presenter.instertMeal(meal);
-                }else{
+                    if (isfav) {
+                        Toast.makeText(MealItemScreen.this.requireContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MealItemScreen.this.requireContext(), "Meal is Already Saved", Toast.LENGTH_SHORT).show();
+                    }
+                    }else{
                     App.Login_State.setValue(App.not_Logged_in);
                     Intent intent=new Intent(requireActivity(), AuthActivity.class);
                     App.naigateback=true;
@@ -209,7 +217,10 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                     plan.Day=dayName;
                     presenter.savePlan(plan);
                 }
+                eee.setValue("");
+                type="";
                 bottomSheetDialog.dismiss(); // Dismiss the bottom sheet
+                Toast.makeText(MealItemScreen.this.requireContext(), "Plan Saved", Toast.LENGTH_SHORT).show();
             }
         });
         bottomSheetView.button3.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +237,8 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
             public void onClick(View view) {
                 Log.i("dawee2465478",eee+"  "+type);
                 bottomSheetDialog.dismiss(); // Dismiss the bottom sheet
+                eee.setValue("");
+                type="";
             }
         });
         bottomSheetDialog.show();

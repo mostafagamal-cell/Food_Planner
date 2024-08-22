@@ -79,13 +79,13 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
                 presenter.f2 = getString(R.string.Non);
             }
             binding.dayspinner.setSelection(typs.indexOf(presenter.f1));
-           binding.typespinner.setSelection(days.indexOf(presenter.f2));
+            binding.typespinner.setSelection(days.indexOf(presenter.f2));
 
-        planRec.filterDay(presenter.f1);
+            planRec.filterDay(presenter.f1);
             planRec.filterType(presenter.f2);
         if (email != null) {
             presenter.getPlans(email).observe(this.requireActivity(), plans -> {
-                planRec.setcontent(plans);
+                planRec.setupdate(plans);
                 binding.planrec.setAdapter(planRec);
             });
         } else {
@@ -94,8 +94,13 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
         binding.button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (email!=null){
                 presenter.loadplane(email);
+            }else{
+                Toast.makeText(PlanScreen.this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
             }
+
+        }
         });
         binding.button6.setOnClickListener(v -> {
             if (email!=null){
@@ -103,7 +108,7 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
                 plannesMeal.meals=planRec.myplans;
                 presenter.saveplans(plannesMeal,email);
             }else{
-                Toast.makeText(this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlanScreen.this.getActivity(), "Please login", Toast.LENGTH_SHORT).show();
             }
 
         });
