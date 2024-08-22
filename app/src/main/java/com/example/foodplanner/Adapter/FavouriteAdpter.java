@@ -27,6 +27,8 @@ public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.Favour
     }
      public void remove(Meal meal1){
         meals.meals.removeIf(meal -> meal.idMeal.equals(meal1.idMeal));
+
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
