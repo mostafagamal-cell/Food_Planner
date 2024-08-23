@@ -296,21 +296,19 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                 for (Meal meal : all_meals.meals) {
                     boolean containsQuery = meal.strMeal.toLowerCase().contains(query.toLowerCase());
                     // Check if the meal matches the category, area, and ingredient
-                    boolean matchesCategory = f1.equalsIgnoreCase("None") || meal.strArea.equalsIgnoreCase(f1);
-                    boolean matchesArea = f2.equalsIgnoreCase("None") || meal.strCategory.equalsIgnoreCase(f2);
-                    boolean matchesIngredient = f3.equalsIgnoreCase("None");
+                    boolean matchesCategory = f1.equalsIgnoreCase(application.getString(R.string.Non)) || meal.strArea.equalsIgnoreCase(f1);
+                    boolean matchesArea = f2.equalsIgnoreCase(application.getString(R.string.Non)) || meal.strCategory.equalsIgnoreCase(f2);
+                    boolean matchesIngredient = f3.equalsIgnoreCase(application.getString(R.string.Non));
 
-                    // Check if any ingredient matches the given ingredient filter
                     for (int j = 1; j <= 20; j++) {
                         try {
-                            // Dynamically access ingredient fields like strIngredient1, strIngredient2, etc.
                             Field ingredientField = Meal.class.getDeclaredField("strIngredient" + j);
                             ingredientField.setAccessible(true);
                             String ingredient = (String) ingredientField.get(meal);
 
                             if (ingredient != null && ingredient.equalsIgnoreCase(f3)) {
                                 matchesIngredient = true;
-                                break; // No need to check further ingredients if one matches
+                                break;
                             }
                         } catch (NoSuchFieldException | IllegalAccessException e) {
                             Log.e("SearchError", e.getMessage());

@@ -106,8 +106,7 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                 fragmentSearchBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
-
-                            presenter.query = s;
+                        presenter.query = s;
                         presenter.search();
                         return false;
                     }
@@ -115,7 +114,7 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                     @Override
                     public boolean onQueryTextChange(String s) {
 
-                            presenter.query = s;
+                        presenter.query = s;
                         presenter.search();
                         return false;
                     }
