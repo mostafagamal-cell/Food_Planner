@@ -20,6 +20,7 @@
     <string name="Authfild">Authentication Failed</string>
     <string name="api_key">AIzaSyB6yA4ob64p9aGrtrxtCcg5pd1TSlSTFEU</string>
     <string name="Continue_as_Guest">Continue as Guest</string>
+    <string name="Guest">Guest</string>
     <string name="createaccpuntwithgoogle">create accunt with google</string>
     <string name="loginwithgoogleaccount">login with google account</string>
     <string name="password_is_empty">password is empty</string>
@@ -29,6 +30,7 @@
     <string name="password_does_not_match">password does not match</string>
     <string name="Search">Search</string>
     <string name="error">Error</string>
+    <string name="about">about</string>
     <string name="mealsaved">Meal Saved</string>
     <string name="mealallreadysaved">Meal is Already Saved</string>
     <string name="Pleaselogin">Please login</string>
@@ -76,4 +78,5 @@
     <string name="_type">Type :</string>
     <string name="saveOnCloud">Save On Cloud</string>
     <string name="areas">Areas</string>
+    <string name="Email">"Email : "</string>
 </resources>

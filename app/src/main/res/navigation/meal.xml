@@ -90,4 +90,9 @@
             android:id="@+id/action_searchFrag_to_mealItemScreen"
             app:destination="@id/mealItemScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFrag"
+        android:name="com.example.foodplanner.AboutFrag.AboutFrag"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

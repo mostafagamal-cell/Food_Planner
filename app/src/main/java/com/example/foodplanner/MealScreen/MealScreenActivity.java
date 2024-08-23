@@ -30,6 +30,10 @@ import java.util.Objects;
 public class MealScreenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getTitle() == getString(R.string.about)){
+            mealScreenNavController.navigate(R.id.aboutFrag);
+            return true;
+        }
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("user", null).apply();
 
         if (Objects.equals(App.Login_State.getValue(), App.Logged_in)) {
@@ -50,23 +54,17 @@ public class MealScreenActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.topbar, menu);
         if (App.Login_State.getValue().equals(App.Logged_in)) {
-
             menu.getItem(0).setTitle(getString(R.string.Logout));
-
         } else {
             menu.getItem(0).setTitle(getString(R.string.login));
         }
         return true;
     }
 
-    boolean started = false;
     public NavController mealScreenNavController;
     private ActivityMealScreenBinding binding;
-    private int previousTabId = R.id.meal_Fragment;  // Set the initial tab to "All Meals"
-    private boolean isNavigating = false;  // A flag to prevent recursion
 
 
     @Override
@@ -119,6 +117,7 @@ public class MealScreenActivity extends AppCompatActivity {
     private void updateUIVisibility() {
         if (!booleanMutableLiveData.getValue() &&
                 mealScreenNavController.getCurrentDestination() != null &&
+                mealScreenNavController.getCurrentDestination().getId() != R.id.aboutFrag &&
                 mealScreenNavController.getCurrentDestination().getId() != R.id.planScreen &&
                 mealScreenNavController.getCurrentDestination().getId() != R.id.favouriteScreen &&
                 mealScreenNavController.getCurrentDestination().getId() != R.id.mealItemScreen &&
