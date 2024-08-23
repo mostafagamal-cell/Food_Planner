@@ -37,7 +37,7 @@ public class LocalDataSourse implements IlocalDataSource {
     @Override
     public LiveData<List<Plan>> getPlanned(String email) {
         ArrayList<String> a= getStartAndEndDate();
-        return dao.getAllMealsPlanned(email,a.get(1),a.get(0));
+        return dao.getAllMealsPlanned(email,a.get(0),a.get(1));
     }
 
     @Override
@@ -94,19 +94,15 @@ public class LocalDataSourse implements IlocalDataSource {
         ArrayList<String> strings =new ArrayList<>();
         String o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        while (!Objects.requireNonNull(o).equalsIgnoreCase("Friday")){
-            calendar.add(Calendar.DAY_OF_YEAR,1);
-            o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
-        }
-        o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
-        strings.add(sdf.format(calendar.getTime()));
-        o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
-
         while (!Objects.requireNonNull(o).equalsIgnoreCase("Saturday")){
             calendar.add(Calendar.DAY_OF_YEAR,-1);
             o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
         }
-        o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+        strings.add(sdf.format(calendar.getTime()));
+        while (!Objects.requireNonNull(o).equalsIgnoreCase("Friday")){
+            calendar.add(Calendar.DAY_OF_YEAR,1);
+            o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+        }
         strings.add(sdf.format(calendar.getTime()));
         return strings;
     }
