@@ -45,48 +45,47 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
         adapter=new FavouriteAdpter(this);
             App.Login_State.observe(getViewLifecycleOwner(), login_state -> {
                 if (login_state .equals(App.Logged_in)){
-                    presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
+                       presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
                         Meals meals1 =new Meals();
                         meals1.meals=new ArrayList<>(meals);
                         adapter.update(meals1);
                         binding.FaveortaieREC.setAdapter(adapter);
-                        binding.asyncButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-                                if (email==null){
-                                    Toast.makeText(getContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                               if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
-                                   presenter.saveOnClould(email, adapter.meals);
-                               }else{
-                                   Toast.makeText(FavouriteScreen.this.getContext(), FavouriteScreen.this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
-                               }
-                            }
-                        });
-                        binding.button2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-                                if (email==null){
-                                    Toast.makeText(getContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
-                                presenter.readOnClould(email);
-                                }else{
-                                    Toast.makeText(FavouriteScreen.this.getContext(), FavouriteScreen.this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
                     });
                 }else{
                     Toast.makeText(requireContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
                 }
             });
+
+        binding.asyncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                if (email==null){
+                    Toast.makeText(getContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
+                    presenter.saveOnClould(email, adapter.meals);
+                }else{
+                    Toast.makeText(FavouriteScreen.this.getContext(), FavouriteScreen.this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        binding.button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
+                if (email==null){
+                    Toast.makeText(getContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (InternetBroadcastReciver.booleanMutableLiveData.getValue()) {
+                    presenter.readOnClould(email);
+                }else{
+                    Toast.makeText(FavouriteScreen.this.getContext(), FavouriteScreen.this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
     }
