@@ -1,6 +1,7 @@
 package com.example.foodplanner.MealScreen;
 
 import static com.example.foodplanner.Util.InternetBroadcastReciver.booleanMutableLiveData;
+import static com.example.foodplanner.Util.InternetBroadcastReciver.ss;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,6 +71,15 @@ public class MealScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+            booleanMutableLiveData.observe(this, aBoolean -> {
+                if (!ss) {
+                    if (aBoolean)
+                    Toast.makeText(this, this.getString(R.string.connected), Toast.LENGTH_SHORT).show();
+                    else
+                    Toast.makeText(this, this.getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
+                }
+                });
         super.onCreate(savedInstanceState);
         binding = ActivityMealScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

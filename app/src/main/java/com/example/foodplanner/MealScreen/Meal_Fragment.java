@@ -57,10 +57,13 @@ public class Meal_Fragment extends Fragment implements IfragmentMealComm, MyClic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter=MealScreenPresenter.getinstance(this);
-        presenter.getRandommeal();
-        presenter.getcatigorys();
-        presenter.getListOfingredients();
-        presenter.getListOfarea();
+        booleanMutableLiveData.observe(this.requireActivity(),e->{
+        if (e) {
+            presenter.getRandommeal();
+            presenter.getcatigorys();
+            presenter.getListOfingredients();
+            presenter.getListOfarea();
+        } });
         Log.i("eeeeeeeaaaaaaaaeeeeeeeee", ((AppCompatActivity)requireActivity()).getSupportActionBar().getTitle()+"");
     }
 
