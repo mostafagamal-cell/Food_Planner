@@ -16,8 +16,8 @@ public class FavouritePresenter implements IfavouritePresenter {
     private IfavouritePresenter.COMM comm;
     public static final String TAG = "FavouritePresenter";
     private static FavouritePresenter favouritePresenter;
-    private FavouritePresenter(Application application){
-        repository=MyRepository.getInstance(this,application,TAG);
+    private FavouritePresenter(){
+        repository=MyRepository.getInstance(this,TAG);
     }
     @Override
     public void deletFavourite(Meal meal) {
@@ -49,9 +49,9 @@ public class FavouritePresenter implements IfavouritePresenter {
         if (comm!=null) comm.onDataArrive(meals);
     }
 
-    public static FavouritePresenter getInstance(IfavouritePresenter.COMM comm,Application application) {
+    public static FavouritePresenter getInstance(IfavouritePresenter.COMM comm) {
         if (favouritePresenter == null){
-            favouritePresenter=new FavouritePresenter(application);
+            favouritePresenter=new FavouritePresenter();
         }
         favouritePresenter.comm=comm;
         return  favouritePresenter;

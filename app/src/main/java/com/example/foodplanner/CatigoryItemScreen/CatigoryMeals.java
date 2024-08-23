@@ -35,7 +35,7 @@ public class CatigoryMeals extends Fragment implements IcatigortItemPresenter.Ic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       presenter=CatigoryItemPresenter.getInstance(this,this.requireActivity().getApplication());
+       presenter=CatigoryItemPresenter.getInstance(this);
         if (getArguments()!=null){
             CatigoryMealsArgs args= CatigoryMealsArgs.fromBundle(getArguments());
             Category meal = args.getCat();

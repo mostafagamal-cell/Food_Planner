@@ -59,7 +59,7 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
         days.addAll(Arrays.asList(getString(R.string.Non), getString(R.string.Saturday), getString(R.string.Sunday), getString(R.string.Monday),
                 getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday), getString(R.string.Friday)));
 
-        presenter = MealPlanePresenter.getInstance(this, this.getActivity().getApplication());
+        presenter = MealPlanePresenter.getInstance(this);
         String email = this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
 
         ArrayAdapter<String> typead = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, typs);

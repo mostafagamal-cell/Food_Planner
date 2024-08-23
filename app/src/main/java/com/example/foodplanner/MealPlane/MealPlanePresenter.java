@@ -29,8 +29,8 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
     private ImealPlannerPresenter.Comm comm;
     MyRepository repository;
     public static final String TAG = "MealPlanePresenter";
-    private MealPlanePresenter(Application application){
-        repository=MyRepository.getInstance(this,application,TAG);
+    private MealPlanePresenter(){
+        repository=MyRepository.getInstance(this,TAG);
     }
 
     @Override
@@ -55,9 +55,9 @@ public class MealPlanePresenter implements ImealPlannerPresenter{
     }
 
 
-    public static MealPlanePresenter getInstance(ImealPlannerPresenter.Comm comm , Application application) {
+    public static MealPlanePresenter getInstance(ImealPlannerPresenter.Comm comm ) {
        if (presenter==null){
-           presenter=new MealPlanePresenter(application);
+           presenter=new MealPlanePresenter();
        }
         presenter.comm=comm;
         return presenter ;

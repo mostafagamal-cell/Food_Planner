@@ -21,14 +21,13 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
    public static final String name="MealScreenPresenter";
    private Categories currentCategory;
    private  static   MealScreenPresenter presenter;
-   private static Application context;
    private IfragmentMealComm communicator;
-   private MealScreenPresenter(Application application){
-       repository=MyRepository.getInstance(this,application,name);
+   private MealScreenPresenter(){
+       repository=MyRepository.getInstance(this,name);
    }
-   public static MealScreenPresenter getinstance(IfragmentMealComm communicatorf, Application application){
+   public static MealScreenPresenter getinstance(IfragmentMealComm communicatorf){
        if (presenter==null){
-           presenter=new MealScreenPresenter(application);
+           presenter=new MealScreenPresenter();
        }
        presenter.communicator=communicatorf;
        return presenter;
@@ -64,9 +63,9 @@ public class MealScreenPresenter implements ImealScreenPresenter,ImealScreenPres
     }
 
 
-    public static MealScreenPresenter getInstance(IfragmentMealComm communicator,Application application) {
+    public static MealScreenPresenter getInstance(IfragmentMealComm communicator) {
         if (presenter==null){
-            presenter=new MealScreenPresenter(application);
+            presenter=new MealScreenPresenter();
         }
         presenter.communicator=communicator;
         return presenter;

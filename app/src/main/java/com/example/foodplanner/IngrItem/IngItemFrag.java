@@ -38,7 +38,7 @@ public class IngItemFrag extends Fragment implements IingPresenter.IareaMealsPre
         if(getArguments()!=null){
             String ing=IngItemFragArgs.fromBundle(getArguments()).getIng();
             ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(ing);
-            presenter=IngPresenter.getInstance(this,requireActivity().getApplication());
+            presenter=IngPresenter.getInstance(this);
             presenter.loadMeals(ing);
         }
     }

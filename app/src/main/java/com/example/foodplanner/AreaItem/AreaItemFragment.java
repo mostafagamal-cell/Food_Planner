@@ -39,7 +39,7 @@ public class AreaItemFragment extends Fragment implements IareaMealsPresenter.Ia
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter=AreaPresenter.getInstance(this,requireActivity().getApplication());
+        presenter=AreaPresenter.getInstance(this);
         if (getArguments()!=null){
             String area=AreaItemFragmentArgs.fromBundle(getArguments()).getArea();
             ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(area);

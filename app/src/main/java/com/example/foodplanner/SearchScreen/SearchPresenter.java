@@ -23,12 +23,12 @@ public class SearchPresenter implements IsearchPresenter,IsearchPresenter.Comm{
     }
 
     public static final String TAG = "SearchPresenter";
-    private SearchPresenter(Application application){
-        repository= MyRepository.getInstance(this,application,TAG);
+    private SearchPresenter(){
+        repository= MyRepository.getInstance(this,TAG);
     }
-    public static SearchPresenter getInstance(IsearchPresenter.Comm comm,Application application) {
+    public static SearchPresenter getInstance(IsearchPresenter.Comm comm) {
         if (searchPresenter == null){
-            searchPresenter = new SearchPresenter(application);
+            searchPresenter = new SearchPresenter();
 
         }
         searchPresenter.comm=comm;

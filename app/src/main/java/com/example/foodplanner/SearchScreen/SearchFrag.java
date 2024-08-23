@@ -39,7 +39,7 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-          presenter=SearchPresenter.getInstance(this,this.requireActivity().getApplication());
+          presenter=SearchPresenter.getInstance(this);
           if (presenter.f1==null&&presenter.f2==null){
               presenter.f1=getString(R.string.Non);
               presenter.f2=getString(R.string.Non);

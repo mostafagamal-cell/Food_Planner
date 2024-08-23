@@ -11,14 +11,14 @@ public class IngPresenter implements IingPresenter {
     private MyRepository repository;
     public static final String TAG = "IngPresenter";
     private static IngPresenter instance;
-    private IngPresenter(Application application) {
-        repository=MyRepository.getInstance(this,application,TAG);
+    private IngPresenter() {
+        repository=MyRepository.getInstance(this,TAG);
     }
 
-    public static IngPresenter getInstance(IngPresenter.IareaMealsPresenterComm comm,Application application) {
+    public static IngPresenter getInstance(IngPresenter.IareaMealsPresenterComm comm) {
        if (instance==null)
        {
-           instance=new IngPresenter(application);
+           instance=new IngPresenter();
        }
         IngPresenter.comm =comm;
          return instance ;

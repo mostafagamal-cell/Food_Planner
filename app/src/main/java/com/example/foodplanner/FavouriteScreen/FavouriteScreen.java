@@ -41,7 +41,7 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = FavouritePresenter.getInstance(this,requireActivity().getApplication());
+        presenter = FavouritePresenter.getInstance(this);
         adapter=new FavouriteAdpter(this);
             App.Login_State.observe(getViewLifecycleOwner(), login_state -> {
                 if (login_state .equals(App.Logged_in)){

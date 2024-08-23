@@ -36,6 +36,7 @@ import com.example.foodplanner.Util.IfavouritePresenter;
 import com.example.foodplanner.Util.IingPresenter;
 import com.example.foodplanner.Util.ImainPresenter;
 import com.example.foodplanner.Util.ImealScreenPresenter;
+import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresenter {
   public static Countries countries;
@@ -69,19 +71,18 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
   private static final String TAG = "MyRepository";
   private final LocalDataSourse localDataSourse;
   private final FirebaseFirestore db;
-  private  final Application application;
+  public static Application application=null;
   private static IfavouritePresenter ifavouritePresenter;
   private final RemoteDataSourse remoteDataSourse;
   private  Meals all_meals= new Meals();
-  private MyRepository(Application application){
+  private MyRepository(){
       db = FirebaseFirestore.getInstance();
-        this.application=application;
       remoteDataSourse = new RemoteDataSourse(this);
       localDataSourse = new LocalDataSourse(application);
   }
-    public static MyRepository getInstance(ImainPresenter presenter, Application application,String type) {
+    public static MyRepository getInstance(ImainPresenter presenter,String type) {
         if (instance == null){
-            instance = new MyRepository(application);
+            instance = new MyRepository();
         }
         switch (type) {
             case MealScreenPresenter.name:
@@ -278,7 +279,6 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
         }
 
     }
-    public  static  int xxx;
     @Override
     public synchronized void  onDataMealByIdArrived(Meals meals) {
         if (imealItemPreseter!=null)
@@ -371,7 +371,13 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
 
     @Override
     public void readPlanedFromFireStore(String email) {
-        db.collection(email).document("P").get().addOnCompleteListener
+        db.collection(email).document("P")
+                .get().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("eeeee1215411",e.getMessage());
+            }
+        }).addOnCompleteListener
                 (new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -379,6 +385,7 @@ public class MyRepository implements Irepo,Irepo.Communicator,ImealScreenPresent
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()){
                                 PlannesMeal meals = document.toObject(PlannesMeal.class);
+                                Toast.makeText(application, application.getString(R.string.dataArrivec), Toast.LENGTH_SHORT).show();
                                 if (mealPlanePresenter!=null)
                                     mealPlanePresenter.dataArrived(meals);
                             }

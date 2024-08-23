@@ -12,8 +12,8 @@ public class AreaPresenter  implements IareaMealsPresenter {
     public static final String TAG = "AreaPresenter";
     IareaMealsPresenter.IareaMealsPresenterComm presenterComm;
     private static AreaPresenter presenter;
-    private  AreaPresenter(Application application){
-        repository=MyRepository.getInstance(this,application,TAG);
+    private  AreaPresenter(){
+        repository=MyRepository.getInstance(this,TAG);
     }
 
     @Override
@@ -27,9 +27,9 @@ public class AreaPresenter  implements IareaMealsPresenter {
         presenterComm.onDataArrived(categories);
     }
 
-    public static AreaPresenter getInstance(IareaMealsPresenter.IareaMealsPresenterComm presenterComm,Application application) {
+    public static AreaPresenter getInstance(IareaMealsPresenter.IareaMealsPresenterComm presenterComm) {
         if (presenter==null){
-            presenter=new AreaPresenter(application);
+            presenter=new AreaPresenter();
         }
         presenter.presenterComm=presenterComm;
         return presenter ;

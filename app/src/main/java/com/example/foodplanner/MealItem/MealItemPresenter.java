@@ -14,13 +14,13 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
     private static MealItemPresenter instance;
     private MyRepository repository;
     private ImealItemPreseter.ImealScreenComm comm;
-    private MealItemPresenter(Application application){
-        repository=MyRepository.getInstance(this,application,TAG);
+    private MealItemPresenter(){
+        repository=MyRepository.getInstance(this,TAG);
     }
 
-    public static MealItemPresenter getInstance(ImealItemPreseter.ImealScreenComm comm, Application application) {
+    public static MealItemPresenter getInstance(ImealItemPreseter.ImealScreenComm comm) {
         if (instance==null){
-            instance=new MealItemPresenter(application);
+            instance=new MealItemPresenter();
         }
         instance.comm=comm;
         return instance ;
