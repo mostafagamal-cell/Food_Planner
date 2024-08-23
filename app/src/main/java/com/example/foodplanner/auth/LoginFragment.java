@@ -39,6 +39,11 @@ public class LoginFragment extends Fragment implements IauthPresenter.IauthComm 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState!=null){
+            binding.email.getEditText().setText(savedInstanceState.getString("eeee"));
+            binding.password.getEditText().setText(savedInstanceState.getString("pppp"));
+        }
+
         presenter=LoginPresenter.getInstance(this,this);
         App.Login_State.observe(getViewLifecycleOwner(),state->{
             if (!App.naigateback) {
@@ -166,5 +171,15 @@ public class LoginFragment extends Fragment implements IauthPresenter.IauthComm 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             presenter.handleResult(task);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+      String email=   binding.email.getEditText().getText().toString();
+      String pass= binding.password.getEditText().getText().toString();
+        outState.putString("eeee",email);
+        outState.putString("pppp",pass);
+
     }
 }

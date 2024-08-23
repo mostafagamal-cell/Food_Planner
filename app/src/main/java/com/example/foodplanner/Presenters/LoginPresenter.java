@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Objects;
+
 public class LoginPresenter implements IauthPresenter.IloginPresenter {
     protected  LoginFragment  context;
     private GoogleSignInClient  googleApiClient;
@@ -55,13 +57,17 @@ public class LoginPresenter implements IauthPresenter.IloginPresenter {
         }
         if(!isEmailValid||!isPasswordValid)
             return;
-
           firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(context.requireActivity(),task -> {
             Log.d("eaaaaaaaaaaaaaaaaaaaaaaaaa", "signInWithEmail:onComplete:" + task.isSuccessful());
           if (task.isSuccessful()){
               icommuncate.Sucess(email);
           }else{
+              Log.w("aaaaaaaaaaaaaaaaaaaaaaaa", "signInWithEmail:failed", task.getException());
+              if (Objects.equals(task.getException().getMessage(), "The supplied auth credential is incorrect, malformed or has expired.")){
+                  icommuncate.Error(context.getString(R.string.errorauthfild));
+              }else{
               icommuncate.Error(task.getException().getMessage());
+          }
           }
         });
 

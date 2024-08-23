@@ -36,6 +36,11 @@ public class CreateAccountFragment extends Fragment implements IauthPresenter.Ia
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState!=null){
+            binding.email.getEditText().setText(savedInstanceState.getString("eeee"));
+            binding.password.getEditText().setText(savedInstanceState.getString("pppp"));
+            binding.confermpassword.getEditText().setText(savedInstanceState.getString("cpppp"));
+        }
         presenter= CreateAccountPresenter.getInstance(this,this);
         binding.email.getEditText().setOnFocusChangeListener((view2, hasFocus) -> {
             if (hasFocus) {
@@ -139,5 +144,16 @@ public class CreateAccountFragment extends Fragment implements IauthPresenter.Ia
     public void Error(String error) {
         Toast.makeText(getContext(), getString(R.string.error) , Toast.LENGTH_SHORT).show();
         show();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+      String email=  binding.email.getEditText().getText().toString();
+      String pass= binding.password.getEditText().getText().toString();
+      String cpass=binding.confermpassword.getEditText().getText().toString();
+      outState.putString("eeee",email);
+      outState.putString("pppp",pass);
+      outState.putString("cpppp",cpass);
     }
 }

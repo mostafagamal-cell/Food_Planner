@@ -37,11 +37,11 @@
     <string name="sucess">Success</string>
     <string name="plansaved">Plan Saved</string>
     <string name="faild">Failed</string>
-
+    <string name="errorauthfild">user name or password is incorrect.</string>
     <string name="connected">connected</string>
     <string name="youarenotlogin">You are not Login</string>
     <string name="notconnected">not connected</string>
-
+    <string name="CreateAccount">Create Account</string>
     <string name="createaccountsucces">Create Account Successful</string>
     <string name="welcom">"Welcome"</string>
     <string name="All_Meals">Meals</string>

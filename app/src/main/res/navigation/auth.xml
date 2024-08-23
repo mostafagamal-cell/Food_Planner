@@ -11,8 +11,8 @@
         tools:layout="@layout/fragment_login2" />
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="com.example.foodplanner.auth.CreateAccountFragment"
-        android:label="CreateAccountFragment" >
+        android:label="@string/create_account"
+        android:name="com.example.foodplanner.auth.CreateAccountFragment">
         <action
             android:id="@+id/action_createAccountFragment_to_loginFragment2"
             app:destination="@id/loginFragment2" />
