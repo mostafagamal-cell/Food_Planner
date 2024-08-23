@@ -155,7 +155,10 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
                     showBottomSheetDialog(meal);
 
                 }else{
-                    Toast.makeText(MealItemScreen.this.requireContext(), getString(R.string.youarenotlogin), Toast.LENGTH_SHORT).show();
+                    App.Login_State.setValue(App.not_Logged_in);
+                    Intent intent=new Intent(requireActivity(), AuthActivity.class);
+                    App.naigateback=true;
+                    startActivity(intent);
                 }
             }
         });
