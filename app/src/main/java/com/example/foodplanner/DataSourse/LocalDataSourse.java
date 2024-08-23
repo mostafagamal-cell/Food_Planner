@@ -37,7 +37,7 @@ public class LocalDataSourse implements IlocalDataSource {
     @Override
     public LiveData<List<Plan>> getPlanned(String email) {
         ArrayList<String> a= getStartAndEndDate();
-        return dao.getAllMealsPlanned(email,a.get(0),a.get(1));
+        return dao.getAllMealsPlanned(email,a.get(1),a.get(0));
     }
 
     @Override
@@ -85,24 +85,28 @@ public class LocalDataSourse implements IlocalDataSource {
     public LiveData<Integer> checkinDatabase(String id) {
         return dao.countMealByNameAndCalories(id);
     }
-    @Override
+
     public ArrayList<String> getStartAndEndDate() {
         Calendar calendar = Calendar.getInstance();
         Date date= new Date();
         calendar.setTime(date);
         calendar.setTime(date);
         ArrayList<String> strings =new ArrayList<>();
-        String o="";
+        String o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        while (!Objects.requireNonNull(o).equalsIgnoreCase("Saturday")){
-            calendar.add(Calendar.DAY_OF_YEAR,-1);
-            o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
-        }
-        strings.add(sdf.format(calendar.getTime()));
         while (!Objects.requireNonNull(o).equalsIgnoreCase("Friday")){
             calendar.add(Calendar.DAY_OF_YEAR,1);
             o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
         }
+        o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+        strings.add(sdf.format(calendar.getTime()));
+        o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+
+        while (!Objects.requireNonNull(o).equalsIgnoreCase("Saturday")){
+            calendar.add(Calendar.DAY_OF_YEAR,-1);
+            o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
+        }
+        o= calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.ENGLISH);
         strings.add(sdf.format(calendar.getTime()));
         return strings;
     }

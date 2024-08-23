@@ -16,5 +16,4 @@ public interface IlocalDataSource {
     void insertPlanned(Plan meal);
     void deletePlanned(Plan meal);
     LiveData<Integer> checkinDatabase(String id);
-   default ArrayList<String> getStartAndEndDate(){return null;}
 }
