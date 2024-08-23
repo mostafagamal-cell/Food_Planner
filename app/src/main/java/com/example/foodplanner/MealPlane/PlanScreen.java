@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.PlanRec;
+import com.example.foodplanner.App;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Model.PlannesMeal;
@@ -31,6 +32,7 @@ import com.example.foodplanner.databinding.FragmentPlanScreenBinding;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, MyClickListner, AdapterView.OnItemSelectedListener {
     FragmentPlanScreenBinding binding;
@@ -38,7 +40,7 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     MealPlanePresenter presenter;
     private ArrayList<String> typs=new ArrayList<>();
     private ArrayList<String> days=new ArrayList<>();
-
+    String email;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPlanScreenBinding.inflate(getLayoutInflater());
@@ -60,7 +62,7 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
                 getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday), getString(R.string.Friday)));
 
         presenter = MealPlanePresenter.getInstance(this);
-        String email = this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
+         email = this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
 
         ArrayAdapter<String> typead = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, typs);
         ArrayAdapter<String> daysad = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, days);
@@ -81,10 +83,12 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
             }
             binding.dayspinner.setSelection(typs.indexOf(presenter.f1));
             binding.typespinner.setSelection(days.indexOf(presenter.f2));
-
+            App.Login_State.observe(this.requireActivity(),e->{
+                email=this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
+            });
             planRec.filterDay(presenter.f1);
             planRec.filterType(presenter.f2);
-        if (email != null) {
+        if (Objects.equals(App.Login_State.getValue(), App.Logged_in)) {
             presenter.getPlans(email).observe(this.requireActivity(), plans -> {
                 planRec.setupdate(plans);
                 binding.planrec.setAdapter(planRec);
