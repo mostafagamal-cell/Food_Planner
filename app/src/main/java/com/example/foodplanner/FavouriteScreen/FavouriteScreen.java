@@ -104,6 +104,7 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
     @Override
     public void onDataArrive(Meals meals) {
         Log.d("14488444", "onDataArrive: "+meals.meals.size());
+        Toast.makeText(this.requireActivity(), getString(R.string.dataArrivec), Toast.LENGTH_SHORT).show();
         for (int m = 0; m < meals.meals.size(); m++) {
             presenter.saveOnDB(meals.meals.get(m));
         }
