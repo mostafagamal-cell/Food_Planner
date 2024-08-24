@@ -102,6 +102,7 @@
             android:id="@+id/typetextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintEnd_toStartOf="@+id/imageButton2"
