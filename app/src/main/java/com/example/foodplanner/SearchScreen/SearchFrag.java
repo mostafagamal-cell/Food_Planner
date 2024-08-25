@@ -19,6 +19,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.SearchRecAdp;
+import com.example.foodplanner.App;
 import com.example.foodplanner.DataSourse.LocalDataSourse;
 import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.Model.Categories;
@@ -27,6 +28,7 @@ import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Repository.MyRepository;
+import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentSearchBinding;
 
@@ -61,8 +63,12 @@ public class SearchFrag extends Fragment implements IsearchFragment ,MyClickList
             f2=getString(R.string.Non);
             f3=getString(R.string.Non);
             query="";
-            presenter.gen();
             }
+        InternetBroadcastReciver.booleanMutableLiveData.observe(this, aBoolean -> {
+            if (all_meals.meals.isEmpty()){
+                presenter.gen();
+            }
+        });
           ArrayAdapter<String>areas =new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, MyRepository.areas);
           db.Areasspinner.setAdapter(areas);
           db.Areasspinner.setSelection(MyRepository.areas.indexOf(f1));

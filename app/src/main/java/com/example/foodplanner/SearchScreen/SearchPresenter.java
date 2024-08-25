@@ -22,6 +22,7 @@ public class SearchPresenter implements IsearchPresenter{
     public String query;
     @Override
     public void search(String query,String f1,String f2,String f3,String all) {
+        Log.i("11111111111111119999999999999", "search: "+query+" "+f1+" "+f2+" "+f3+" "+all);
         if (!all_meals.meals.isEmpty()) {
             repository.search(this,query, f1, f2, f3, all);
         }
