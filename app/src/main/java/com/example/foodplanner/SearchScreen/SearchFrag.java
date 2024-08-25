@@ -31,6 +31,7 @@ import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentSearchBinding;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class SearchFrag extends Fragment implements IsearchFragment ,MyClickListner {
@@ -137,7 +138,7 @@ public class SearchFrag extends Fragment implements IsearchFragment ,MyClickList
     }
 
     @Override
-    public void Sucess(ArrayList<Meal> result) {
+    public void Sucess(Vector<Meal> result) {
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -148,20 +149,20 @@ public class SearchFrag extends Fragment implements IsearchFragment ,MyClickList
     }
 
     @Override
-    public void onSucess(ArrayList<String> ing) {
+    public void onSucess(Vector<String> ing) {
         ing.add(0,getString(R.string.Non));
         db.Ingspinner.setAdapter(new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, ing));
     }
 
     @Override
-    public void onsUcess(ArrayList<String> ing) {
+    public void onsUcess(Vector<String> ing) {
         ing.add(0,getString(R.string.Non));
         db.Catspinner.setAdapter(new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, ing));
 
     }
 
     @Override
-    public void onsucess(ArrayList<String> countries) {
+    public void onsucess(Vector<String> countries) {
         countries.add(0,getString(R.string.Non));
         db.Areasspinner.setAdapter(new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, countries));
     }

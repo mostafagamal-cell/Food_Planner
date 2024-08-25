@@ -16,12 +16,13 @@ import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.CatitemBinding;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ItemAreaRec extends RecyclerView.Adapter<ItemAreaRec.ItemsRecViewHolder> {
     private Meals meals= new Meals();
     MyClickListner clickListner;
     public ItemAreaRec(MyClickListner clickListner){
-        meals.meals=new ArrayList<Meal>();
+        meals.meals=new Vector<Meal>();
         this.clickListner=clickListner;
     }
     @NonNull

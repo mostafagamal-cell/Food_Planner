@@ -30,6 +30,7 @@ import com.example.foodplanner.databinding.FragmentFavouriteScreenBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class FavouriteScreen extends Fragment implements MyClickListner, IfavouriteFragment {
     FragmentFavouriteScreenBinding binding;
@@ -51,7 +52,7 @@ public class FavouriteScreen extends Fragment implements MyClickListner, Ifavour
                 if (login_state .equals(App.Logged_in)){
                        presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
                         Meals meals1 =new Meals();
-                        meals1.meals=new ArrayList<>(meals);
+                        meals1.meals=new Vector<>(meals);
                         adapter.update(meals1);
                         binding.FaveortaieREC.setAdapter(adapter);
                     });

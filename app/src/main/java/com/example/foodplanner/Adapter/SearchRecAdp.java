@@ -18,10 +18,11 @@ import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.CatitemBinding;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class SearchRecAdp extends RecyclerView.Adapter<SearchRecAdp.SearchViewHolder> {
     MyClickListner clickListner;
-    ArrayList<Meal> data=new ArrayList<>();
+    Vector<Meal> data=new Vector<>();
     public SearchRecAdp(MyClickListner clickListner){
         this.clickListner=clickListner;
     }
@@ -31,7 +32,7 @@ public class SearchRecAdp extends RecyclerView.Adapter<SearchRecAdp.SearchViewHo
       CatitemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
         return new SearchViewHolder( CatitemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
     }
-    public void setData(ArrayList<Meal> data){
+    public void setData(Vector<Meal> data){
         this.data.clear();
         this.data.addAll(data);
     }

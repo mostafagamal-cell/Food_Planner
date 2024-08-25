@@ -10,6 +10,7 @@ import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Repository.MyRepository;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class SearchPresenter implements IsearchPresenter{
     private final IsearchFragment isearchFragment;
@@ -37,18 +38,18 @@ public class SearchPresenter implements IsearchPresenter{
     }
 
     @Override
-    public void Sucess(ArrayList<Meal> list) {
+    public void Sucess(Vector<Meal> list) {
         isearchFragment.Sucess(list);
     }
-    public void onIngArraied(ArrayList<String> list)
+    public void onIngArraied(Vector<String> list)
     {
         isearchFragment.onSucess(list);
     }
-    public void onCatArraied(ArrayList<String> list)
+    public void onCatArraied(Vector<String> list)
     {
         isearchFragment.onsUcess(list);
     }
-    public void onAreaArraied(ArrayList<String> list) {
+    public void onAreaArraied(Vector<String> list) {
         isearchFragment.onsucess(list);
     }
     @Override

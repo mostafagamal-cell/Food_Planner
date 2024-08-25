@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +44,7 @@ public class MyRepository implements ImyRepository {
   private final RemoteDataSourse remoteDataSourse;
   public static final Meals all_meals= new Meals();
   private MyRepository(LocalDataSourse localDataSourse,RemoteDataSourse remoteDataSourse){
-        all_meals.meals=new ArrayList<>();
+        all_meals.meals=new Vector<>();
       this.remoteDataSourse = remoteDataSourse;
       this.localDataSourse=localDataSourse;
   }
@@ -165,9 +166,10 @@ public class MyRepository implements ImyRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<Meal> meals = new ArrayList<>();
-                if (all_meals.meals!=null)
-                for (Meal meal : all_meals.meals) {
+                Vector<Meal> meals = new Vector<>();
+                for (int i = 0; i < all_meals.meals.size(); i++) {
+                    Meal meal=all_meals.meals.get(i);
+
                     boolean containsQuery = meal.strMeal.toLowerCase().contains(query.toLowerCase());
                     // Check if the meal matches the category, area, and ingredient
                     boolean matchesCategory = f1.equalsIgnoreCase(all) || meal.strArea.equalsIgnoreCase(f1);
@@ -226,9 +228,9 @@ public class MyRepository implements ImyRepository {
         remoteDataSourse.writeFavouriteFromFireStore(email,JsonData,completeListener);
   }
 
-    public static ArrayList<String>all_cat=new ArrayList<>();
-    public static ArrayList<String>areas =new ArrayList<>();
-    public static ArrayList<String>all_ing=new ArrayList<>();
+    public static Vector<String>all_cat=new Vector<>();
+    public static Vector<String>areas =new Vector<>();
+    public static Vector<String>all_ing=new Vector<>();
     public  void genrate(IsearchPresenter presenter){
         for (int i = 0; i < 26; i++) {
             final int dd=i;
@@ -240,7 +242,11 @@ public class MyRepository implements ImyRepository {
                     if (response.isSuccessful())
                         if (response.body().meals!=null) all_meals.meals.addAll(response.body().meals);
                         if (((char)(dd+'a'))=='z'){
-                            presenter.Sucess(all_meals.meals);
+                            Vector<Meal> m=new Vector<>();
+                            for (int j = 0; j < all_meals.meals.size(); j++) {
+                                m.addAll(all_meals.meals);
+                            }
+                            presenter.Sucess(m);
                         }
                     Log.d("121131132asdasdas", ((char)'a'+dd)+" "+all_meals.meals.size());
                 }

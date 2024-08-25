@@ -17,13 +17,14 @@ import com.example.foodplanner.databinding.CatitemBinding;
 import com.example.foodplanner.databinding.FavouriteitemBinding;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.FavouriteItemHolder> {
     public Meals meals= new Meals();
     MyClickListner clickListner;
     public FavouriteAdpter(MyClickListner clickListner){
         this.clickListner=clickListner;
-        meals.meals=new ArrayList<Meal>();
+        meals.meals=new Vector<>();
     }
      public void remove(Meal meal1){
         meals.meals.removeIf(meal -> meal.idMeal.equals(meal1.idMeal));
@@ -57,7 +58,7 @@ public class FavouriteAdpter extends RecyclerView.Adapter<FavouriteAdpter.Favour
     }
     public void update(Meals mymeals){
        Meals meals1= new Meals();
-       meals1.meals=new ArrayList<Meal>();
+       meals1.meals=new Vector<>();
         for (int i = 0; i < mymeals.meals.size(); i++) {
             if (checked(mymeals.meals.get(i).idMeal)){
                 meals.meals.add(mymeals.meals.get(i));
