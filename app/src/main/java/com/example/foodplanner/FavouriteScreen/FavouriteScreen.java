@@ -16,9 +16,13 @@ import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.FavouriteAdpter;
 import com.example.foodplanner.App;
+import com.example.foodplanner.DataSourse.LocalDataSourse;
+import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Repository.MyRepository;
+import com.example.foodplanner.Util.IfavouriteFragment;
 import com.example.foodplanner.Util.IfavouritePresenter;
 import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.example.foodplanner.Util.MyClickListner;
@@ -27,7 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class FavouriteScreen extends Fragment implements MyClickListner,IfavouritePresenter.COMM {
+public class FavouriteScreen extends Fragment implements MyClickListner, IfavouriteFragment {
     FragmentFavouriteScreenBinding binding;
     FavouriteAdpter adapter;
     IfavouritePresenter presenter;
@@ -41,7 +45,7 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = FavouritePresenter.getInstance(this);
+        presenter = new FavouritePresenter(this, MyRepository.getInstance(LocalDataSourse.getInstance(this.getActivity().getApplication()), RemoteDataSourse.getInstance()));
         adapter=new FavouriteAdpter(this);
             App.Login_State.observe(getViewLifecycleOwner(), login_state -> {
                 if (login_state .equals(App.Logged_in)){
@@ -102,10 +106,20 @@ public class FavouriteScreen extends Fragment implements MyClickListner,Ifavouri
     }
 
     @Override
-    public void onDataArrive(Meals meals) {
+    public void onSucces(Meals meals) {
         Log.d("14488444", "onDataArrive: "+meals.meals.size());
         for (int m = 0; m < meals.meals.size(); m++) {
             presenter.saveOnDB(meals.meals.get(m));
         }
+    }
+
+    @Override
+    public void onSucces() {
+        Toast.makeText(requireContext(), getString(R.string.sucess), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.foodplanner.SearchScreen;
 
+import static com.example.foodplanner.Repository.MyRepository.all_meals;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +16,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.SearchRecAdp;
+import com.example.foodplanner.DataSourse.LocalDataSourse;
+import com.example.foodplanner.DataSourse.RemoteDataSourse;
+import com.example.foodplanner.Model.Categories;
+import com.example.foodplanner.Model.Countries;
+import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.R;
 import com.example.foodplanner.Repository.MyRepository;
@@ -25,47 +33,53 @@ import com.example.foodplanner.databinding.FragmentSearchBinding;
 import java.util.ArrayList;
 
 
-public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyClickListner {
+public class SearchFrag extends Fragment implements IsearchFragment ,MyClickListner {
     SearchPresenter presenter;
     SearchRecAdp adp;
-    FragmentSearchBinding fragmentSearchBinding;
+    FragmentSearchBinding db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         fragmentSearchBinding= FragmentSearchBinding.inflate(inflater);
-        return fragmentSearchBinding.getRoot();
+         db= db.inflate(inflater);
+        return db.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-          presenter=SearchPresenter.getInstance(this);
-          if (presenter.f1==null&&presenter.f2==null){
-              presenter.f1=getString(R.string.Non);
-              presenter.f2=getString(R.string.Non);
-              presenter.f3=getString(R.string.Non);
-              presenter.query="";
-          }
+        presenter=new SearchPresenter(this,MyRepository.getInstance(LocalDataSourse.getInstance(this.requireActivity().getApplication()), RemoteDataSourse.getInstance()));
+
+        if(savedInstanceState!=null){
+                f1=savedInstanceState.getString("f1");
+                f2=savedInstanceState.getString("f2");
+                f3=savedInstanceState.getString("f3");
+                query=savedInstanceState.getString("query");
+            }else{
+            f1=getString(R.string.Non);
+            f2=getString(R.string.Non);
+            f3=getString(R.string.Non);
+            query="";
+            presenter.gen();
+            }
           ArrayAdapter<String>areas =new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, MyRepository.areas);
-          fragmentSearchBinding.Areasspinner.setAdapter(areas);
-          fragmentSearchBinding.Areasspinner.setSelection(MyRepository.areas.indexOf(presenter.f1));
+          db.Areasspinner.setAdapter(areas);
+          db.Areasspinner.setSelection(MyRepository.areas.indexOf(f1));
         ArrayAdapter<String>categories =new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, MyRepository.all_cat);
-        fragmentSearchBinding.Catspinner.setAdapter(categories);
-        fragmentSearchBinding.Catspinner.setSelection(MyRepository.all_cat.indexOf(presenter.f2));
+        db.Catspinner.setAdapter(categories);
+        db.Catspinner.setSelection(MyRepository.all_cat.indexOf(f2));
         ArrayAdapter<String>ing =new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, MyRepository.all_ing);
-        fragmentSearchBinding.Ingspinner.setAdapter(ing);
-        fragmentSearchBinding.Ingspinner.setSelection(MyRepository.all_ing.indexOf(presenter.f3));
+        db.Ingspinner.setAdapter(ing);
+        db.Ingspinner.setSelection(MyRepository.all_ing.indexOf(f3));
         requireActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-                fragmentSearchBinding.Catspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                db.Catspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        presenter.f2=MyRepository.all_cat.get(i);
-                        Log.i("asddsadasdasdasdd f3",presenter.f3);
-
-                        presenter.search();
+                        f2=MyRepository.all_cat.get(i);
+                        presenter.search(query,f1,f2,f3,getString(R.string.Non));
                     }
 
                     @Override
@@ -73,13 +87,12 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
 
                     }
                 });
-                fragmentSearchBinding.Ingspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                db.Ingspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        presenter.f3=MyRepository.all_ing.get(i);
-                        Log.i("asddsadasdasdasdd f3",presenter.f3);
+                        f3=MyRepository.all_ing.get(i);
+                        presenter.search(query,f1,f2,f3,getString(R.string.Non));
 
-                        presenter.search();
                     }
 
                     @Override
@@ -88,12 +101,11 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                     }
                 });
 
-                fragmentSearchBinding.Areasspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                db.Areasspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        presenter.f1=MyRepository.areas.get(i);
-                        Log.i("asddsadasdasdasdd f1",presenter.f1);
-                        presenter.search();
+                        f1=MyRepository.areas.get(i);
+                        presenter.search(query,f1,f2,f3,getString(R.string.Non));
                     }
 
                     @Override
@@ -102,20 +114,20 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
                     }
                 });
                 adp=new SearchRecAdp(SearchFrag.this);
-                fragmentSearchBinding.SearchRec.setAdapter(adp);
-                fragmentSearchBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                db.SearchRec.setAdapter(adp);
+                db.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
-                        presenter.query = s;
-                        presenter.search();
+                        query = s;
+                        presenter.search(query,f1,f2,f3,getString(R.string.Non));
                         return false;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String s) {
 
-                        presenter.query = s;
-                        presenter.search();
+                        query = s;
+                        presenter.search(query,f1,f2,f3,getString(R.string.Non));
                         return false;
                     }
                 });
@@ -125,14 +137,38 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
     }
 
     @Override
-    public void dataArrivedSearch(ArrayList<Meal> result) {
+    public void Sucess(ArrayList<Meal> result) {
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 adp.setData(result);
-                fragmentSearchBinding.SearchRec.setAdapter(adp);
+                db.SearchRec.setAdapter(adp);
             }
         });
+    }
+
+    @Override
+    public void onSucess(ArrayList<String> ing) {
+        ing.add(0,getString(R.string.Non));
+        db.Ingspinner.setAdapter(new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, ing));
+    }
+
+    @Override
+    public void onsUcess(ArrayList<String> ing) {
+        ing.add(0,getString(R.string.Non));
+        db.Catspinner.setAdapter(new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, ing));
+
+    }
+
+    @Override
+    public void onsucess(ArrayList<String> countries) {
+        countries.add(0,getString(R.string.Non));
+        db.Areasspinner.setAdapter(new ArrayAdapter<>(this.requireActivity(), android.R.layout.simple_spinner_dropdown_item, countries));
+    }
+
+    @Override
+    public void Fail(String meassage) {
+        Toast.makeText(this.requireActivity(),meassage,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -140,6 +176,14 @@ public class SearchFrag extends Fragment implements IsearchPresenter.Comm, MyCli
        NavHostFragment.findNavController(this).navigate(SearchFragDirections.actionSearchFragToMealItemScreen(meal));
 
     }
+    String f1,f2,f3,query="";
 
-
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("f1",f1);
+        outState.putString("f2",f2);
+        outState.putString("f3",f3);
+        outState.putString("query",query);
+    }
 }

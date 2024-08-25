@@ -11,17 +11,20 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.ItemIngrRec;
+import com.example.foodplanner.DataSourse.LocalDataSourse;
+import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
-import com.example.foodplanner.R;
+import com.example.foodplanner.Repository.MyRepository;
+import com.example.foodplanner.Util.Iingfrage;
 import com.example.foodplanner.Util.IingPresenter;
 import com.example.foodplanner.Util.MyClickListner;
-import com.example.foodplanner.databinding.CardItemBinding;
 import com.example.foodplanner.databinding.FragmentIngItemBinding;
 
-public class IngItemFrag extends Fragment implements IingPresenter.IareaMealsPresenterComm, MyClickListner {
+public class IngItemFrag extends Fragment implements Iingfrage, MyClickListner {
     FragmentIngItemBinding binding;
     IingPresenter presenter;
     ItemIngrRec  adapter;
@@ -38,7 +41,8 @@ public class IngItemFrag extends Fragment implements IingPresenter.IareaMealsPre
         if(getArguments()!=null){
             String ing=IngItemFragArgs.fromBundle(getArguments()).getIng();
             ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(ing);
-            presenter=IngPresenter.getInstance(this);
+            presenter=new IngPresenter(this, MyRepository.getInstance(LocalDataSourse.getInstance(this.getActivity().getApplication()), RemoteDataSourse.getInstance()));
+
             presenter.loadMeals(ing);
         }
     }
@@ -51,9 +55,14 @@ public class IngItemFrag extends Fragment implements IingPresenter.IareaMealsPre
     }
 
     @Override
-    public void onDataArrived(Meals categories) {
+    public void onSuccess(Meals categories) {
         adapter= new ItemIngrRec(this);
         adapter.setcontect(categories);
         binding.eeeeef.setAdapter(adapter);
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

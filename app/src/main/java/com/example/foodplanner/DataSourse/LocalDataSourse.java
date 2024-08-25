@@ -10,7 +10,6 @@ import com.example.foodplanner.DatabaseRoom.MealDao;
 import com.example.foodplanner.DatabaseRoom.MyDataBase;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
-import com.example.foodplanner.Repository.Irepo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,17 +20,25 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class LocalDataSourse implements IlocalDataSource {
+    public static LocalDataSourse instance;
     MealDao dao;
     Application application;
-    public LocalDataSourse(Application context)
-   {
+    private LocalDataSourse(Application context)
+    {
     dao=MyDataBase.getInstance(context).mealDao();
     this.application=context;
-   }
+    }
+
     @Override
     public LiveData<List<Meal>> getFavourites() {
        String email= application.getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
        return dao.getAllMeals(email);
+    }
+
+    public static LocalDataSourse getInstance(Application application) {
+        if (instance==null)
+            instance=new LocalDataSourse(application);
+        return instance;
     }
 
     @Override

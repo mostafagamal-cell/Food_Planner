@@ -13,19 +13,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.CuntriesAdpter;
 import com.example.foodplanner.Adapter.ItemAreaRec;
+import com.example.foodplanner.DataSourse.LocalDataSourse;
+import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Repository.MyRepository;
+import com.example.foodplanner.Util.IareaFrag;
 import com.example.foodplanner.Util.IareaMealsPresenter;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FragmentAreaItemBinding;
 
 
-public class AreaItemFragment extends Fragment implements IareaMealsPresenter.IareaMealsPresenterComm , MyClickListner {
+public class AreaItemFragment extends Fragment implements IareaFrag, MyClickListner {
     ItemAreaRec adpter;
     FragmentAreaItemBinding binding;
     AreaPresenter presenter;
@@ -39,7 +44,7 @@ public class AreaItemFragment extends Fragment implements IareaMealsPresenter.Ia
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter=AreaPresenter.getInstance(this);
+        presenter=new AreaPresenter(this, MyRepository.getInstance(LocalDataSourse.getInstance(this.getActivity().getApplication()), RemoteDataSourse.getInstance()));
         if (getArguments()!=null){
             String area=AreaItemFragmentArgs.fromBundle(getArguments()).getArea();
             ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(area);
@@ -49,7 +54,7 @@ public class AreaItemFragment extends Fragment implements IareaMealsPresenter.Ia
     }
 
     @Override
-    public void onDataArrived(Meals categories) {
+    public void onSucess(Meals categories) {
         adpter= new ItemAreaRec(this);
         adpter.setcontect(categories);
         binding.myrecycler.setAdapter(adpter);
@@ -58,5 +63,9 @@ public class AreaItemFragment extends Fragment implements IareaMealsPresenter.Ia
     @Override
     public void OnClick(Meal meal) {
         NavHostFragment.findNavController(this).navigate(AreaItemFragmentDirections.actionAreaItemFragmentToMealItemScreen(meal));
+    }
+    @Override
+    public void fail(String Message) {
+        Toast.makeText(this.getActivity(), Message, Toast.LENGTH_SHORT).show();
     }
 }

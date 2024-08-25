@@ -29,11 +29,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.Adapter.InteREc;
 import com.example.foodplanner.Adapter.ItemCatigoryRec;
 import com.example.foodplanner.App;
+import com.example.foodplanner.DataSourse.LocalDataSourse;
+import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.IngradintMeals;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Repository.MyRepository;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.auth.AuthActivity;
 import com.example.foodplanner.databinding.BotttommodelsheetBinding;
@@ -52,7 +55,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 
-public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealScreenComm, MyClickListner {
+public class MealItemScreen extends Fragment implements ImealItemFragment, MyClickListner {
     FragmentMealItemScreenBinding binding;
     InteREc rec;
     MealItemPresenter presenter;
@@ -66,12 +69,12 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-          presenter= MealItemPresenter.getInstance(this);
+          presenter= new MealItemPresenter(this, MyRepository.getInstance(LocalDataSourse.getInstance(this.getActivity().getApplication()), RemoteDataSourse.getInstance()));
         email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
         if (MealItemScreenArgs.fromBundle(getArguments()).getMeal().strInstructions!=null)
-                dataArrived(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
+            OnSucess(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
         else presenter.loadMealById(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
-          presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(this.requireActivity(),e->{
+        presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(getViewLifecycleOwner(),e->{
                 Log.i("dasadasd223wee2465478",e+"");
                 if (e==1) {
                     isfav = true;
@@ -85,7 +88,7 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
     }
 
     @Override
-    public void dataArrived(Meal meal) {
+    public void OnSucess(Meal meal) {
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(meal.strMeal);
         String [] stps=meal.strInstructions.split("\n\r");
         StringBuilder str= new StringBuilder();
@@ -163,6 +166,12 @@ public class MealItemScreen extends Fragment implements ImealItemPreseter.ImealS
             }
         });
     }
+
+    @Override
+    public void OnError(String message) {
+        Toast.makeText(this.requireContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+    }
+
     String email;
     String dayName="";
     MutableLiveData<String> eee=new MutableLiveData<>("");

@@ -20,10 +20,13 @@ import android.widget.Toast;
 
 import com.example.foodplanner.Adapter.PlanRec;
 import com.example.foodplanner.App;
+import com.example.foodplanner.DataSourse.LocalDataSourse;
+import com.example.foodplanner.DataSourse.RemoteDataSourse;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Model.PlannesMeal;
 import com.example.foodplanner.R;
+import com.example.foodplanner.Repository.MyRepository;
 import com.example.foodplanner.Util.InternetBroadcastReciver;
 import com.example.foodplanner.Util.MyClickListner;
 import com.example.foodplanner.databinding.FavouriteitemBinding;
@@ -34,7 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, MyClickListner, AdapterView.OnItemSelectedListener {
+public class PlanScreen extends Fragment implements ImealPlannerFrag, MyClickListner, AdapterView.OnItemSelectedListener {
     FragmentPlanScreenBinding binding;
     PlanRec planRec;
     MealPlanePresenter presenter;
@@ -61,8 +64,9 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
         days.addAll(Arrays.asList(getString(R.string.Non), getString(R.string.Saturday), getString(R.string.Sunday), getString(R.string.Monday),
                 getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday), getString(R.string.Friday)));
 
-        presenter = MealPlanePresenter.getInstance(this);
-         email = this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
+        presenter =new MealPlanePresenter(this, MyRepository.getInstance(LocalDataSourse.getInstance(this.getActivity().getApplication()), RemoteDataSourse.getInstance()));
+
+        email = this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
 
         ArrayAdapter<String> typead = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, typs);
         ArrayAdapter<String> daysad = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, days);
@@ -76,11 +80,6 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
 
         binding.dayspinner.setOnItemSelectedListener(this);
         binding.typespinner.setOnItemSelectedListener(this);
-
-            if (presenter.f1==null||presenter.f2==null) {
-                presenter.f1 = getString(R.string.Non);
-                presenter.f2 = getString(R.string.Non);
-            }
             binding.dayspinner.setSelection(typs.indexOf(presenter.f1));
             binding.typespinner.setSelection(days.indexOf(presenter.f2));
             App.Login_State.observe(this.requireActivity(),e->{
@@ -129,13 +128,18 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
     }
 
     @Override
-    public void onDataArrived(List<Plan> meal) {
+    public void onSucces(List<Plan> meal) {
         Log.i("eeeeeeeeeeeeeeedeefafaffa", meal.size()+"");
         planRec.setupdate(meal);
         binding.planrec.setAdapter(planRec);
         for (int i = 0; i < meal.size(); i++) {
             presenter.insertPlan(meal.get(i));
         }
+    }
+
+    @Override
+    public void onSucces() {
+        Toast.makeText(this.getActivity(), getString(R.string.plansaved), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -165,6 +169,8 @@ public class PlanScreen extends Fragment implements ImealPlannerPresenter.Comm, 
         // Do nothing
     }
 
-
-
+    @Override
+    public void onError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

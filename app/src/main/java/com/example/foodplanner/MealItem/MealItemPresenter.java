@@ -5,26 +5,25 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Model.Plan;
 import com.example.foodplanner.Repository.MyRepository;
 
-public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.ImealScreenComm {
-    public static final String TAG = "MealItemPresenter";
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class MealItemPresenter implements ImealItemPreseter, Callback<Meals> {
+    public static final String TAG = "MealItemPresenter";
+    ImealItemFragment fragment;
     private static MealItemPresenter instance;
     private MyRepository repository;
-    private ImealItemPreseter.ImealScreenComm comm;
-    private MealItemPresenter(){
-        repository=MyRepository.getInstance(this,TAG);
+    public MealItemPresenter(ImealItemFragment f,MyRepository repository){
+        this.fragment=f;
+        this.repository=repository;
     }
 
-    public static MealItemPresenter getInstance(ImealItemPreseter.ImealScreenComm comm) {
-        if (instance==null){
-            instance=new MealItemPresenter();
-        }
-        instance.comm=comm;
-        return instance ;
-    }
+
 
     @Override
     public void instertMeal(Meal meal) {
@@ -34,7 +33,7 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
 
     @Override
     public void loadMealById(Meal meal) {
-     repository.getMealByid(meal.idMeal);
+     repository.getMealByid(meal.idMeal,this);
     }
 
     @Override
@@ -49,12 +48,17 @@ public class MealItemPresenter implements ImealItemPreseter,ImealItemPreseter.Im
     }
 
     @Override
-    public void dataArrived(Meal meal) {
-        comm.dataArrived(meal);
+    public LiveData<Integer> checkinDatabase(String id) {
+        return repository.checkinDatabase(id);
     }
 
     @Override
-    public LiveData<Integer> checkinDatabase(String id) {
-        return repository.checkinDatabase(id);
+    public void onResponse(Call<Meals> call, Response<Meals> response) {
+        fragment.OnSucess(response.body().meals.get(0));
+    }
+
+    @Override
+    public void onFailure(Call<Meals> call, Throwable throwable) {
+    fragment.OnError(throwable.getMessage());
     }
 }

@@ -5,9 +5,10 @@ import com.example.foodplanner.Model.Countries;
 import com.example.foodplanner.Model.Ingradiants;
 import com.example.foodplanner.Model.Meals;
 
-public interface IfragmentMealComm  extends ImainPresenter  {
-     void onDataArrivedRandomaMeal(Meals meals);
-     void onDataArrivedCategories(Categories categories);
-     void onDataArrivedIngredients(Ingradiants meals);
-     void onDataArrivedCountry(Countries meals);
+public interface IfragmentMealComm {
+     void onSucess(Meals meals);
+     void onSucess(Categories categories);
+     void onSucess(Ingradiants meals);
+     void onSucess(Countries meals);
+     void onError(String message);
 }

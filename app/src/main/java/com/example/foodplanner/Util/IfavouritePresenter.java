@@ -14,8 +14,4 @@ public interface IfavouritePresenter extends ImainPresenter{
          void saveOnDB(Meal meal);
          LiveData<List<Meal>> readDatafromDB();
          void dataArriveFromCloud(Meals meals);
-         interface COMM{
-             void onDataArrive(Meals meals);
-         }
-
 }

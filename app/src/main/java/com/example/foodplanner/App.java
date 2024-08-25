@@ -33,17 +33,8 @@ public class App extends Application implements ImainPresenter {
         }else{
             Login_State.setValue(Logged_in);
         }
-        MyRepository.application=this;
-        repository=MyRepository.getInstance(this,"N/A");
-        repository.getcatigorys();
-        repository.getListOfarea();
-        repository.getListOfingredients();
-        for (int i = 0; i < 26; i++) {
-           char a=(char) ('a'+i);
-           repository.getMealByletter(a+"");
-        }
         FirebaseApp.initializeApp(this);
         registerReceiver(new InternetBroadcastReciver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        repository.getListOfcategories();
+        //repository.getListOfcategories();
     }
 }

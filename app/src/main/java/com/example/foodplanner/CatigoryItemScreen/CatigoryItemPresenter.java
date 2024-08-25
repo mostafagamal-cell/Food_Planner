@@ -8,33 +8,35 @@ import com.example.foodplanner.App;
 import com.example.foodplanner.Model.Categories;
 import com.example.foodplanner.Model.Meals;
 import com.example.foodplanner.Repository.MyRepository;
+import com.example.foodplanner.Util.IcatigortItemFrag;
 import com.example.foodplanner.Util.IcatigortItemPresenter;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CatigoryItemPresenter implements IcatigortItemPresenter {
-    public final static  String name="CatigoryItemPresenter";
     private final MyRepository repo;
 
-    private static IcatigortItemPresenter.IcatigortItemComm icatigortItemComm;
-    private static CatigoryItemPresenter catigoryItemPresenter;
-    private CatigoryItemPresenter() {
-        repo=MyRepository.getInstance(this,name);
+    private static IcatigortItemFrag icatigortItemComm;
+    public CatigoryItemPresenter(IcatigortItemFrag icatigortItemFrag ,MyRepository repository) {
+        repo=repository;
+        icatigortItemComm=icatigortItemFrag;
     }
 
-    public static CatigoryItemPresenter getInstance(IcatigortItemPresenter.IcatigortItemComm icatigortItemComm) {
-        if (catigoryItemPresenter == null){
-            catigoryItemPresenter= new CatigoryItemPresenter();
-        }
-        CatigoryItemPresenter.icatigortItemComm =icatigortItemComm;
-        return catigoryItemPresenter;
-    }
 
     @Override
     public void loadMeals(String category) {
-       repo.filterBycategory(category,0);
-    }
+       repo.filterBycategory(category, new Callback<Meals>() {
+           @Override
+           public void onResponse(Call<Meals> call, Response<Meals> response) {
+               icatigortItemComm.onScuess(response.body());
+           }
 
-    @Override
-    public void onDataArrived(Meals categories) {
-        icatigortItemComm.onDataArrived(categories);
+           @Override
+           public void onFailure(Call<Meals> call, Throwable throwable) {
+            icatigortItemComm.onFail(throwable.getMessage());
+           }
+       });
     }
 }
