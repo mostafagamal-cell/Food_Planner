@@ -194,9 +194,10 @@ public class MealItemScreen extends Fragment implements ImealItemFragment, MyCli
                      dayName = sdf.format(calendar.getTime());
                 },
                 year, month, day);
-            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
-        datePickerDialog.show();
+             datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+             Calendar maxDate = Calendar.getInstance();
+             maxDate.add(Calendar.DAY_OF_MONTH, 7);
+             datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());        datePickerDialog.show();
 
     }
     String name="";
