@@ -1,6 +1,7 @@
 package com.example.foodplanner.FavouriteScreen;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -14,7 +15,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Vector;
 
 public class FavouritePresenter implements IfavouritePresenter {
     MyRepository repository;
@@ -48,7 +52,15 @@ public class FavouritePresenter implements IfavouritePresenter {
         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
             if (task.isSuccessful()){
                 if (task.getResult().exists()){
-                    Meals meals=task.getResult().toObject(Meals.class);
+                     Meals meals=new Meals();
+                     ArrayList<Meal> meals1=new ArrayList<>();
+                     try {
+                         meals1=task.getResult().toObject(ArrayList.class);
+
+                     }catch (Exception e){
+                         Log.d("asdddddddddddddddddddddd", "onComplete: "+e.getMessage());
+                     }
+                     meals.meals=new ArrayList<>(meals1);
                     comm.onSucces(meals);
                 }
             }

@@ -22,7 +22,7 @@ public class ItemCatigoryRec extends RecyclerView.Adapter<ItemCatigoryRec.ItemsR
     MyClickListner clickListner;
     public ItemCatigoryRec(MyClickListner clickListner){
         this.clickListner= clickListner;
-        meals.meals=new Vector<Meal>();
+        meals.meals=new ArrayList<>();
     }
     @NonNull
     @Override

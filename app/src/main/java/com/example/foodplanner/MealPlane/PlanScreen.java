@@ -44,6 +44,7 @@ public class PlanScreen extends Fragment implements ImealPlannerFrag, MyClickLis
     private ArrayList<String> typs=new ArrayList<>();
     private ArrayList<String> days=new ArrayList<>();
     String email;
+    String f1,f2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPlanScreenBinding.inflate(getLayoutInflater());
@@ -53,7 +54,13 @@ public class PlanScreen extends Fragment implements ImealPlannerFrag, MyClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if (savedInstanceState!=null){
+            f1=savedInstanceState.getString("f1");
+            f2=savedInstanceState.getString("f2");
+        }else{
+            f1=getString(R.string.Non);
+            f2=getString(R.string.Non);
+        }
         typs.addAll(Arrays.asList(
                 getString(R.string.Non),
                 getString(R.string.breakfast),
@@ -72,21 +79,21 @@ public class PlanScreen extends Fragment implements ImealPlannerFrag, MyClickLis
         ArrayAdapter<String> daysad = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, days);
 
         planRec = new PlanRec(this);
-        planRec.filterDay(getString(R.string.Non));
-        planRec.filterType(getString(R.string.Non));
+        planRec.filterDay(f1);
+        planRec.filterType(f2);
 
         binding.dayspinner.setAdapter(daysad);
         binding.typespinner.setAdapter(typead);
 
         binding.dayspinner.setOnItemSelectedListener(this);
         binding.typespinner.setOnItemSelectedListener(this);
-            binding.dayspinner.setSelection(typs.indexOf(presenter.f1));
-            binding.typespinner.setSelection(days.indexOf(presenter.f2));
+            binding.dayspinner.setSelection(typs.indexOf(f1));
+            binding.typespinner.setSelection(days.indexOf(f2));
             App.Login_State.observe(this.requireActivity(),e->{
                 email=this.requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
             });
-            planRec.filterDay(presenter.f1);
-            planRec.filterType(presenter.f2);
+            planRec.filterDay(f1);
+            planRec.filterType(f2);
         if (Objects.equals(App.Login_State.getValue(), App.Logged_in)) {
             presenter.getPlans(email).observe(this.requireActivity(), plans -> {
                 planRec.setupdate(plans);
@@ -157,10 +164,10 @@ public class PlanScreen extends Fragment implements ImealPlannerFrag, MyClickLis
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (adapterView.getId() == binding.dayspinner.getId()) {
             planRec.filterDay(days.get(i));
-            presenter.f1=days.get(i);
+            f1=days.get(i);
         } else if (adapterView.getId() == binding.typespinner.getId()) {
             planRec.filterType(typs.get(i));
-            presenter.f2=typs.get(i);
+            f2=typs.get(i);
         }
     }
 
@@ -172,5 +179,12 @@ public class PlanScreen extends Fragment implements ImealPlannerFrag, MyClickLis
     @Override
     public void onError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("f1",f1);
+        outState.putString("f2",f2);
     }
 }

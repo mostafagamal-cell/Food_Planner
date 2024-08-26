@@ -44,7 +44,7 @@ public class MyRepository implements ImyRepository {
   private final RemoteDataSourse remoteDataSourse;
   public static final Meals all_meals= new Meals();
   private MyRepository(LocalDataSourse localDataSourse,RemoteDataSourse remoteDataSourse){
-        all_meals.meals=new Vector<>();
+        all_meals.meals=new ArrayList<>();
       this.remoteDataSourse = remoteDataSourse;
       this.localDataSourse=localDataSourse;
   }

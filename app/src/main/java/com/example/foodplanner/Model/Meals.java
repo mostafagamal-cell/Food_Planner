@@ -7,5 +7,5 @@ import java.util.Vector;
 
 
 public class Meals {
-    public Vector<Meal> meals;
+    public ArrayList<Meal> meals;
 }

@@ -32,8 +32,8 @@ public class PlanRec extends RecyclerView.Adapter<PlanRec.MyViewHolder> {
     MyClickListner clickListner;
     public  ArrayList<Plan> myplans=new ArrayList<>();
     public  ArrayList<Plan> filterplan=new ArrayList<>();
-    public String f1;
-    public String f2;
+    public String f1="";
+    public String f2="";
      public PlanRec(MyClickListner clickListner){
         this.clickListner=clickListner;
     }

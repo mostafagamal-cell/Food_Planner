@@ -22,7 +22,7 @@ public class ItemAreaRec extends RecyclerView.Adapter<ItemAreaRec.ItemsRecViewHo
     private Meals meals= new Meals();
     MyClickListner clickListner;
     public ItemAreaRec(MyClickListner clickListner){
-        meals.meals=new Vector<Meal>();
+        meals.meals=new ArrayList<>();
         this.clickListner=clickListner;
     }
     @NonNull

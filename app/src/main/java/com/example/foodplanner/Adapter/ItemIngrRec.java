@@ -21,7 +21,7 @@ public class ItemIngrRec  extends RecyclerView.Adapter<ItemIngrRec.ItemIngrRecVi
     private Meals meals= new Meals();
     MyClickListner clickListner;
     public ItemIngrRec(MyClickListner clickListner){
-        meals.meals=new Vector<Meal>();
+        meals.meals=new ArrayList<>();
         this.clickListner=clickListner;
     }
     @NonNull

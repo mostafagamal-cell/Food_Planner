@@ -52,7 +52,7 @@ public class FavouriteScreen extends Fragment implements MyClickListner, Ifavour
                 if (login_state .equals(App.Logged_in)){
                        presenter.readDatafromDB().observe(getViewLifecycleOwner(), meals -> {
                         Meals meals1 =new Meals();
-                        meals1.meals=new Vector<>(meals);
+                        meals1.meals=new ArrayList<>(meals);
                         adapter.update(meals1);
                         binding.FaveortaieREC.setAdapter(adapter);
                     });

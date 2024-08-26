@@ -70,8 +70,10 @@ public class MealItemScreen extends Fragment implements ImealItemFragment, MyCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
           presenter= new MealItemPresenter(this, MyRepository.getInstance(LocalDataSourse.getInstance(this.getActivity().getApplication()), RemoteDataSourse.getInstance()));
-        email= requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user",null);
-        if (MealItemScreenArgs.fromBundle(getArguments()).getMeal().strInstructions!=null)
+          App.Login_State.observe(getViewLifecycleOwner(),e-> {
+              email = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getString("user", null);
+          });
+            if (MealItemScreenArgs.fromBundle(getArguments()).getMeal().strInstructions!=null)
             OnSucess(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
         else presenter.loadMealById(MealItemScreenArgs.fromBundle(getArguments()).getMeal());
         presenter.checkinDatabase(MealItemScreenArgs.fromBundle(getArguments()).getMeal().idMeal).observe(getViewLifecycleOwner(),e->{
@@ -188,10 +190,12 @@ public class MealItemScreen extends Fragment implements ImealItemFragment, MyCli
 
                       eee.setValue(String.format("%d-%d-%d", year1, month1 + 1, dayOfMonth));
                      calendar.set(year1, month1, dayOfMonth);
-                      name =calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+                     name =calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
                      dayName = sdf.format(calendar.getTime());
                 },
                 year, month, day);
+            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
         datePickerDialog.show();
 
     }

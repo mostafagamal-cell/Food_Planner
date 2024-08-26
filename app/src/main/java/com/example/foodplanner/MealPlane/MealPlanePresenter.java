@@ -29,8 +29,6 @@ import java.util.Objects;
 
 public class MealPlanePresenter implements ImealPlannerPresenter{
     private static MealPlanePresenter presenter;
-    public String f1;
-    public String f2;
     private ImealPlannerFrag comm;
     MyRepository repository;
     public static final String TAG = "MealPlanePresenter";
